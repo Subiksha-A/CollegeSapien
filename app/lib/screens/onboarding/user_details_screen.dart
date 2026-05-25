@@ -1,0 +1,345 @@
+import 'package:flutter/material.dart';
+import '../../models/api_models.dart';
+import '../../services/auth_service.dart';
+import '../../services/college_service.dart';
+import '../../utils/app_colors.dart';
+import '../home/main_navigation.dart';
+
+class UserDetailsScreen extends StatefulWidget {
+  const UserDetailsScreen({super.key});
+
+  @override
+  State<UserDetailsScreen> createState() => _UserDetailsScreenState();
+}
+
+class _UserDetailsScreenState extends State<UserDetailsScreen>
+    with TickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _collegeService = CollegeService();
+  List<College> _colleges = [];
+  String? _selectedCollegeId;
+  String? _selectedDepartment;
+  int? _selectedSemester;
+  bool _isLoading = false;
+  bool _isButtonPressed = false;
+  late AnimationController _animationController;
+
+  final List<String> _departments = [
+    'Computer Science',
+    'Information Technology',
+    'Electronics',
+    'Electrical',
+    'Mechanical',
+    'Civil',
+    'Chemical',
+    'Other',
+  ];
+
+  final List<int> _semesters = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 15),
+    )..repeat();
+    _nameController.text = AuthService.instance.currentUser?.displayName ?? '';
+    _loadColleges();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadColleges() async {
+    try {
+      final colleges = await _collegeService.listColleges();
+      if (!mounted) return;
+      setState(() => _colleges = colleges);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Unable to load colleges: $e')),
+      );
+    }
+  }
+
+  Future<void> _handleSubmit() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    if (_selectedCollegeId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select your college')),
+      );
+      return;
+    }
+
+    if (_selectedDepartment == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a department')),
+      );
+      return;
+    }
+
+    if (_selectedSemester == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a semester')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      await AuthService.instance.onboard(
+        name: _nameController.text,
+        collegeId: _selectedCollegeId!,
+        department: _selectedDepartment!,
+        semester: _selectedSemester!,
+      );
+
+      if (mounted) {
+        setState(() => _isLoading = false);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainNavigation()),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString()), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // Animated Background Blocks
+            AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child) {
+                return Stack(
+                  children: List.generate(8, (index) {
+                    final double startX = -200 + (index * 150.0);
+                    final double currentX =
+                        startX + (_animationController.value * screenWidth * 1.5);
+                    final double yPosition = 100 + (index * 80.0);
+
+                    final List<Color> colors = [
+                      const Color(0xFFFF6B6B),
+                      const Color(0xFF4ECDC4),
+                      const Color(0xFFFFE66D),
+                      const Color(0xFF95E1D3),
+                      const Color(0xFFF38181),
+                      const Color(0xFFAA96DA),
+                      const Color(0xFFFCBF49),
+                      const Color(0xFF06FFA5),
+                    ];
+
+                    return Positioned(
+                      left: currentX % (screenWidth + 400) - 200,
+                      top: yPosition,
+                      child: Transform.rotate(
+                        angle: 0.785398, // 45 degrees in radians
+                        child: Container(
+                          width: 60 + (index % 3) * 20,
+                          height: 60 + (index % 3) * 20,
+                          decoration: BoxDecoration(
+                            color: colors[index % colors.length].withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.black, width: 2),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                );
+              },
+            ),
+            SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.06,
+                vertical: 40,
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                const SizedBox(height: 20),
+                const Text(
+                  'Tell us about yourself',
+                  style: TextStyle(
+                    fontFamily: 'Lexend Mega',
+                    fontSize: 26,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'We need this info to personalize your experience',
+                  style: TextStyle(
+                    fontFamily: 'Public Sans',
+                    fontSize: 14,
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                // Name Field
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Full Name',
+                    prefixIcon: Icon(Icons.person_outline),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // College Dropdown
+                DropdownButtonFormField<String>(
+                  value: _selectedCollegeId,
+                  decoration: const InputDecoration(
+                    labelText: 'College',
+                    prefixIcon: Icon(Icons.school_outlined),
+                  ),
+                  isExpanded: true,
+                  items: _colleges.map((college) {
+                    return DropdownMenuItem(
+                      value: college.id,
+                      child: Text(
+                        college.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedCollegeId = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Department Dropdown
+                DropdownButtonFormField<String>(
+                  value: _selectedDepartment,
+                  decoration: const InputDecoration(
+                    labelText: 'Department',
+                    prefixIcon: Icon(Icons.engineering_outlined),
+                  ),
+                  items: _departments.map((dept) {
+                    return DropdownMenuItem(
+                      value: dept,
+                      child: Text(dept),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedDepartment = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Semester Dropdown
+                DropdownButtonFormField<int>(
+                  value: _selectedSemester,
+                  decoration: const InputDecoration(
+                    labelText: 'Current Semester',
+                    prefixIcon: Icon(Icons.calendar_month_outlined),
+                  ),
+                  items: _semesters.map((sem) {
+                    return DropdownMenuItem(
+                      value: sem,
+                      child: Text('Semester $sem'),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedSemester = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 40),
+
+                // Submit Button
+                GestureDetector(
+                  onTapDown: (_) {
+                    setState(() => _isButtonPressed = true);
+                  },
+                  onTapUp: (_) {
+                    setState(() => _isButtonPressed = false);
+                  },
+                  onTapCancel: () {
+                    setState(() => _isButtonPressed = false);
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _handleSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryYellow,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: const BorderSide(color: Colors.black, width: 2),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.black,
+                                ),
+                              ),
+                            )
+                          : const Text(
+                            'Continue',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                            ),
+                          ),
+                  ),
+                ),
+                ),
+              ],
+            ),
+          ),
+        ),
+          ],
+        ),
+      ),
+    );
+  }
+}

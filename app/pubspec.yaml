@@ -1,0 +1,109 @@
+name: codesapiens
+description: A university attendance and timetable management app
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+  # Image & File Handling
+  image_picker: ^1.0.7
+  file_picker: ^10.3.7
+  path_provider: ^2.1.1
+
+  # State Management
+  provider: ^6.1.1
+
+  # Local Storage
+  shared_preferences: ^2.2.2
+
+  # HTTP & API
+  http: ^1.1.2
+
+  # Google Sign In & Calendar
+  google_sign_in: ^6.2.1
+  googleapis: ^13.0.0
+  googleapis_auth: ^1.5.1
+
+  # Firebase (for authentication and storage)
+  firebase_core: ^3.0.0
+  firebase_auth: ^5.0.0
+  firebase_storage: ^12.0.0
+  cloud_firestore: ^5.0.0
+  firebase_app_check: ^0.3.0
+
+  # UI Components
+  smooth_page_indicator: ^1.1.0
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.1
+  google_fonts: ^6.1.0
+
+  # Calendar
+  table_calendar: ^3.0.9
+  add_2_calendar: ^2.2.0
+
+  # Animations
+  lottie: ^3.0.0
+
+  # Timer
+  circular_countdown_timer: ^0.2.3
+
+  # Utilities
+  intl: ^0.18.1
+  uuid: ^4.3.3
+  url_launcher: ^6.2.3
+  flutter_markdown: ^0.7.7+1
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/wave_texture.svg
+    - assets/images/halftone.png
+
+  # Fonts are commented out until you download them
+  # Run ./setup_fonts.sh to download fonts, then uncomment below
+  # fonts:
+  #   - family: Lexend Mega
+  #     fonts:
+  #       - asset: fonts/LexendMega-Bold.ttf
+  #         weight: 700
+  #       - asset: fonts/LexendMega-SemiBold.ttf
+  #         weight: 600
+  #       - asset: fonts/LexendMega-Regular.ttf
+  #         weight: 400
+  #   - family: Public Sans
+  #     fonts:
+  #       - asset: fonts/PublicSans-ExtraBold.ttf
+  #         weight: 800
+  #       - asset: fonts/PublicSans-Bold.ttf
+  #         weight: 700
+  #       - asset: fonts/PublicSans-SemiBold.ttf
+  #         weight: 600
+  #       - asset: fonts/PublicSans-Regular.ttf
+  #         weight: 400
+  #       - asset: fonts/PublicSans-Light.ttf
+  #         weight: 300
+  #   - family: Inter
+  #     fonts:
+  #       - asset: fonts/Inter-Bold.ttf
+  #         weight: 700
+  #       - asset: fonts/Inter-Medium.ttf
+  #         weight: 500
+  #   - family: Patrick Hand
+  #     fonts:
+  #       - asset: fonts/PatrickHand-Regular.ttf
+  #         weight: 400
