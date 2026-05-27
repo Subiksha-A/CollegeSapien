@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from 'express';
 import * as admin from 'firebase-admin';
 
 const isAppCheckDisabled = () =>
-  process.env.DISABLE_APP_CHECK === 'true' ||
+  process.env.DISABLE_APP_CHECK?.toLowerCase() === 'true' ||
   process.env.FUNCTIONS_EMULATOR === 'true' ||
   process.env.NODE_ENV === 'test';
 

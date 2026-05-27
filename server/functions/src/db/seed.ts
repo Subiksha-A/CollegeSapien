@@ -30,7 +30,7 @@ if (isLocal) {
 // Initialize Firebase
 if (admin.apps.length === 0) {
   admin.initializeApp({
-    projectId: 'codesapien-college',
+    projectId: 'collegesapiens',
   });
 }
 
