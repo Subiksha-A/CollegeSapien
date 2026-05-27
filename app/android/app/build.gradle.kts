@@ -28,7 +28,7 @@ if (releaseSigningRequested && !hasReleaseKeystore) {
 }
 
 android {
-    namespace = "com.codesapiens.app.codesapiens"
+    namespace = "com.collegesapien.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.codesapiens.app.codesapiens"
+        applicationId = "com.collegesapien.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

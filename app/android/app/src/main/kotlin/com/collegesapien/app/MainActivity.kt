@@ -1,4 +1,4 @@
-package com.codesapiens.app.codesapiens
+package com.collegesapien.app
 
 import io.flutter.embedding.android.FlutterActivity
 

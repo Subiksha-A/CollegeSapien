@@ -8,7 +8,7 @@ import 'api_service.dart';
 // Web OAuth client ID from google-services.json (client_type: 3).
 // Required for Google Sign-In on Android to return an idToken.
 const _googleWebClientId =
-    '967553114336-dn8lj07ei0f8mgol1esf5hp4d48dcqv3.apps.googleusercontent.com';
+    '186941997391-uhmgsim9eq2pfttpk9ihk6so83q5na0l.apps.googleusercontent.com';
 
 class AuthService {
   AuthService._();
