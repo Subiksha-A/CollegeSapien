@@ -1,93 +1,99 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'default', middleware: [] })
+definePageMeta({ layout: "default", middleware: [] });
 
-const { signIn, signInWithGoogle } = useFirebaseAuth()
-const { post } = useApi()
-const authStore = useAuthStore()
-const router = useRouter()
+const { signIn, signInWithGoogle } = useFirebaseAuth();
+const { post } = useApi();
+const authStore = useAuthStore();
+const router = useRouter();
 
-const email = ref('')
-const password = ref('')
-const error = ref('')
-const loading = ref(false)
+const email = ref("");
+const password = ref("");
+const error = ref("");
+const loading = ref(false);
 
 interface AuthTokenResult {
-  claims: Record<string, unknown>
+  claims: Record<string, unknown>;
 }
 
 interface AuthUser {
-  uid: string
-  email?: string | null
-  displayName?: string | null
-  getIdTokenResult: (forceRefresh?: boolean) => Promise<AuthTokenResult>
+  uid: string;
+  email?: string | null;
+  displayName?: string | null;
+  getIdTokenResult: (forceRefresh?: boolean) => Promise<AuthTokenResult>;
 }
 
 const isAuthUser = (value: unknown): value is AuthUser => {
-  if (!value || typeof value !== 'object') return false
-  const candidate = value as { uid?: unknown; getIdTokenResult?: unknown }
-  return typeof candidate.uid === 'string' && typeof candidate.getIdTokenResult === 'function'
-}
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as { uid?: unknown; getIdTokenResult?: unknown };
+  return (
+    typeof candidate.uid === "string" &&
+    typeof candidate.getIdTokenResult === "function"
+  );
+};
 
 const getErrorMessage = (err: unknown, fallback: string) => {
-  if (err && typeof err === 'object' && 'message' in err) {
-    const message = (err as { message?: unknown }).message
-    if (typeof message === 'string') return message
+  if (err && typeof err === "object" && "message" in err) {
+    const message = (err as { message?: unknown }).message;
+    if (typeof message === "string") return message;
   }
-  return fallback
-}
+  return fallback;
+};
 
 const handleGoogleLogin = async () => {
-  loading.value = true
-  error.value = ''
+  loading.value = true;
+  error.value = "";
   try {
-    const user = await signInWithGoogle()
-    if (!isAuthUser(user)) throw new Error('Unexpected auth response.')
-    await finalizeLogin(user)
+    const user = await signInWithGoogle();
+    if (!isAuthUser(user)) throw new Error("Unexpected auth response.");
+    await finalizeLogin(user);
   } catch (err) {
-    error.value = getErrorMessage(err, 'Google sign in failed.')
+    error.value = getErrorMessage(err, "Google sign in failed.");
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 const handleLogin = async () => {
-  if (!email.value || !password.value) return
-  loading.value = true
-  error.value = ''
+  if (!email.value || !password.value) return;
+  loading.value = true;
+  error.value = "";
 
   try {
-    const user = await signIn(email.value, password.value)
-    if (!isAuthUser(user)) throw new Error('Unexpected auth response.')
-    await finalizeLogin(user)
+    const user = await signIn(email.value, password.value);
+    if (!isAuthUser(user)) throw new Error("Unexpected auth response.");
+    await finalizeLogin(user);
   } catch (err) {
-    error.value = getErrorMessage(err, 'Sign in failed. Check your credentials.')
+    error.value = getErrorMessage(
+      err,
+      "Sign in failed. Check your credentials.",
+    );
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 const finalizeLogin = async (user: AuthUser) => {
-  const tokenResult = await user.getIdTokenResult(true)
-  const roleClaim = tokenResult.claims['role']
-  const role = typeof roleClaim === 'string' ? roleClaim : 'user'
+  const tokenResult = await user.getIdTokenResult(true);
+  const roleClaim = tokenResult.claims["role"];
+  const role = typeof roleClaim === "string" ? roleClaim : "user";
 
-  const allowedRoles = ['moderator', 'admin', 'superadmin']
+  const allowedRoles = ["moderator", "admin", "superadmin"];
   if (!allowedRoles.includes(role)) {
-    error.value = 'Access denied: insufficient role.'
-    await useFirebaseAuth().signOut()
-    return
+    error.value = "Access denied: insufficient role.";
+    await useFirebaseAuth().signOut();
+    return;
   }
 
-  const profile = await post<{ user?: { name?: string } }>('/auth/sync')
+  const profile = await post<{ user?: { name?: string } }>("/auth/sync");
   authStore.setUser({
     uid: user.uid,
-    email: user.email ?? '',
-    name: profile?.user?.name ?? user.displayName ?? user.email ?? '',
+    email: user.email ?? "",
+    name: profile?.user?.name ?? user.displayName ?? user.email ?? "",
     role,
-  })
+  });
 
-  router.push('/')
-}
+  router.push("/");
+};
 </script>
 
 <template>
@@ -119,7 +125,9 @@ const finalizeLogin = async (user: AuthUser) => {
 
         <form class="flex flex-col gap-4" @submit.prevent="handleLogin">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Email</label
+            >
             <input
               v-model="email"
               type="email"
@@ -130,7 +138,9 @@ const finalizeLogin = async (user: AuthUser) => {
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Password</label
+            >
             <input
               v-model="password"
               type="password"
@@ -147,7 +157,7 @@ const finalizeLogin = async (user: AuthUser) => {
             :disabled="loading"
             class="w-full py-2.5 bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-yellow-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-1"
           >
-            {{ loading ? 'Signing in…' : 'Sign in' }}
+            {{ loading ? "Signing in…" : "Sign in" }}
           </button>
         </form>
       </div>

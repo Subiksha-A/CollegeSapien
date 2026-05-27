@@ -1,1 +1,30 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"collegesapiens","appId":"1:186941997391:android:ad107546857d411763853a","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"collegesapiens","appId":"1:186941997391:ios:53f25851ab79a73563853a","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"collegesapiens","configurations":{"android":"1:186941997391:android:ad107546857d411763853a","ios":"1:186941997391:ios:53f25851ab79a73563853a"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "collegesapiens",
+          "appId": "1:186941997391:android:ad107546857d411763853a",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "collegesapiens",
+          "appId": "1:186941997391:ios:53f25851ab79a73563853a",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "collegesapiens",
+          "configurations": {
+            "android": "1:186941997391:android:ad107546857d411763853a",
+            "ios": "1:186941997391:ios:53f25851ab79a73563853a"
+          }
+        }
+      }
+    }
+  }
+}

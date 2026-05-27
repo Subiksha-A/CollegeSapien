@@ -15,6 +15,7 @@ By participating, you agree to follow the [Code of Conduct](./CODE_OF_CONDUCT.md
 ## Getting Started
 
 ### Admin (Nuxt 3)
+
 ```bash
 cd admin
 pnpm install
@@ -22,6 +23,7 @@ pnpm dev
 ```
 
 ### Server (Firebase Functions)
+
 ```bash
 cd server/functions
 pnpm install
@@ -30,6 +32,7 @@ pnpm serve
 ```
 
 ### Mobile App (Flutter)
+
 ```bash
 cd app
 flutter pub get
@@ -39,6 +42,7 @@ flutter run
 ## Running Checks
 
 ### Admin
+
 ```bash
 cd admin
 pnpm lint
@@ -46,6 +50,7 @@ pnpm build
 ```
 
 ### Server
+
 ```bash
 cd server/functions
 pnpm lint
@@ -53,6 +58,7 @@ pnpm build
 ```
 
 ### Mobile App
+
 ```bash
 cd app
 flutter analyze

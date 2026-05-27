@@ -5,18 +5,39 @@ on:
   pull_request:
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      admin: ${{ steps.filter.outputs.admin }}
+      server: ${{ steps.filter.outputs.server }}
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            admin:
+              - 'admin/**'
+            server:
+              - 'server/**'
+            app:
+              - 'app/**'
+
   admin-checks:
+    needs: changes
+    if: needs.changes.outputs.admin == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.2.1
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
           cache-dependency-path: admin/pnpm-lock.yaml
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11.2.1
       - name: Install dependencies
         working-directory: admin
         run: pnpm install --frozen-lockfile
@@ -28,17 +49,19 @@ jobs:
         run: pnpm build
 
   server-checks:
+    needs: changes
+    if: needs.changes.outputs.server == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.2.1
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
           cache-dependency-path: server/functions/pnpm-lock.yaml
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11.2.1
       - name: Install dependencies
         working-directory: server/functions
         run: pnpm install --frozen-lockfile
@@ -50,6 +73,8 @@ jobs:
         run: pnpm build
 
   app-checks:
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

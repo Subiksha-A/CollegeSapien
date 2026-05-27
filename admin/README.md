@@ -19,6 +19,7 @@ pnpm install
 ```
 
 Copy the environment template and provide Firebase config values:
+
 ```bash
 cp .env.example .env
 ```

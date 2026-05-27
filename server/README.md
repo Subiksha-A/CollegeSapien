@@ -24,12 +24,15 @@ pnpm serve
 ## 1. System Entities & Edge Cases
 
 ### 1.1 Base Entity Structure
+
 All entities include standard audit fields:
+
 - `createdAt`: Timestamp
 - `updatedAt`: Timestamp
 - `deletedAt`: Timestamp (nullable, for soft deletes)
 
 ### 1.2 Authentication & User State
+
 - **Flow (Passwordless Email Link)**:
   1. Flutter App: `FirebaseAuth.instance.sendSignInLinkToEmail(email, ...)`
   2. User clicks link -> Redirects back to app -> `FirebaseAuth.instance.signInWithEmailLink(...)`
@@ -38,6 +41,7 @@ All entities include standard audit fields:
 - **SES Utility**: SES is retained in `shared/ses` for system notifications, resource moderation alerts, or custom branded emails, but removed from the core passwordless auth loop to reduce latency.
 
 ### 1.3 Colleges & Domains
+
 - **State**: Colleges are managed by Superadmins.
 - **Fields**: Name, Code, Domains (allowed email domains for auto-verification/association).
 - **Edge Cases**:
@@ -45,6 +49,7 @@ All entities include standard audit fields:
   - Superadmin can assign moderators specifically to a `collegeId`.
 
 ### 1.4 Subjects & Timetable (Semester Managed)
+
 - **State**: Subjects are globally managed per `collegeId`.
 - **Flows**:
   - Users select from existing subjects for their college. If missing, they can create one which becomes available to others in the same college.
@@ -52,12 +57,14 @@ All entities include standard audit fields:
   - When users advance a semester, they create a new timetable.
 
 ### 1.5 Attendance Tracking
+
 - **State**: Records are stored individually: `users/{uid}/attendance/{date}_{subjectId}`.
 - **Edge Cases**:
   - **Past Updates**: Users can update previous days to Present, Absent, Leave, or None.
   - **Correction (None)**: Soft deletes the attendance record.
 
 ### 1.6 Grade Prediction (Internal vs External)
+
 - **State**: Dynamic calculation of external marks based on internal performance.
 - **Edge Cases**:
   - User inputs earned internals ($x$) and max possible internals ($y$).
@@ -65,6 +72,7 @@ All entities include standard audit fields:
   - API calculates the exact marks needed in the external exam to achieve specific grades (O, A+, A, etc.).
 
 ### 1.7 Moderation, Roles & Reports
+
 - **Roles**: `user`, `moderator` (college-specific or global), `superadmin`.
 - **Entities**: Reports (spam, incorrect, abusive).
 - **Flows**:
@@ -78,12 +86,14 @@ All entities include standard audit fields:
 **Base URL:** `https://asia-south1-codesapien-college.cloudfunctions.net/api/api/v1`
 
 All app requests should send:
+
 - `Authorization: Bearer <Firebase ID token>`
 - `X-Firebase-AppCheck: <Firebase App Check token>` outside local emulators
 
 The Flutter app should be started with `--dart-define=CODESAPIENS_API_BASE_URL=<base-url>` when using a custom domain or emulator.
 
 ### Auth (`/auth`)
+
 - `POST /sync`: Sync Firebase Auth token with Firestore profile and return onboarding status.
 - `POST /onboard`: Create/update the student's profile after verified Firebase Auth.
 - `POST /signup`: Backward-compatible profile creation endpoint.
@@ -93,33 +103,40 @@ The Flutter app should be started with `--dart-define=CODESAPIENS_API_BASE_URL=<
 - `POST /logout`: Clears cookie.
 
 ### Colleges (`/colleges`)
+
 - `GET /`: List all colleges (public).
 - `GET /:id/subjects`: List subjects for a specific college (public).
 
 ### Subjects (`/subjects`)
+
 - `POST /`: User creates a new subject for their college.
 
 ### Attendance (`/attendance`)
+
 - `POST /`: Upsert attendance for a specific day/subject.
 - `POST /sync`: Bulk update/correction of past attendance.
 - `GET /summary`: Returns % and Safe to Skip metrics for current semester.
 
 ### Semesters & Timetable (`/timetable`)
+
 - `POST /`: Upload/Update timetable for current semester.
 - `GET /`: Get current semester timetable.
 - `POST /parse`: Gemini Vision parse.
 
 ### CGPA & Grade Prediction (`/cgpa`)
+
 - `POST /calculate`: Parse grade sheet image.
 - `POST /predict`: Input `(earned_internal, max_internal, target_grade)` -> Output needed external marks.
 
 ### Resources Hub (`/resources`)
+
 - `GET /syllabus`: Filter by college, department, semester.
 - `GET /hub`: View notes and question papers.
 - `POST /upload`: Upload resource.
 - `POST /report`: Report a resource/user.
 
 ### Admin & Moderation (`/admin`)
+
 - `GET /colleges`, `POST /colleges`, `PUT /colleges/:id`, `DELETE /colleges/:id`
 - `GET /users`, `PATCH /users/:id/role`
 - `GET /reports`, `PATCH /reports/:id/resolve`
@@ -128,6 +145,7 @@ The Flutter app should be started with `--dart-define=CODESAPIENS_API_BASE_URL=<
 ---
 
 ## 3. Tooling
+
 - **Emails**: AWS SES (using `@aws-sdk/client-ses`).
 - **Database**: Firestore.
 - **Files**: Firebase Storage with path-scoped rules.
@@ -140,13 +158,14 @@ The Flutter app should be started with `--dart-define=CODESAPIENS_API_BASE_URL=<
 
 Three secrets are required. All are stored in Firebase Secret Manager and injected at deploy time.
 
-| Secret | Purpose | Rotation cadence |
-|---|---|---|
-| `GEMINI_API_KEY` | Gemini Vision (timetable parse, CGPA scan) | On compromise or every 90 days |
-| `AWS_ACCESS_KEY_ID` | SES transactional email (send login links) | On compromise or every 90 days |
-| `AWS_SECRET_ACCESS_KEY` | SES transactional email (paired with above) | Same as above |
+| Secret                  | Purpose                                     | Rotation cadence               |
+| ----------------------- | ------------------------------------------- | ------------------------------ |
+| `GEMINI_API_KEY`        | Gemini Vision (timetable parse, CGPA scan)  | On compromise or every 90 days |
+| `AWS_ACCESS_KEY_ID`     | SES transactional email (send login links)  | On compromise or every 90 days |
+| `AWS_SECRET_ACCESS_KEY` | SES transactional email (paired with above) | Same as above                  |
 
 **Set / rotate a secret:**
+
 ```bash
 firebase functions:secrets:set GEMINI_API_KEY
 firebase functions:secrets:set AWS_ACCESS_KEY_ID
@@ -154,11 +173,13 @@ firebase functions:secrets:set AWS_SECRET_ACCESS_KEY
 ```
 
 After rotating, redeploy functions so the new version picks up the updated secret:
+
 ```bash
 firebase deploy --only functions
 ```
 
 **Verify a secret is set:**
+
 ```bash
 firebase functions:secrets:access GEMINI_API_KEY
 ```

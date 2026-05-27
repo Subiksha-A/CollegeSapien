@@ -1,32 +1,41 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'admin', middleware: 'auth' })
+definePageMeta({ layout: "admin", middleware: "auth" });
 
 interface User {
-  id: string; uid?: string; name: string; email: string
-  role: string; collegeId?: string; collegeName?: string
-  isVerified?: boolean; createdAt?: string
+  id: string;
+  uid?: string;
+  name: string;
+  email: string;
+  role: string;
+  collegeId?: string;
+  collegeName?: string;
+  isVerified?: boolean;
+  createdAt?: string;
 }
 
-const { get } = useApi()
+const { get } = useApi();
 
-const users = ref<User[]>([])
-const loading = ref(true)
-const search = ref('')
-const roleFilter = ref('all')
+const users = ref<User[]>([]);
+const loading = ref(true);
+const search = ref("");
+const roleFilter = ref("all");
 
 onMounted(async () => {
-  users.value = await get<User[]>('/admin/users')
-  loading.value = false
-})
+  users.value = await get<User[]>("/admin/users");
+  loading.value = false;
+});
 
 const filtered = computed(() =>
   users.value.filter((u) => {
-    const q = search.value.toLowerCase()
-    const matchSearch = !q || u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)
-    const matchRole = roleFilter.value === 'all' || u.role === roleFilter.value
-    return matchSearch && matchRole
-  })
-)
+    const q = search.value.toLowerCase();
+    const matchSearch =
+      !q ||
+      u.name.toLowerCase().includes(q) ||
+      u.email.toLowerCase().includes(q);
+    const matchRole = roleFilter.value === "all" || u.role === roleFilter.value;
+    return matchSearch && matchRole;
+  }),
+);
 </script>
 
 <template>
@@ -52,8 +61,15 @@ const filtered = computed(() =>
         </select>
       </div>
 
-      <div v-if="loading" class="p-8 text-center text-gray-400 text-sm">Loading…</div>
-      <div v-else-if="filtered.length === 0" class="p-8 text-center text-gray-400 text-sm">No users found.</div>
+      <div v-if="loading" class="p-8 text-center text-gray-400 text-sm">
+        Loading…
+      </div>
+      <div
+        v-else-if="filtered.length === 0"
+        class="p-8 text-center text-gray-400 text-sm"
+      >
+        No users found.
+      </div>
       <table v-else class="w-full text-sm">
         <thead>
           <tr class="text-xs text-gray-500 border-b border-gray-100">
@@ -73,7 +89,9 @@ const filtered = computed(() =>
             <td class="px-4 py-3 font-medium text-gray-900">{{ user.name }}</td>
             <td class="px-4 py-3 text-gray-600">{{ user.email }}</td>
             <td class="px-4 py-3"><RoleBadge :role="user.role" /></td>
-            <td class="px-4 py-3 text-gray-500">{{ user.collegeName ?? user.collegeId ?? '—' }}</td>
+            <td class="px-4 py-3 text-gray-500">
+              {{ user.collegeName ?? user.collegeId ?? "—" }}
+            </td>
           </tr>
         </tbody>
       </table>

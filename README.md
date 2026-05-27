@@ -4,21 +4,23 @@ CollegeSapien is a monorepo for the Codesapiens initiative, covering the admin d
 
 ## Repository Layout
 
-| Path | App | Stack | Docs |
-| --- | --- | --- | --- |
-| `admin/` | Admin dashboard | Nuxt 3, Vue 3, Pinia | `admin/README.md` |
-| `server/` | API + Firebase Functions | Node.js, Firebase | `server/README.md` |
-| `app/` | Mobile app | Flutter | `app/README.md` |
+| Path      | App                      | Stack                | Docs               |
+| --------- | ------------------------ | -------------------- | ------------------ |
+| `admin/`  | Admin dashboard          | Nuxt 3, Vue 3, Pinia | `admin/README.md`  |
+| `server/` | API + Firebase Functions | Node.js, Firebase    | `server/README.md` |
+| `app/`    | Mobile app               | Flutter              | `app/README.md`    |
 
 ## Quickstart
 
 ### Prerequisites
+
 - Node.js (use Node 24 for `server/functions`, Node 20+ for `admin`)
 - pnpm 11+
 - Flutter SDK >= 3.0.0
 - Firebase CLI (for local emulators)
 
 ### Admin (Nuxt 3)
+
 ```bash
 cd admin
 pnpm install
@@ -26,6 +28,7 @@ pnpm dev
 ```
 
 ### Server (Firebase Functions)
+
 ```bash
 cd server/functions
 pnpm install
@@ -34,6 +37,7 @@ pnpm serve
 ```
 
 ### Mobile App (Flutter)
+
 ```bash
 cd app
 flutter pub get

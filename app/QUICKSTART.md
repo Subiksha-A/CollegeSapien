@@ -5,6 +5,7 @@ Get the CollegeSapien app running in 5 minutes!
 ## Prerequisites
 
 Make sure you have Flutter installed:
+
 ```bash
 flutter doctor
 ```
@@ -20,6 +21,7 @@ cd app
 ### 1. Download Fonts (Automated)
 
 Run the font setup script:
+
 ```bash
 ./setup_fonts.sh
 ```
@@ -64,6 +66,7 @@ flutter run
 ### "No such file or directory" errors for fonts
 
 Make sure you've:
+
 1. Run `./setup_fonts.sh`
 2. Copied the font files to the `fonts/` directory
 3. Run `flutter pub get`
@@ -75,6 +78,7 @@ Make sure the `assets/images/` directory exists and contains all the downloaded 
 ### Build errors
 
 Try cleaning and rebuilding:
+
 ```bash
 flutter clean
 flutter pub get
@@ -84,6 +88,7 @@ flutter run
 ## Screen Sizes Tested
 
 The app is fully responsive and has been designed to work on:
+
 - ✅ Small phones (320px width)
 - ✅ Medium phones (375px width)
 - ✅ Large phones (414px width)

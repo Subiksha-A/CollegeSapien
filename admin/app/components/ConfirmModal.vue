@@ -1,15 +1,15 @@
 <script setup lang="ts">
 defineProps<{
-  title: string
-  message: string
-  confirmLabel?: string
-  danger?: boolean
-}>()
+  title: string;
+  message: string;
+  confirmLabel?: string;
+  danger?: boolean;
+}>();
 
 const emit = defineEmits<{
-  confirm: []
-  cancel: []
-}>()
+  confirm: [];
+  cancel: [];
+}>();
 </script>
 
 <template>
@@ -26,12 +26,14 @@ const emit = defineEmits<{
         </button>
         <button
           class="px-4 py-2 text-sm rounded-lg font-medium transition-colors"
-          :class="danger
-            ? 'bg-red-600 text-white hover:bg-red-700'
-            : 'bg-yellow-400 text-gray-900 hover:bg-yellow-500'"
+          :class="
+            danger
+              ? 'bg-red-600 text-white hover:bg-red-700'
+              : 'bg-yellow-400 text-gray-900 hover:bg-yellow-500'
+          "
           @click="emit('confirm')"
         >
-          {{ confirmLabel ?? 'Confirm' }}
+          {{ confirmLabel ?? "Confirm" }}
         </button>
       </div>
     </div>

@@ -1,11 +1,11 @@
 interface AdminUser {
-  uid: string
-  email: string
-  name: string
-  role: string
+  uid: string;
+  email: string;
+  name: string;
+  role: string;
 }
 
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null as AdminUser | null,
     isInitialized: false,
@@ -13,28 +13,28 @@ export const useAuthStore = defineStore('auth', {
 
   getters: {
     isAuthenticated: (state) => state.user !== null,
-    isSuperAdmin: (state) => state.user?.role === 'superadmin',
+    isSuperAdmin: (state) => state.user?.role === "superadmin",
     isAdminOrAbove: (state) =>
-      state.user?.role === 'admin' || state.user?.role === 'superadmin',
+      state.user?.role === "admin" || state.user?.role === "superadmin",
     canModerate: (state) =>
-      ['moderator', 'admin', 'superadmin'].includes(state.user?.role ?? ''),
+      ["moderator", "admin", "superadmin"].includes(state.user?.role ?? ""),
   },
 
   actions: {
     setUser(user: AdminUser) {
-      this.user = user
-      this.isInitialized = true
+      this.user = user;
+      this.isInitialized = true;
     },
     clearUser() {
-      this.user = null
-      this.isInitialized = true
+      this.user = null;
+      this.isInitialized = true;
     },
     markInitialized() {
-      this.isInitialized = true
+      this.isInitialized = true;
     },
   },
 
   persist: {
-    pick: ['user'],
+    pick: ["user"],
   },
-})
+});

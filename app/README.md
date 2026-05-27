@@ -37,11 +37,13 @@ This app is built from a Figma design using the Figma MCP plugin, ensuring pixel
 This app uses custom fonts. You need to download and add the following font files to the `fonts/` directory:
 
 **Lexend Mega:**
+
 - LexendMega-Bold.ttf (weight 700)
 - LexendMega-SemiBold.ttf (weight 600)
 - LexendMega-Regular.ttf (weight 400)
 
 **Public Sans:**
+
 - PublicSans-ExtraBold.ttf (weight 800)
 - PublicSans-Bold.ttf (weight 700)
 - PublicSans-SemiBold.ttf (weight 600)
@@ -49,13 +51,16 @@ This app uses custom fonts. You need to download and add the following font file
 - PublicSans-Light.ttf (weight 300)
 
 **Inter:**
+
 - Inter-Bold.ttf (weight 700)
 - Inter-Medium.ttf (weight 500)
 
 **Patrick Hand:**
+
 - PatrickHand-Regular.ttf (weight 400)
 
 You can download these fonts from:
+
 - Lexend Mega: https://fonts.google.com/specimen/Lexend+Mega
 - Public Sans: https://fonts.google.com/specimen/Public+Sans
 - Inter: https://fonts.google.com/specimen/Inter
@@ -64,25 +69,30 @@ You can download these fonts from:
 ### Installation
 
 1. **Navigate to the project directory:**
+
    ```bash
    cd app
    ```
 
 2. **Create the fonts directory and add font files:**
+
    ```bash
    mkdir fonts
    # Download and add the font files listed above to the fonts/ directory
    ```
 
 3. **Install dependencies:**
+
    ```bash
    flutter pub get
    ```
 
 4. **Configure Firebase:**
+
    ```bash
    flutterfire configure
    ```
+
    This should add platform Firebase config files for the same Firebase project as the API.
 
 5. **Run the app:**
