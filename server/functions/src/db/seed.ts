@@ -58,7 +58,7 @@ async function seed() {
 
     // 2. Seed User (hp8823)
     console.log('\n2. Seeding Test User...');
-    const userEmail = 'hp8823@limgreen.studio';
+    const userEmail = 'hp8823@limegreen.studio';
     const userUid = 'uid_hp8823';
 
     try {

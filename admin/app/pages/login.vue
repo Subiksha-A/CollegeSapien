@@ -19,6 +19,7 @@ interface AuthUser {
   uid: string;
   email?: string | null;
   displayName?: string | null;
+  getIdToken: (forceRefresh?: boolean) => Promise<string>;
   getIdTokenResult: (forceRefresh?: boolean) => Promise<AuthTokenResult>;
 }
 
@@ -84,7 +85,12 @@ const finalizeLogin = async (user: AuthUser) => {
     return;
   }
 
-  const profile = await post<{ user?: { name?: string } }>("/auth/sync");
+  const token = await user.getIdToken();
+  const profile = await post<{ user?: { name?: string } }>(
+    "/auth/sync",
+    undefined,
+    token,
+  );
   authStore.setUser({
     uid: user.uid,
     email: user.email ?? "",

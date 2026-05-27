@@ -7,8 +7,9 @@ export const useApi = () => {
     method: string,
     path: string,
     body?: Record<string, unknown>,
+    explicitToken?: string,
   ): Promise<T> => {
-    const token = await getToken();
+    const token = explicitToken ?? (await getToken());
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       Accept: "application/json",
@@ -32,8 +33,11 @@ export const useApi = () => {
 
   return {
     get: <T = unknown>(path: string) => request<T>("GET", path),
-    post: <T = unknown>(path: string, body?: Record<string, unknown>) =>
-      request<T>("POST", path, body),
+    post: <T = unknown>(
+      path: string,
+      body?: Record<string, unknown>,
+      token?: string,
+    ) => request<T>("POST", path, body, token),
     patch: <T = unknown>(path: string, body?: Record<string, unknown>) =>
       request<T>("PATCH", path, body),
     delete: <T = unknown>(path: string) => request<T>("DELETE", path),
