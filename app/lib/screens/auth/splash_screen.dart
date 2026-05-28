@@ -66,8 +66,11 @@ class _SplashScreenState extends State<SplashScreen>
       } else {
         _replaceWith(const MainNavigation());
       }
-    } catch (_) {
-      if (mounted) _replaceWith(const LoginScreen());
+    } catch (e) {
+      if (mounted) {
+        debugPrint('SplashScreen navigation error: $e');
+        _replaceWith(const LoginScreen());
+      }
     }
   }
 

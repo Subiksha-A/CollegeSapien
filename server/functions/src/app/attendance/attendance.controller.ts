@@ -314,7 +314,7 @@ export const getAttendanceSummary = async (req: AuthRequest, res: Response) => {
 
       for (const dateKey of elapsedDateKeys) {
         const day = dayCodeForDateKey(dateKey);
-        const slots = subject.classes.filter(
+        const slots = (subject.classes || []).filter(
           cls =>
             cls.day === day &&
             cls.type !== 'BREAK' &&
