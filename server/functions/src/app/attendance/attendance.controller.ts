@@ -126,7 +126,7 @@ const resolveAttendanceSlot = (
 const getElapsedDateKeys = (
   startDateKey: string,
   now: Date,
-  timezoneOffsetMinutes: number = 0
+  timezoneOffsetMinutes = 0
 ): string[] => {
   const result: string[] = [];
   const cursor = new Date(`${startDateKey}T00:00:00Z`);
@@ -295,7 +295,11 @@ export const getAttendanceSummary = async (req: AuthRequest, res: Response) => {
     const safeTimezoneOffsetMinutes = Number.isNaN(timezoneOffsetMinutes)
       ? 0
       : timezoneOffsetMinutes;
-    const elapsedDateKeys = getElapsedDateKeys(attendanceTrackingStartDate, now, safeTimezoneOffsetMinutes);
+    const elapsedDateKeys = getElapsedDateKeys(
+      attendanceTrackingStartDate,
+      now,
+      safeTimezoneOffsetMinutes
+    );
 
     const summary = subjects.map((subject: TimetableSubject) => {
       const explicitBySlot = new Map<string, AttendanceRecord>();
