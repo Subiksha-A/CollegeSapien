@@ -287,7 +287,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.black.withValues(alpha: 0.5),
                       ),
                       children: [
-                        const TextSpan(text: 'By continuing, you agree to our '),
+                        const TextSpan(
+                            text: 'By continuing, you agree to our '),
                         TextSpan(
                           text: 'Terms of Service',
                           style: const TextStyle(

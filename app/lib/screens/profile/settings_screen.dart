@@ -36,8 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete',
-                style: TextStyle(color: Colors.red)),
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -287,8 +286,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
-                    decoration: AppTheme.cardDecoration(
-                        color: const Color(0xFFFFCDD2)),
+                    decoration:
+                        AppTheme.cardDecoration(color: const Color(0xFFFFCDD2)),
                     child: const Row(
                       children: [
                         Icon(Icons.delete_forever_outlined,
