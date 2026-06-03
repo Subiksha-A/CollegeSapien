@@ -122,8 +122,9 @@ class _CgpaCalculatorScreenState extends State<CgpaCalculatorScreen> {
                 ),
                 validator: (v) {
                   final val = double.tryParse(v ?? '');
-                  if (val == null || val < 0 || val > 10)
+                  if (val == null || val < 0 || val > 10) {
                     return 'Enter a valid GPA (0–10)';
+                  }
                   return null;
                 },
               ),
@@ -137,8 +138,9 @@ class _CgpaCalculatorScreenState extends State<CgpaCalculatorScreen> {
                 ),
                 validator: (v) {
                   final val = int.tryParse(v ?? '');
-                  if (val == null || val <= 0)
+                  if (val == null || val <= 0) {
                     return 'Enter total credits for this semester';
+                  }
                   return null;
                 },
               ),
