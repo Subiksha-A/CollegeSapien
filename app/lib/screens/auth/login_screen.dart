@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
 import '../../services/auth_service.dart';
@@ -272,7 +274,55 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // Google
                 _googleButton(),
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
+
+                // Terms & Privacy
+                Center(
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontFamily: 'Public Sans',
+                        fontSize: 12,
+                        color: Colors.black.withValues(alpha: 0.5),
+                      ),
+                      children: [
+                        const TextSpan(text: 'By continuing, you agree to our '),
+                        TextSpan(
+                          text: 'Terms of Service',
+                          style: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => launchUrl(
+                                  Uri.parse(
+                                      'https://college.codesapiens.in/terms.html'),
+                                  mode: LaunchMode.externalApplication,
+                                ),
+                        ),
+                        const TextSpan(text: ' and '),
+                        TextSpan(
+                          text: 'Privacy Policy',
+                          style: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => launchUrl(
+                                  Uri.parse(
+                                      'https://college.codesapiens.in/privacy.html'),
+                                  mode: LaunchMode.externalApplication,
+                                ),
+                        ),
+                        const TextSpan(text: '.'),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
               ],
             ),
           ),
