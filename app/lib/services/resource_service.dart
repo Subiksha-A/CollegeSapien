@@ -130,7 +130,7 @@ class ResourceService {
     final ref = resourceFileRef(resourceId, fileName);
     final metadata =
         SettableMetadata(contentType: mimeType ?? 'application/pdf');
-    
+
     await PlatformFileUploader.uploadFile(
       ref: ref,
       file: file,
