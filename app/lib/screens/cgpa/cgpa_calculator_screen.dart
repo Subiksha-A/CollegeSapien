@@ -102,7 +102,8 @@ class _CgpaCalculatorScreenState extends State<CgpaCalculatorScreen> {
 
   Future<void> _saveCgpa() async {
     final list = _semesters
-        .map((e) => {'semester': e.semester, 'gpa': e.gpa, 'credits': e.credits})
+        .map(
+            (e) => {'semester': e.semester, 'gpa': e.gpa, 'credits': e.credits})
         .toList();
 
     // Persist locally first (instant, no network)
@@ -114,8 +115,7 @@ class _CgpaCalculatorScreenState extends State<CgpaCalculatorScreen> {
 
     // Sync to Firebase (fire-and-forget; failures are silent)
     ApiService.instance
-        .post('/cgpa/semesters', {'semesters': list})
-        .catchError((_) {});
+        .post('/cgpa/semesters', {'semesters': list}).catchError((_) {});
   }
 
   Future<void> _uploadGradeSheet() async {

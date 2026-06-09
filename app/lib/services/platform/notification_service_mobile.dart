@@ -178,7 +178,10 @@ class AttendanceNotificationService {
 
     final firstReal = subjects.firstWhere(
       (s) => s.classes.any((c) => c.type != 'BREAK'),
-      orElse: () => subjects.isNotEmpty ? subjects.first : TimetableSubject(id: 'test-subject', name: 'Test', code: 'TEST101', classes: []),
+      orElse: () => subjects.isNotEmpty
+          ? subjects.first
+          : TimetableSubject(
+              id: 'test-subject', name: 'Test', code: 'TEST101', classes: []),
     );
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(

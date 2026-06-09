@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { calculateCGPA, predictExternalMarks, getSemesters, saveSemesters } from './cgpa.controller';
+import {
+  calculateCGPA,
+  predictExternalMarks,
+  getSemesters,
+  saveSemesters,
+} from './cgpa.controller';
 import { authenticate, requireVerifiedEmail } from '../../shared/middlewares/auth.middleware';
 
 const router = Router();
