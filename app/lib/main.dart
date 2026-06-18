@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'firebase_options.dart';
 import 'utils/app_theme.dart';
 import 'utils/app_constants.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
   if (!AppConstants.disableAppCheck) {
     final shouldActivate =
         !kIsWeb || AppConstants.appCheckRecaptchaSiteKey.isNotEmpty;
