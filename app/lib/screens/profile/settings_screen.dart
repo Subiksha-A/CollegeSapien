@@ -1,3 +1,4 @@
+import 'package:codesapiens/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import '../../services/attendance_notification_service.dart';
 import '../../services/app_theme_notifier.dart';
@@ -323,7 +324,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Column(
                     children: [
                       const Text(
-                        'Codesapiens',
+                        AppConstants.appName,
                         style: TextStyle(
                           fontFamily: 'Lexend Mega',
                           fontSize: 20,

@@ -128,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                   // App Name
                   const Text(
-                    'Codesapiens',
+                    'CollegeSapien',
                     style: TextStyle(
                       fontFamily: 'Lexend Mega',
                       fontSize: 32,

@@ -46,7 +46,7 @@ class CodesapiensApp extends StatelessWidget {
       listenable: AppThemeNotifier.instance,
       builder: (context, _) => MaterialApp(
         navigatorKey: appNavigatorKey,
-        title: 'Codesapiens',
+        title: AppConstants.appName,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
         home: const SplashScreen(),

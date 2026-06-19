@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart'
 
 class AppConstants {
   // App Info
-  static const String appName = 'Codesapiens';
+  static const String appName = 'CollegeSapien';
   static const String appVersion = '1.0.0';
 
   // Attendance Thresholds

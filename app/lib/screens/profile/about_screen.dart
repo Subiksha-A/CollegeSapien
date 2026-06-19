@@ -1,3 +1,4 @@
+import 'package:codesapiens/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_colors.dart';
@@ -49,7 +50,7 @@ class AboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               const Text(
-                'CodeSapiens',
+                AppConstants.appName,
                 style: TextStyle(
                   fontFamily: 'Lexend Mega',
                   fontSize: 28,
