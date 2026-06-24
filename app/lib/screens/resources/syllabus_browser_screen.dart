@@ -3,9 +3,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/api_models.dart';
+import '../../services/auth_service.dart';
+import '../../services/college_service.dart';
 import '../../services/resource_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
+import '../../utils/department_constants.dart';
+import '../../widgets/searchable_dropdown.dart';
 
 class SyllabusBrowserScreen extends StatefulWidget {
   const SyllabusBrowserScreen({super.key});
@@ -16,20 +20,38 @@ class SyllabusBrowserScreen extends StatefulWidget {
 
 class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
   final _resourceService = ResourceService();
+  final _collegeService = CollegeService();
   late Future<List<HubResource>> _future;
   double? _uploadProgress;
   final _searchController = TextEditingController();
-  String? _selectedDepartment;
-  String? _selectedRegulation;
-  final _subjectCodeController = TextEditingController();
-  final _departmentController = TextEditingController();
-  final _regulationController = TextEditingController();
-  final _titleController = TextEditingController();
+  String? _filterCollege;
+  String? _filterDepartment;
+  String? _filterRegulation;
+
+  List<College> _colleges = [];
+  UserProfile? _userProfile;
 
   @override
   void initState() {
     super.initState();
     _future = _resourceService.listSyllabus();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final results = await Future.wait([
+        _collegeService.listColleges(),
+        AuthService.instance.syncProfile(),
+      ]);
+      if (!mounted) return;
+      final colleges = results[0] as List<College>
+        ..sort((a, b) => a.name.compareTo(b.name));
+      setState(() {
+        _colleges = colleges;
+        _userProfile = (results[1] as AuthSyncResult).user;
+      });
+    } catch (_) {}
   }
 
   void _refresh() {
@@ -41,18 +63,21 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
   @override
   void dispose() {
     _searchController.dispose();
-    _subjectCodeController.dispose();
-    _departmentController.dispose();
-    _regulationController.dispose();
-    _titleController.dispose();
     super.dispose();
   }
 
+  HubResource? _findProfileSyllabus(List<HubResource> items) {
+    final profile = _userProfile;
+    if (profile == null || profile.department == null) return null;
+    return items
+        .where((r) => r.department == profile.department)
+        .firstOrNull;
+  }
+
   Future<void> _pickAndUpload() async {
-    _subjectCodeController.clear();
-    _departmentController.clear();
-    _regulationController.clear();
-    _titleController.clear();
+    String? uploadCollegeId = _userProfile?.collegeId;
+    String? uploadDepartment = _userProfile?.department;
+    String? uploadRegulation;
 
     final uploadData = await showModalBottomSheet<Map<String, String>>(
       context: context,
@@ -61,84 +86,118 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setSheetState) => Padding(
-          padding: EdgeInsets.fromLTRB(
-              20, 20, 20, MediaQuery.of(ctx).viewInsets.bottom + 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Upload Syllabus',
-                  style: TextStyle(
-                      fontFamily: 'Lexend Mega',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600)),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _subjectCodeController,
-                decoration: InputDecoration(
-                  labelText: 'Subject Code',
-                  hintText: 'e.g., CS3401',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8)),
+        builder: (ctx, setSheetState) {
+          final college =
+              _colleges.where((c) => c.id == uploadCollegeId).firstOrNull;
+          final deptObj = departments
+              .where((d) => d.name == uploadDepartment)
+              .firstOrNull;
+          final autoTitle =
+              (college != null && deptObj != null && uploadRegulation != null)
+                  ? '${college.code}_${deptObj.code}_$uploadRegulation'
+                  : null;
+
+          return Padding(
+            padding: EdgeInsets.fromLTRB(
+                20, 20, 20, MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Upload Syllabus',
+                    style: TextStyle(
+                        fontFamily: 'Lexend Mega',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600)),
+                const SizedBox(height: 16),
+                SearchableDropdown<College>(
+                  items: _colleges,
+                  value: uploadCollegeId != null
+                      ? _colleges
+                          .where((c) => c.id == uploadCollegeId)
+                          .firstOrNull
+                      : null,
+                  labelBuilder: (c) => c.name,
+                  decoration: InputDecoration(
+                    labelText: 'College',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onChanged: (c) =>
+                      setSheetState(() => uploadCollegeId = c?.id),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _departmentController,
-                decoration: InputDecoration(
-                  labelText: 'Department',
-                  hintText: 'e.g., Computer Science',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                const SizedBox(height: 12),
+                SearchableDropdown<Department>(
+                  items: departments,
+                  value: uploadDepartment != null
+                      ? departments
+                          .where((d) => d.name == uploadDepartment)
+                          .firstOrNull
+                      : null,
+                  labelBuilder: (d) => d.name,
+                  decoration: InputDecoration(
+                    labelText: 'Department',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onChanged: (d) =>
+                      setSheetState(() => uploadDepartment = d?.name),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _regulationController,
-                decoration: InputDecoration(
-                  labelText: 'Regulation',
-                  hintText: 'e.g., R2021',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                const SizedBox(height: 12),
+                SearchableDropdown<String>(
+                  items: regulations,
+                  value: uploadRegulation,
+                  labelBuilder: (r) => r,
+                  decoration: InputDecoration(
+                    labelText: 'Regulation',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onChanged: (r) =>
+                      setSheetState(() => uploadRegulation = r),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'Document Title',
-                  hintText: 'e.g., Syllabus 2023',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                      onPressed: () => Navigator.pop(ctx),
-                      child: const Text('Cancel')),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(ctx, {
-                      'subjectCode': _subjectCodeController.text.trim(),
-                      'department': _departmentController.text.trim(),
-                      'regulation': _regulationController.text.trim(),
-                      'title': _titleController.text.trim(),
-                    }),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
+                if (autoTitle != null) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    'File name: $autoTitle',
+                    style: TextStyle(
+                      fontFamily: 'Public Sans',
+                      fontSize: 13,
+                      color: Colors.black.withValues(alpha: 0.6),
                     ),
-                    child: const Text('Continue'),
                   ),
                 ],
-              ),
-            ],
-          ),
-        ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        child: const Text('Cancel')),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: (uploadCollegeId != null &&
+                              uploadDepartment != null &&
+                              uploadRegulation != null)
+                          ? () => Navigator.pop(ctx, {
+                                'collegeId': uploadCollegeId!,
+                                'department': uploadDepartment!,
+                                'regulation': uploadRegulation!,
+                                'title': autoTitle!,
+                              })
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text('Continue'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
 
@@ -151,17 +210,18 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
     final file = result?.files.single;
     if (file == null) return;
 
+    final ext = file.extension ?? 'pdf';
+    final storageName = '${uploadData['title']}.$ext';
+
     if (mounted) setState(() => _uploadProgress = 0.0);
     try {
       await _resourceService.uploadLocalFile(
         file: file,
-        title: uploadData['title'] ?? file.name,
+        title: uploadData['title']!,
         category: 'Syllabus',
-        mimeType: file.extension == 'pdf'
-            ? 'application/pdf'
-            : 'image/${file.extension}',
-        subjectId: uploadData['subjectCode'],
+        mimeType: ext == 'pdf' ? 'application/pdf' : 'image/$ext',
         regulation: uploadData['regulation'],
+        overrideFileName: storageName,
         onProgress: (p) {
           if (mounted) setState(() => _uploadProgress = p);
         },
@@ -194,9 +254,7 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
         title: const Text(
           'Syllabus Browser',
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            letterSpacing: 0,
-          ),
+          style: TextStyle(letterSpacing: 0),
         ),
         backgroundColor: AppColors.background,
         actions: [
@@ -231,34 +289,41 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                   }
 
                   final allItems = snapshot.data ?? [];
-                  final departments = allItems
-                      .map((r) => r.department)
-                      .whereType<String>()
-                      .toSet()
-                      .toList()
-                    ..sort();
-                  final regulations = allItems
-                      .map((r) => r.regulation)
-                      .whereType<String>()
-                      .toSet()
-                      .toList()
-                    ..sort();
+                  final profileMatch = _findProfileSyllabus(allItems);
 
                   final query = _searchController.text.toLowerCase();
                   final items = allItems.where((r) {
                     final matchesSearch =
                         query.isEmpty || r.name.toLowerCase().contains(query);
-                    final matchesDept = _selectedDepartment == null ||
-                        r.department == _selectedDepartment;
-                    final matchesReg = _selectedRegulation == null ||
-                        r.regulation == _selectedRegulation;
-                    return matchesSearch && matchesDept && matchesReg;
+                    final matchesCollege = _filterCollege == null ||
+                        r.name.toLowerCase().contains(
+                            _filterCollege!.toLowerCase());
+                    final matchesDept = _filterDepartment == null ||
+                        r.department == _filterDepartment;
+                    final matchesReg = _filterRegulation == null ||
+                        r.regulation == _filterRegulation;
+                    return matchesSearch &&
+                        matchesCollege &&
+                        matchesDept &&
+                        matchesReg;
                   }).toList();
 
                   return ListView(
                     padding: const EdgeInsets.all(20),
                     children: [
-                      // Search field
+                      if (profileMatch != null) ...[
+                        const Text(
+                          'Your Syllabus',
+                          style: TextStyle(
+                            fontFamily: 'Lexend Mega',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        _buildSyllabusCard(profileMatch, highlighted: true),
+                        const Divider(height: 32),
+                      ],
                       TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
@@ -271,66 +336,61 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                         ),
                         onChanged: (_) => setState(() {}),
                       ),
-                      if (departments.isNotEmpty) ...[
+                      if (_colleges.isNotEmpty) ...[
                         const SizedBox(height: 12),
-                        DropdownButtonFormField<String?>(
-                          initialValue: _selectedDepartment,
+                        SearchableDropdown<College>(
+                          items: _colleges,
+                          value: _filterCollege != null
+                              ? _colleges
+                                  .where((c) => c.name == _filterCollege)
+                                  .firstOrNull
+                              : null,
+                          labelBuilder: (c) => c.name,
                           decoration: InputDecoration(
-                            labelText: 'Department',
+                            labelText: 'College',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8)),
                             filled: true,
                             fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
                           ),
-                          items: [
-                            const DropdownMenuItem<String?>(
-                              value: null,
-                              child: Text('All Departments'),
-                            ),
-                            ...departments.map(
-                              (dept) => DropdownMenuItem<String?>(
-                                value: dept,
-                                child:
-                                    Text(dept, overflow: TextOverflow.ellipsis),
-                              ),
-                            ),
-                          ],
-                          onChanged: (v) =>
-                              setState(() => _selectedDepartment = v),
+                          onChanged: (c) =>
+                              setState(() => _filterCollege = c?.name),
                         ),
                       ],
-                      if (regulations.isNotEmpty) ...[
-                        const SizedBox(height: 12),
-                        DropdownButtonFormField<String?>(
-                          initialValue: _selectedRegulation,
-                          decoration: InputDecoration(
-                            labelText: 'Regulation',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                          ),
-                          items: [
-                            const DropdownMenuItem<String?>(
-                              value: null,
-                              child: Text('All Regulations'),
-                            ),
-                            ...regulations.map(
-                              (reg) => DropdownMenuItem<String?>(
-                                value: reg,
-                                child:
-                                    Text(reg, overflow: TextOverflow.ellipsis),
-                              ),
-                            ),
-                          ],
-                          onChanged: (v) =>
-                              setState(() => _selectedRegulation = v),
+                      const SizedBox(height: 12),
+                      SearchableDropdown<Department>(
+                        items: departments,
+                        value: _filterDepartment != null
+                            ? departments
+                                .where((d) => d.name == _filterDepartment)
+                                .firstOrNull
+                            : null,
+                        labelBuilder: (d) => d.name,
+                        decoration: InputDecoration(
+                          labelText: 'Department',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          filled: true,
+                          fillColor: Colors.white,
                         ),
-                      ],
+                        onChanged: (d) =>
+                            setState(() => _filterDepartment = d?.name),
+                      ),
+                      const SizedBox(height: 12),
+                      SearchableDropdown<String>(
+                        items: regulations,
+                        value: _filterRegulation,
+                        labelBuilder: (r) => r,
+                        decoration: InputDecoration(
+                          labelText: 'Regulation',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
+                        onChanged: (r) =>
+                            setState(() => _filterRegulation = r),
+                      ),
                       const SizedBox(height: 16),
                       if (items.isEmpty)
                         Container(
@@ -340,7 +400,7 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                           child: const Text('No syllabus documents found.'),
                         )
                       else
-                        ...items.map(_buildSyllabusCard),
+                        ...items.map((item) => _buildSyllabusCard(item)),
                     ],
                   );
                 },
@@ -352,12 +412,13 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
     );
   }
 
-  Widget _buildSyllabusCard(HubResource item) {
+  Widget _buildSyllabusCard(HubResource item, {bool highlighted = false}) {
     final url = item.fileUrl;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
-      decoration: AppTheme.cardDecoration(color: AppColors.accentGreen),
+      decoration: AppTheme.cardDecoration(
+          color: highlighted ? AppColors.primaryYellow : AppColors.accentGreen),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

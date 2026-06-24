@@ -149,7 +149,17 @@ class _SplashScreenState extends State<SplashScreen>
                       color: Colors.black.withValues(alpha: 0.7),
                     ),
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Open Source • For Students, By Students',
+                    style: TextStyle(
+                      fontFamily: 'Public Sans',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black.withValues(alpha: 0.5),
+                    ),
+                  ),
+                  const SizedBox(height: 52),
 
                   // Loading indicator
                   const SizedBox(

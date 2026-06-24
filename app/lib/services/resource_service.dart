@@ -105,11 +105,12 @@ class ResourceService {
     String? subjectId,
     String? subjectName,
     String? regulation,
+    String? overrideFileName,
     void Function(double)? onProgress,
   }) async {
     final id = _uuid.v4();
     final fileSize = file.size;
-    final fileName = file.name;
+    final fileName = overrideFileName ?? file.name;
 
     // Create Firestore doc first so storage read rule can verify uploadedBy
     final resourceId = await uploadResourceMetadata(

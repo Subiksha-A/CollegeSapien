@@ -33,6 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _cgpaStat = '--';
   String _semesterStat = '--';
   String _filesUploaded = '--';
+  String? _collegeName;
   // mod: _showAdminManagement removed — admin management moved to web admin panel
   // bool _showAdminManagement = false;
 
@@ -102,18 +103,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     } catch (_) {}
 
-    // Semester from profile sync
+    // Semester + college from profile sync
     try {
       final result = await AuthService.instance.syncProfile();
-      final sem = result.user?.semester;
-      if (sem != null) {
-        final semText = sem.toString();
-        CacheService.instance.set(_semesterCacheKey, semText);
-        try {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setInt(_semesterPrefsKey, sem);
-        } catch (_) {}
-        if (mounted) setState(() => _semesterStat = semText);
+      final profile = result.user;
+      if (profile != null) {
+        final sem = profile.semester;
+        if (sem > 0) {
+          final semText = sem.toString();
+          CacheService.instance.set(_semesterCacheKey, semText);
+          try {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setInt(_semesterPrefsKey, sem);
+          } catch (_) {}
+          if (mounted) setState(() => _semesterStat = semText);
+        }
+        if (profile.collegeName != null && mounted) {
+          setState(() => _collegeName = profile.collegeName);
+        }
       }
     } catch (_) {}
 
@@ -200,6 +207,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Colors.black.withValues(alpha: 0.7),
                 ),
               ),
+              if (_collegeName != null) ...[
+                const SizedBox(height: 6),
+                Text(
+                  _collegeName!,
+                  style: TextStyle(
+                    fontFamily: 'Public Sans',
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black.withValues(alpha: 0.6),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
               const SizedBox(height: 30),
 
               // Stats — 2×2 grid

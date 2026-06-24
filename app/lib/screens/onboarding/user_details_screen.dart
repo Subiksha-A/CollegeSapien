@@ -3,6 +3,8 @@ import '../../models/api_models.dart';
 import '../../services/auth_service.dart';
 import '../../services/college_service.dart';
 import '../../utils/app_colors.dart';
+import '../../utils/department_constants.dart';
+import '../../widgets/searchable_dropdown.dart';
 import '../home/main_navigation.dart';
 
 class UserDetailsScreen extends StatefulWidget {
@@ -24,18 +26,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen>
   bool _isLoading = false;
   late AnimationController _animationController;
 
-  final List<String> _departments = [
-    'Computer Science',
-    'Information Technology',
-    'Electronics',
-    'Electrical',
-    'Mechanical',
-    'Civil',
-    'Chemical',
-    'Other',
-  ];
-
-  final List<int> _semesters = [1, 2, 3, 4, 5, 6, 7, 8];
 
   @override
   void initState() {
@@ -59,6 +49,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen>
     try {
       final colleges = await _collegeService.listColleges();
       if (!mounted) return;
+      colleges.sort((a, b) => a.name.compareTo(b.name));
       setState(() => _colleges = colleges);
     } catch (e) {
       if (!mounted) return;
@@ -219,47 +210,43 @@ class _UserDetailsScreenState extends State<UserDetailsScreen>
                     ),
                     const SizedBox(height: 20),
 
-                    // College Dropdown
-                    DropdownButtonFormField<String>(
-                      initialValue: _selectedCollegeId,
+                    // College Searchable Dropdown
+                    SearchableDropdown<College>(
+                      items: _colleges,
+                      value: _selectedCollegeId != null
+                          ? _colleges
+                              .where((c) => c.id == _selectedCollegeId)
+                              .firstOrNull
+                          : null,
+                      labelBuilder: (c) => c.name,
                       decoration: const InputDecoration(
                         labelText: 'College',
                         prefixIcon: Icon(Icons.school_outlined),
                       ),
-                      isExpanded: true,
-                      items: _colleges.map((college) {
-                        return DropdownMenuItem(
-                          value: college.id,
-                          child: Text(
-                            college.name,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
+                      onChanged: (college) {
                         setState(() {
-                          _selectedCollegeId = value;
+                          _selectedCollegeId = college?.id;
                         });
                       },
                     ),
                     const SizedBox(height: 20),
 
-                    // Department Dropdown
-                    DropdownButtonFormField<String>(
-                      initialValue: _selectedDepartment,
+                    // Department Searchable Dropdown
+                    SearchableDropdown<Department>(
+                      items: departments,
+                      value: _selectedDepartment != null
+                          ? departments
+                              .where((d) => d.name == _selectedDepartment)
+                              .firstOrNull
+                          : null,
+                      labelBuilder: (d) => d.name,
                       decoration: const InputDecoration(
                         labelText: 'Department',
                         prefixIcon: Icon(Icons.engineering_outlined),
                       ),
-                      items: _departments.map((dept) {
-                        return DropdownMenuItem(
-                          value: dept,
-                          child: Text(dept),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
+                      onChanged: (dept) {
                         setState(() {
-                          _selectedDepartment = value;
+                          _selectedDepartment = dept?.name;
                         });
                       },
                     ),
@@ -272,7 +259,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen>
                         labelText: 'Current Semester',
                         prefixIcon: Icon(Icons.calendar_month_outlined),
                       ),
-                      items: _semesters.map((sem) {
+                      items: semesters.map((sem) {
                         return DropdownMenuItem(
                           value: sem,
                           child: Text('Semester $sem'),

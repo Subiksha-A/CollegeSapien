@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../models/api_models.dart';
 import '../../services/api_service.dart';
 import '../../services/auth_service.dart';
+import '../../services/college_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
+import '../../utils/department_constants.dart';
+import '../../widgets/searchable_dropdown.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -16,8 +20,10 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _nameController;
-  late final TextEditingController _departmentController;
-  late final TextEditingController _semesterController;
+  List<College> _colleges = [];
+  String? _selectedCollegeId;
+  String? _selectedDepartment;
+  int? _selectedSemester;
   bool _isSaving = false;
   bool _isLoading = true;
 
@@ -26,20 +32,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
     final user = FirebaseAuth.instance.currentUser;
     _nameController = TextEditingController(text: user?.displayName ?? '');
-    _departmentController = TextEditingController();
-    _semesterController = TextEditingController();
     _loadProfile();
   }
 
   Future<void> _loadProfile() async {
     try {
-      final result = await AuthService.instance.syncProfile();
+      final results = await Future.wait([
+        CollegeService().listColleges(),
+        AuthService.instance.syncProfile(),
+      ]);
       if (!mounted) return;
-      final profile = result.user;
+      _colleges = results[0] as List<College>
+        ..sort((a, b) => a.name.compareTo(b.name));
+      final profile = (results[1] as AuthSyncResult).user;
       if (profile != null) {
-        _departmentController.text = profile.department ?? '';
-        _semesterController.text =
-            profile.semester > 0 ? profile.semester.toString() : '';
+        _selectedCollegeId = profile.collegeId;
+        final deptMatch = departments.any((d) => d.name == profile.department);
+        _selectedDepartment = deptMatch ? profile.department : null;
+        _selectedSemester =
+            profile.semester > 0 && profile.semester <= 8 ? profile.semester : null;
       }
     } catch (_) {}
     if (mounted) setState(() => _isLoading = false);
@@ -48,8 +59,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void dispose() {
     _nameController.dispose();
-    _departmentController.dispose();
-    _semesterController.dispose();
     super.dispose();
   }
 
@@ -62,11 +71,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       if (_nameController.text.trim().isNotEmpty) {
         body['name'] = _nameController.text.trim();
       }
-      if (_departmentController.text.trim().isNotEmpty) {
-        body['department'] = _departmentController.text.trim();
+      if (_selectedCollegeId != null) {
+        body['collegeId'] = _selectedCollegeId;
       }
-      final sem = int.tryParse(_semesterController.text.trim());
-      if (sem != null) body['semester'] = sem;
+      if (_selectedDepartment != null) {
+        body['department'] = _selectedDepartment;
+      }
+      if (_selectedSemester != null) {
+        body['semester'] = _selectedSemester;
+      }
 
       await ApiService.instance.patch('/auth/me', body);
 
@@ -153,28 +166,54 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             : null,
                       ),
                       const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _departmentController,
+                      SearchableDropdown<College>(
+                        items: _colleges,
+                        value: _selectedCollegeId != null
+                            ? _colleges
+                                .where((c) => c.id == _selectedCollegeId)
+                                .firstOrNull
+                            : null,
+                        labelBuilder: (c) => c.name,
+                        decoration: const InputDecoration(
+                          labelText: 'College',
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (college) {
+                          setState(() => _selectedCollegeId = college?.id);
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      SearchableDropdown<Department>(
+                        items: departments,
+                        value: _selectedDepartment != null
+                            ? departments
+                                .where((d) => d.name == _selectedDepartment)
+                                .firstOrNull
+                            : null,
+                        labelBuilder: (d) => d.name,
                         decoration: const InputDecoration(
                           labelText: 'Department',
                           border: OutlineInputBorder(),
                         ),
+                        onChanged: (dept) {
+                          setState(() => _selectedDepartment = dept?.name);
+                        },
                       ),
                       const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _semesterController,
-                        keyboardType: TextInputType.number,
+                      DropdownButtonFormField<int>(
+                        initialValue: _selectedSemester,
                         decoration: const InputDecoration(
-                          labelText: 'Semester (1–10)',
+                          labelText: 'Semester',
                           border: OutlineInputBorder(),
                         ),
-                        validator: (v) {
-                          if (v == null || v.trim().isEmpty) return null;
-                          final n = int.tryParse(v.trim());
-                          if (n == null || n < 1 || n > 10) {
-                            return 'Enter a semester between 1 and 10';
-                          }
-                          return null;
+                        items: semesters.map((sem) {
+                          return DropdownMenuItem(
+                            value: sem,
+                            child: Text('Semester $sem'),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() => _selectedSemester = value);
                         },
                       ),
                     ],
