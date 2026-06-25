@@ -15,6 +15,7 @@ interface Resource {
   uploadedBy?: string;
   collegeId?: string;
   createdAt?: string;
+  fileUrl?: string;
 }
 
 const { get, patch, delete: apiDelete } = useApi();
@@ -232,6 +233,19 @@ watch([tab, categoryFilter], fetchResources);
         </div>
 
         <div class="flex gap-2">
+          <a
+            v-if="resource.fileUrl"
+            :href="resource.fileUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1.5 text-xs font-medium border border-blue-300 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-1"
+          >
+            <Icon
+              name="i-heroicons-arrow-top-right-on-square"
+              class="w-3.5 h-3.5"
+            />
+            Open File
+          </a>
           <button
             v-if="tab === 'approved'"
             :disabled="actionInFlight.has(resource.id)"
