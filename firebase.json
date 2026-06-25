@@ -1,0 +1,26 @@
+{
+  "hosting": [
+    {
+      "target": "app",
+      "public": "app/build/web",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "admin",
+      "public": "admin/.output/public",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/200.html"
+        }
+      ]
+    }
+  ]
+}

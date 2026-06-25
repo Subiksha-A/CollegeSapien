@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "collegesapiens"
+  },
+  "targets": {
+    "collegesapiens": {
+      "hosting": {
+        "app": [
+          "collegesapiens"
+        ],
+        "admin": [
+          "admin-collegesapiens"
+        ]
+      }
+    }
+  }
+}
