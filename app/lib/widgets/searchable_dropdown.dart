@@ -23,19 +23,24 @@ class SearchableDropdown<T extends Object> extends StatefulWidget {
 class _SearchableDropdownState<T extends Object>
     extends State<SearchableDropdown<T>> {
   late TextEditingController _controller;
+  late FocusNode _focusNode;
+  bool _hasSelection = false;
 
   @override
   void initState() {
     super.initState();
+    _hasSelection = widget.value != null;
     _controller = TextEditingController(
       text: widget.value != null ? widget.labelBuilder(widget.value as T) : '',
     );
+    _focusNode = FocusNode();
   }
 
   @override
   void didUpdateWidget(covariant SearchableDropdown<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.value != oldWidget.value) {
+      _hasSelection = widget.value != null;
       final text =
           widget.value != null ? widget.labelBuilder(widget.value as T) : '';
       if (_controller.text != text) {
@@ -44,9 +49,18 @@ class _SearchableDropdownState<T extends Object>
     }
   }
 
+  void _clear() {
+    _controller.clear();
+    _hasSelection = false;
+    widget.onChanged(null);
+    _focusNode.unfocus();
+    setState(() {});
+  }
+
   @override
   void dispose() {
     _controller.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -56,7 +70,7 @@ class _SearchableDropdownState<T extends Object>
       builder: (context, constraints) {
         return RawAutocomplete<T>(
           textEditingController: _controller,
-          focusNode: FocusNode(),
+          focusNode: _focusNode,
           optionsBuilder: (textEditingValue) {
             final query = textEditingValue.text.toLowerCase();
             if (query.isEmpty) return widget.items;
@@ -66,6 +80,7 @@ class _SearchableDropdownState<T extends Object>
           },
           displayStringForOption: widget.labelBuilder,
           onSelected: (item) {
+            setState(() => _hasSelection = true);
             widget.onChanged(item);
           },
           fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
@@ -73,10 +88,16 @@ class _SearchableDropdownState<T extends Object>
               controller: controller,
               focusNode: focusNode,
               decoration: (widget.decoration ?? const InputDecoration()).copyWith(
-                suffixIcon: const Icon(Icons.arrow_drop_down),
+                suffixIcon: _hasSelection
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, size: 20),
+                        onPressed: _clear,
+                      )
+                    : const Icon(Icons.arrow_drop_down),
               ),
               onChanged: (text) {
                 if (text.isEmpty) {
+                  setState(() => _hasSelection = false);
                   widget.onChanged(null);
                 }
               },
