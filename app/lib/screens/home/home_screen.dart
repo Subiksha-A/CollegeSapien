@@ -13,9 +13,12 @@ import '../../services/attendance_service.dart';
 import '../../services/auth_service.dart';
 import '../../services/cache_service.dart';
 import '../../services/timetable_service.dart';
+import '../../models/syllabus_models.dart';
+import '../../services/syllabus_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
 import '../attendance/mark_attendance_screen.dart';
+import '../syllabus/syllabus_selection_screen.dart';
 import '../timetable_list_screen.dart';
 import '../ai_features/resume_roast_screen.dart';
 import 'events_all_screen.dart';
@@ -121,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _hasMoreEvents = false;
   int _semester = 0;
   final Set<String> _markedSlots = {};
+  List<SavedSubject> _savedSubjects = [];
 
   static String get _todayMarkedKey =>
       'marked_slots_${_dateKey(DateTime.now())}';
@@ -180,6 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _loadEvents(),
       _loadSemester(),
       _loadMarkedSlots(),
+      _loadSyllabus(),
     ]);
   }
 
@@ -194,6 +199,18 @@ class _HomeScreenState extends State<HomeScreen> {
       await prefs.setInt('last_semester', user.semester);
       await prefs.setString('last_college_name', user.collegeName ?? '');
       if (mounted) setState(() => _semester = user.semester);
+    } catch (_) {}
+  }
+
+  Future<void> _loadSyllabus() async {
+    try {
+      final result = await AuthService.instance.syncProfile();
+      final semester = result.user?.semester ?? 0;
+      if (semester <= 0) return;
+      final saved = await SyllabusService().getSavedSubjects(semester);
+      if (mounted && saved != null) {
+        setState(() => _savedSubjects = saved);
+      }
     } catch (_) {}
   }
 
@@ -390,6 +407,19 @@ class _HomeScreenState extends State<HomeScreen> {
               }),
               const SizedBox(height: 12),
               _timetableCarousel(),
+              if (_savedSubjects.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _sectionHeader(
+                  "Your Subjects",
+                  onShowAll: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const SyllabusSelectionScreen()),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _syllabusCarousel(),
+              ],
               const SizedBox(height: 24),
               _sectionHeader(
                 "Events Near You",
@@ -926,6 +956,68 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  // ─── Syllabus carousel ─────────────────────────────────────────────────────
+
+  Widget _syllabusCarousel() {
+    return SizedBox(
+      height: 80,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: _savedSubjects.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
+        itemBuilder: (_, i) {
+          final s = _savedSubjects[i];
+          final color = s.isElective
+              ? AppColors.accentPurple
+              : _cardColors[i % _cardColors.length];
+          return Container(
+            width: 150,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color,
+              border: Border.all(color: Colors.black, width: 1.5),
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: const [
+                BoxShadow(offset: Offset(4, 4), color: Colors.black),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Text(
+                    s.subjectName,
+                    style: const TextStyle(
+                      fontFamily: 'Lexend Mega',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.5,
+                      color: Colors.black,
+                      height: 1.2,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (s.credits != null)
+                  Text(
+                    '${s.credits} credits',
+                    style: TextStyle(
+                      fontFamily: 'Public Sans',
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black.withValues(alpha: 0.6),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -78,6 +78,7 @@ export const OnboardingSchema = z
 
 export const ProfileUpdateSchema = z.object({
   name: z.string().min(2).optional(),
+  collegeId: z.string().min(1).optional(),
   department: z.string().min(1).optional(),
   semester: z.number().int().min(1).max(10).optional(),
   attendanceThreshold: z.number().int().min(50).max(100).optional(),

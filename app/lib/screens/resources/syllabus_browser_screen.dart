@@ -296,8 +296,8 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                     final matchesSearch =
                         query.isEmpty || r.name.toLowerCase().contains(query);
                     final matchesCollege = _filterCollege == null ||
-                        r.name.toLowerCase().contains(
-                            _filterCollege!.toLowerCase());
+                        r.name.toUpperCase().contains(
+                            _filterCollege!.toUpperCase());
                     final matchesDept = _filterDepartment == null ||
                         r.department == _filterDepartment;
                     final matchesReg = _filterRegulation == null ||
@@ -342,7 +342,7 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                           items: _colleges,
                           value: _filterCollege != null
                               ? _colleges
-                                  .where((c) => c.name == _filterCollege)
+                                  .where((c) => c.code == _filterCollege)
                                   .firstOrNull
                               : null,
                           labelBuilder: (c) => c.name,
@@ -354,7 +354,7 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                             fillColor: Colors.white,
                           ),
                           onChanged: (c) =>
-                              setState(() => _filterCollege = c?.name),
+                              setState(() => _filterCollege = c?.code),
                         ),
                       ],
                       const SizedBox(height: 12),
