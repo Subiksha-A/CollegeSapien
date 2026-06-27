@@ -93,32 +93,6 @@ jobs:
         working-directory: app
         run: flutter test
 
-  deploy-admin:
-    needs: admin-checks
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11.2.1
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-          cache-dependency-path: admin/pnpm-lock.yaml
-      - name: Install dependencies
-        working-directory: admin
-        run: pnpm install --frozen-lockfile
-      - name: Generate static site
-        working-directory: admin
-        run: pnpm generate
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COLLEGESAPIENS }}
-          target: admin
-          channelId: live
 
   deploy-app:
     needs: app-checks
