@@ -12,7 +12,7 @@ dependencies:
 
   # Image & File Handling
   image_picker: ^1.2.1
-  file_picker: ^10.3.10
+  file_picker: ^11.0.2
 
   # Local Storage
   shared_preferences: ^2.2.2
@@ -21,7 +21,7 @@ dependencies:
   http: ^1.1.2
 
   # Google Sign In
-  google_sign_in: ^6.2.1
+  google_sign_in: ^7.2.0
 
   # Firebase (for authentication and storage)
   firebase_core: ^4.11.0
