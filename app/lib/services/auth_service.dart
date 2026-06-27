@@ -16,12 +16,7 @@ class AuthService {
 
   static final AuthService instance = AuthService._();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn? _googleSignIn = kIsWeb
-      ? null
-      : GoogleSignIn(
-          serverClientId: _googleWebClientId,
-          scopes: ['email'],
-        );
+  GoogleSignIn get _googleSignIn => GoogleSignIn.instance;
 
   User? get currentUser => _auth.currentUser;
 
@@ -75,26 +70,24 @@ class AuthService {
       }
     }
 
-    GoogleSignInAccount? googleUser;
+    final GoogleSignInAccount googleUser;
     try {
-      googleUser = await _googleSignIn!.signIn();
+      await _googleSignIn.initialize(
+        serverClientId: _googleWebClientId,
+      );
+      googleUser = await _googleSignIn.authenticate();
     } catch (e) {
       throw ApiException(500, 'Google sign-in failed: ${e.toString()}');
     }
 
-    if (googleUser == null) {
-      throw ApiException(499, 'Google sign-in was cancelled');
-    }
+    final googleAuth = googleUser.authentication;
 
-    final googleAuth = await googleUser.authentication;
-
-    if (googleAuth.idToken == null && googleAuth.accessToken == null) {
+    if (googleAuth.idToken == null) {
       throw ApiException(500,
           'Google sign-in failed: could not obtain credentials. Ensure your SHA-1 fingerprint is registered in Firebase Console.');
     }
 
     final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
     await _auth.signInWithCredential(credential);
@@ -134,7 +127,7 @@ class AuthService {
     } catch (_) {
       // Local sign-out should still complete if the API is unreachable.
     }
-    await _googleSignIn?.signOut();
+    await _googleSignIn.disconnect();
     await _auth.signOut();
   }
 }

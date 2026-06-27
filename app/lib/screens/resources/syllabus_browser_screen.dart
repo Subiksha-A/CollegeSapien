@@ -203,7 +203,7 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
 
     if (uploadData == null) return;
 
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
     );
