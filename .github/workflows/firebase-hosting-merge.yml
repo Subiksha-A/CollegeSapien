@@ -27,7 +27,7 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/gcloud.json
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COLLEGESAPIENS }}' > "$GOOGLE_APPLICATION_CREDENTIALS"
-          OUTPUT=$(npx firebase-tools@latest deploy --only hosting:app --project collegesapiens --json 2>&1) || true
+          OUTPUT=$(npx firebase-tools@latest deploy --only hosting:app1 --project collegesapiens --json 2>&1) || true
           echo "$OUTPUT"
           if echo "$OUTPUT" | grep -q "is the current active version"; then
             echo "Site already up to date, nothing to deploy."
