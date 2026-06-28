@@ -20,18 +20,21 @@ class AuthService {
 
   User? get currentUser => _auth.currentUser;
 
+  UserProfile? _profile;
+  UserProfile? get profile => _profile;
+
   Future<AuthSyncResult> syncProfile() async {
     final json =
         await ApiService.instance.post('/auth/sync') as Map<String, dynamic>;
-    return AuthSyncResult.fromJson(json);
+    final result = AuthSyncResult.fromJson(json);
+    _profile = result.user;
+    return result;
   }
 
   Future<AuthSyncResult> signInWithEmailPassword(
       String email, String password) async {
     await _auth.signInWithEmailAndPassword(
         email: email.trim(), password: password);
-    await _auth.currentUser?.reload();
-    await _auth.currentUser?.getIdToken(true);
     return syncProfile();
   }
 
@@ -91,7 +94,6 @@ class AuthService {
       idToken: googleAuth.idToken,
     );
     await _auth.signInWithCredential(credential);
-    await _auth.currentUser?.getIdToken(true);
     return syncProfile();
   }
 
@@ -121,13 +123,18 @@ class AuthService {
   }
 
   Future<void> signOut() async {
+    _profile = null;
     // AppCapabilityService.instance.invalidate(); // mod: moved to web admin panel
     try {
-      await ApiService.instance.post('/auth/logout');
+      await ApiService.instance
+          .post('/auth/logout')
+          .timeout(const Duration(seconds: 2));
     } catch (_) {
       // Local sign-out should still complete if the API is unreachable.
     }
-    await _googleSignIn.disconnect();
+    try {
+      await _googleSignIn.signOut().timeout(const Duration(seconds: 2));
+    } catch (_) {}
     await _auth.signOut();
   }
 }

@@ -534,38 +534,68 @@ class _HomeScreenState extends State<HomeScreen> {
   // ─── Header ────────────────────────────────────────────────────────────────
 
   Widget _header() {
-    return Row(
+    final now = DateTime.now();
+    const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    String daySuffix(int day) {
+      if (day >= 11 && day <= 13) return 'th';
+      switch (day % 10) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+      }
+    }
+    final dateStr = '${weekdays[now.weekday - 1]}, ${now.day}${daySuffix(now.day)} ${months[now.month - 1]}';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Expanded(
-          child: Text(
-            'Codesapiens',
-            style: TextStyle(
-              fontFamily: 'Lexend Mega',
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0,
-              color: Colors.black,
-            ),
+        Text(
+          dateStr.toUpperCase(),
+          style: TextStyle(
+            fontFamily: 'Public Sans',
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.5,
+            color: Colors.black.withValues(alpha: 0.5),
           ),
         ),
-        GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const ProfileScreen()),
-          ),
-          child: Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: AppColors.accentBlue,
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: const [
-                BoxShadow(offset: Offset(2, 2), color: Colors.black)
-              ],
+        const SizedBox(height: 4),
+        Row(
+          children: [
+            const Expanded(
+              child: Text(
+                'Codesapiens',
+                style: TextStyle(
+                  fontFamily: 'Lexend Mega',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                  color: Colors.black,
+                ),
+              ),
             ),
-            child: const Icon(Icons.person, size: 22),
-          ),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ProfileScreen()),
+              ),
+              child: Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: AppColors.accentBlue,
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: const [
+                    BoxShadow(offset: Offset(2, 2), color: Colors.black)
+                  ],
+                ),
+                child: const Icon(Icons.person, size: 22),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -1050,7 +1080,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _syllabusCarousel() {
     return SizedBox(
-      height: 80,
+      height: 150,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: _savedSubjects.length,
@@ -1060,9 +1090,11 @@ class _HomeScreenState extends State<HomeScreen> {
           final color = s.isElective
               ? AppColors.accentPurple
               : _cardColors[i % _cardColors.length];
+          final typeLabel = s.courseType?.toUpperCase() ??
+              (s.isElective ? 'ELECTIVE' : 'THEORY');
           return Container(
-            width: 150,
-            padding: const EdgeInsets.all(12),
+            width: 155,
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
             decoration: BoxDecoration(
               color: color,
               border: Border.all(color: Colors.black, width: 1.5),
@@ -1073,32 +1105,68 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
               children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.7),
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    typeLabel,
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 9,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.5,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
                 Expanded(
                   child: Text(
                     s.subjectName,
                     style: const TextStyle(
-                      fontFamily: 'Lexend Mega',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -0.5,
+                      fontFamily: 'Inter',
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0,
                       color: Colors.black,
-                      height: 1.2,
+                      height: 1.3,
                     ),
-                    maxLines: 2,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 if (s.credits != null)
-                  Text(
-                    '${s.credits} credits',
-                    style: TextStyle(
-                      fontFamily: 'Public Sans',
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black.withValues(alpha: 0.6),
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        '${s.credits}',
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 30,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black,
+                          height: 1.0,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'CR',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black.withValues(alpha: 0.45),
+                        ),
+                      ),
+                    ],
                   ),
               ],
             ),

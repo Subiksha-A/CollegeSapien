@@ -24,18 +24,29 @@ class TimetableService {
     return subjects.first;
   }
 
+  static Future<TimetableData>? _timetableFuture;
+
   Future<List<TimetableSubject>> getAllSubjects() async {
     final timetable = await getTimetable();
     return timetable.subjects;
   }
 
-  Future<TimetableData> getTimetable() async {
+  Future<TimetableData> getTimetable() {
+    _timetableFuture ??= _fetchTimetable();
+    return _timetableFuture!;
+  }
+
+  Future<TimetableData> _fetchTimetable() async {
     try {
       final json =
           await ApiService.instance.get('/timetable') as Map<String, dynamic>;
       return TimetableData.fromJson(json);
     } on ApiException catch (error) {
       if (error.statusCode == 404) return TimetableData(subjects: []);
+      _timetableFuture = null;
+      rethrow;
+    } catch (_) {
+      _timetableFuture = null;
       rethrow;
     }
   }
@@ -44,6 +55,7 @@ class TimetableService {
     await ApiService.instance.post('/timetable', {
       'subjects': subjects.map((subject) => subject.toJson()).toList(),
     });
+    _timetableFuture = null;
     await AttendanceNotificationService.instance.scheduleForTimetable(subjects);
   }
 

@@ -9,6 +9,7 @@ import '../../services/syllabus_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/department_constants.dart';
+import '../../widgets/searchable_dropdown.dart';
 import '../home/main_navigation.dart';
 
 class SyllabusSelectionScreen extends StatefulWidget {
@@ -785,23 +786,35 @@ class _SyllabusSelectionScreenState extends State<SyllabusSelectionScreen> {
 
   Widget _buildElectiveDropdown(_SubjectEntry entry, int index) {
     final options = _electiveOptions[entry.subject.optionsFrom] ?? [];
-    final currentValue = entry.selectedOption?.subjectName ??
-        entry.editedName ??
-        (entry.subject.isElective ? entry.subject.subjectName : '');
-    final initialValue = currentValue.isNotEmpty ? currentValue : '';
+    final currentValue = entry.selectedOption ?? _findMatchingOption(entry, options);
 
-    return Autocomplete<CurriculumSubject>(
-      initialValue: TextEditingValue(text: initialValue),
-      displayStringForOption: (opt) =>
+    return SearchableDropdown<CurriculumSubject>(
+      items: options,
+      value: currentValue,
+      labelBuilder: (opt) =>
           '${opt.subjectName}${opt.electiveStream != null ? '  (${opt.electiveStream})' : ''}',
-      optionsBuilder: (textEditingValue) {
-        final query = textEditingValue.text.toLowerCase();
-        if (query.isEmpty) return options;
-        return options.where((o) =>
-            o.subjectName.toLowerCase().contains(query) ||
-            (o.electiveStream?.toLowerCase().contains(query) ?? false));
-      },
-      onSelected: (selected) {
+      decoration: InputDecoration(
+        isDense: true,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: Colors.black, width: 1.5),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: Colors.black, width: 1.5),
+        ),
+        filled: true,
+        fillColor: Colors.white.withValues(alpha: 0.7),
+        hintText: 'Type or select a subject',
+        hintStyle: const TextStyle(
+          fontFamily: 'Public Sans',
+          fontSize: 13,
+          color: Colors.black54,
+        ),
+      ),
+      onChanged: (selected) {
         setState(() {
           _entries[index] = _SubjectEntry(
             subject: entry.subject,
@@ -809,101 +822,12 @@ class _SyllabusSelectionScreenState extends State<SyllabusSelectionScreen> {
           );
         });
       },
-      fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
-        void commitTypedValue() {
-          final typed = controller.text.trim();
-          final match = options.where((o) => o.subjectName == typed).firstOrNull;
-          if (match != null) {
-            setState(() {
-              _entries[index] = _SubjectEntry(
-                subject: entry.subject,
-                selectedOption: match,
-              );
-            });
-          } else if (typed.isNotEmpty && typed != initialValue) {
-            setState(() {
-              _entries[index] = _SubjectEntry(
-                subject: entry.subject,
-                editedName: typed,
-              );
-            });
-          }
-        }
-        return Focus(
-          onFocusChange: (hasFocus) {
-            if (!hasFocus) commitTypedValue();
-          },
-          child: TextField(
-          controller: controller,
-          focusNode: focusNode,
-          style: const TextStyle(
-            fontFamily: 'Public Sans',
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-          decoration: InputDecoration(
-            isDense: true,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(color: Colors.black, width: 1.5),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(color: Colors.black, width: 1.5),
-            ),
-            filled: true,
-            fillColor: Colors.white.withValues(alpha: 0.7),
-            hintText: 'Type or select a subject',
-            hintStyle: const TextStyle(
-              fontFamily: 'Public Sans',
-              fontSize: 13,
-              color: Colors.black54,
-            ),
-            suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
-          ),
-        ),
-        );
-      },
-      optionsViewBuilder: (context, onSelected, options) {
-        return Align(
-          alignment: Alignment.topLeft,
-          child: Material(
-            elevation: 4,
-            borderRadius: BorderRadius.circular(6),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 200),
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemCount: options.length,
-                itemBuilder: (context, i) {
-                  final opt = options.elementAt(i);
-                  return InkWell(
-                    onTap: () => onSelected(opt),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 10),
-                      child: Text(
-                        '${opt.subjectName}${opt.electiveStream != null ? '  (${opt.electiveStream})' : ''}',
-                        style: const TextStyle(
-                          fontFamily: 'Public Sans',
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        );
-      },
     );
+  }
+
+  CurriculumSubject? _findMatchingOption(_SubjectEntry entry, List<CurriculumSubject> options) {
+    final name = entry.editedName ?? entry.subject.subjectName;
+    return options.where((o) => o.subjectName == name).firstOrNull;
   }
 
   Widget _chip(String text) {

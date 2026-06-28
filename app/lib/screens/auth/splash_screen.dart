@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import '../../services/auth_service.dart';
-import '../../services/syllabus_service.dart';
 import '../home/main_navigation.dart';
 import '../onboarding/onboarding_screen.dart';
-import '../syllabus/syllabus_selection_screen.dart';
 import 'login_screen.dart';
 
 /// Splash Screen - App launch screen
@@ -66,17 +64,7 @@ class _SplashScreenState extends State<SplashScreen>
       } else if (result.onboardingRequired) {
         _replaceWith(const OnboardingScreen());
       } else {
-        List? saved;
-        try {
-          saved = await SyllabusService()
-              .getSavedSubjects(result.user!.semester);
-        } catch (_) {}
-        if (!mounted) return;
-        if (saved == null || saved.isEmpty) {
-          _replaceWith(const SyllabusSelectionScreen());
-        } else {
-          _replaceWith(const MainNavigation());
-        }
+        _replaceWith(const MainNavigation());
       }
     } catch (e) {
       if (mounted) {

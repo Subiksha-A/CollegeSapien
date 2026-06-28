@@ -496,7 +496,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 56,
                 child: ElevatedButton.icon(
                   onPressed: () async {
-                    await AuthService.instance.signOut();
+                    try {
+                      await AuthService.instance.signOut();
+                    } catch (_) {}
                     if (!context.mounted) return;
                     Navigator.pushAndRemoveUntil(
                       context,
