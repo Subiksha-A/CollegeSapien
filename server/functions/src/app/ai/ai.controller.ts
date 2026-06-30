@@ -7,6 +7,8 @@ import * as admin from 'firebase-admin';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export const roastResume = async (req: AuthRequest, res: Response) => {
+  return res.status(503).json({ error: 'Resume roast is temporarily unavailable.' });
+
   try {
     const { resumeText, storagePath, mimeType, fileBase64 } = req.body;
     if (!resumeText && !storagePath && !fileBase64) {
