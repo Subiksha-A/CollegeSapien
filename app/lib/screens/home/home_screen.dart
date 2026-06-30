@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/api_models.dart';
 import '../../models/timetable_models.dart';
@@ -25,6 +26,7 @@ import '../syllabus/syllabus_selection_screen.dart';
 import '../timetable_list_screen.dart';
 import '../ai_features/resume_roast_screen.dart';
 import 'events_all_screen.dart';
+import '../../providers/app_state_notifier.dart';
 
 // ─── Public event model (shared with EventsAllScreen) ─────────────────────────
 
@@ -129,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final Set<String> _markedSlots = {};
   List<SavedSubject> _savedSubjects = [];
   bool _showingCurriculumFallback = false;
+  String _userName = '';
 
   static String get _todayMarkedKey =>
       'marked_slots_${_dateKey(DateTime.now())}';
@@ -172,13 +175,46 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    final cached = CacheService.instance.get<List>('attendance_summary');
-    if (cached != null) {
-      try {
-        _summaries = cached.cast<AttendanceSummary>();
-      } catch (_) {}
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeStateFromProvider();
+    });
     _load();
+  }
+
+  void _initializeStateFromProvider() {
+    if (!mounted) return;
+    try {
+      final appState = Provider.of<AppStateNotifier>(context, listen: false);
+
+      // Load data from provider if available
+      if (appState.attendanceSummary != null && _summaries.isEmpty) {
+        setState(() => _summaries = appState.attendanceSummary!);
+      }
+      if (appState.timetableSubjects != null && _todayClasses.isEmpty) {
+        _processTodayClasses(appState.timetableSubjects!);
+        setState(() {});
+      }
+      if (appState.events != null && _allEvents.isEmpty) {
+        setState(() {
+          _allEvents = appState.events!;
+          _shownEvents = _allEvents.take(2).toList();
+          _hasMoreEvents = _allEvents.length > 2;
+          _loadingEvents = false;
+        });
+      }
+      if (appState.userProfile != null) {
+        setState(() {
+          _semester = appState.userProfile!.semester;
+          _userName = appState.userProfile!.name;
+        });
+      }
+      if (appState.savedSubjects != null && _savedSubjects.isEmpty) {
+        setState(() {
+          _savedSubjects = appState.savedSubjects!;
+          _showingCurriculumFallback = false;
+        });
+      }
+    } catch (_) {}
   }
 
   Future<void> _load() async {
@@ -202,11 +238,20 @@ class _HomeScreenState extends State<HomeScreen> {
       if (user == null || !mounted) return;
       await prefs.setInt('last_semester', user.semester);
       await prefs.setString('last_college_name', user.collegeName ?? '');
-      if (mounted) setState(() => _semester = user.semester);
+      if (mounted) {
+        final appState = Provider.of<AppStateNotifier>(context, listen: false);
+        appState.setUserProfile(user);
+        setState(() {
+          _semester = user.semester;
+          _userName = user.name;
+        });
+      }
 
       final syllabusService = SyllabusService();
       final saved = await syllabusService.getSavedSubjects(user.semester);
       if (mounted && saved != null) {
+        final appState = Provider.of<AppStateNotifier>(context, listen: false);
+        appState.setSavedSubjects(saved);
         setState(() {
           _savedSubjects = saved;
           _showingCurriculumFallback = false;
@@ -234,20 +279,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 semester: user.semester,
               );
               if (subjects.isNotEmpty && mounted) {
+                final savedSubjects = subjects
+                    .map((s) => SavedSubject(
+                          subjectCode: s.subjectCode,
+                          subjectName: s.subjectName,
+                          credits: s.credits,
+                          isElective: s.isElective,
+                          electiveType: s.electiveType,
+                          courseType: s.courseType,
+                          ltp: s.ltp,
+                          tcp: s.tcp,
+                          category: s.category,
+                        ))
+                    .toList();
+                final appState = Provider.of<AppStateNotifier>(context, listen: false);
+                appState.setSavedSubjects(savedSubjects);
                 setState(() {
-                  _savedSubjects = subjects
-                      .map((s) => SavedSubject(
-                            subjectCode: s.subjectCode,
-                            subjectName: s.subjectName,
-                            credits: s.credits,
-                            isElective: s.isElective,
-                            electiveType: s.electiveType,
-                            courseType: s.courseType,
-                            ltp: s.ltp,
-                            tcp: s.tcp,
-                            category: s.category,
-                          ))
-                      .toList();
+                  _savedSubjects = savedSubjects;
                   _showingCurriculumFallback = true;
                 });
               }
@@ -261,39 +309,48 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadAttendance() async {
     try {
       final s = await AttendanceService().getSummary();
-      CacheService.instance.set('attendance_summary', s);
-      if (mounted) setState(() => _summaries = s);
+      if (mounted) {
+        final appState = Provider.of<AppStateNotifier>(context, listen: false);
+        appState.setAttendanceSummary(s);
+        setState(() => _summaries = s);
+      }
     } catch (_) {}
+  }
+
+  void _processTodayClasses(List<TimetableSubject> subjects) {
+    final today = _todayCode();
+    final todayDateKey = _dateKey(DateTime.now());
+    final entries = <_ClassEntry>[];
+    for (final sub in subjects) {
+      for (final cls in sub.classes) {
+        if (cls.day == today && cls.type != 'BREAK') {
+          entries.add(_ClassEntry(
+            subjectId: sub.id,
+            subjectCode: sub.code,
+            subjectName: sub.name,
+            dateKey: todayDateKey,
+            startTime: cls.startTime,
+            endTime: cls.endTime,
+            room: cls.room,
+          ));
+        }
+      }
+    }
+    entries.sort((a, b) => _toMin(a.startTime).compareTo(_toMin(b.startTime)));
+    _todayClasses = entries;
   }
 
   Future<void> _loadTimetable() async {
     try {
-      List<TimetableSubject>? subjects = CacheService.instance
-          .get<List<TimetableSubject>>('timetable_subjects');
+      final appState = Provider.of<AppStateNotifier>(context, listen: false);
+
+      List<TimetableSubject>? subjects = appState.timetableSubjects;
       subjects ??= await TimetableService().getAllSubjects();
-      final today = _todayCode();
-      final todayDateKey = _dateKey(DateTime.now());
-      final entries = <_ClassEntry>[];
-      for (final sub in subjects) {
-        for (final cls in sub.classes) {
-          if (cls.day == today && cls.type != 'BREAK') {
-            entries.add(_ClassEntry(
-              subjectId: sub.id,
-              subjectCode: sub.code,
-              subjectName: sub.name,
-              dateKey: todayDateKey,
-              startTime: cls.startTime,
-              endTime: cls.endTime,
-              room: cls.room,
-            ));
-          }
-        }
-      }
-      entries
-          .sort((a, b) => _toMin(a.startTime).compareTo(_toMin(b.startTime)));
-      if (mounted) {
+
+      if (mounted && subjects != null) {
+        appState.setTimetableSubjects(subjects);
         setState(() {
-          _todayClasses = entries;
+          _processTodayClasses(subjects!);
           _loadingTimetable = false;
         });
       }
@@ -347,6 +404,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadEvents() async {
     try {
+      final appState = Provider.of<AppStateNotifier>(context, listen: false);
+
+      // Check if we have cached events that are still valid
+      if (appState.events != null) {
+        if (mounted) {
+          setState(() {
+            _allEvents = appState.events!;
+            _shownEvents = _allEvents.take(2).toList();
+            _hasMoreEvents = _allEvents.length > 2;
+            _loadingEvents = false;
+          });
+        }
+        return;
+      }
+
       final res = await http
           .get(Uri.parse(
             'https://raw.githubusercontent.com/FOSSUChennai/Communities/'
@@ -382,6 +454,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
 
         if (mounted) {
+          appState.setEvents(shown);
           setState(() {
             _allEvents = shown;
             _shownEvents = shown.take(2).toList();
@@ -564,10 +637,10 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(height: 4),
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
-                'Codesapiens',
-                style: TextStyle(
+                _userName.isEmpty ? 'Hi there' : 'Hi ${_userName.split(' ').first}',
+                style: const TextStyle(
                   fontFamily: 'Lexend Mega',
                   fontSize: 20,
                   fontWeight: FontWeight.w700,

@@ -6,6 +6,7 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_performance/firebase_performance.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'utils/app_theme.dart';
 import 'utils/app_constants.dart';
@@ -13,6 +14,7 @@ import 'screens/auth/splash_screen.dart';
 import 'services/app_navigation.dart';
 import 'services/app_theme_notifier.dart';
 import 'services/attendance_notification_service.dart';
+import 'providers/app_state_notifier.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,14 +54,17 @@ class CodesapiensApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: AppThemeNotifier.instance,
-      builder: (context, _) => MaterialApp(
-        navigatorKey: appNavigatorKey,
-        title: AppConstants.appName,
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.theme,
-        home: const SplashScreen(),
+    return ChangeNotifierProvider(
+      create: (_) => AppStateNotifier(),
+      child: ListenableBuilder(
+        listenable: AppThemeNotifier.instance,
+        builder: (context, _) => MaterialApp(
+          navigatorKey: appNavigatorKey,
+          title: AppConstants.appName,
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme,
+          home: const SplashScreen(),
+        ),
       ),
     );
   }
