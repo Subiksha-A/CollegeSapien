@@ -1,0 +1,41 @@
+# Dependencies & package managers
+.pnpm-store/
+**/node_modules/
+
+# Build artifacts
+**/build/
+**/.dart_tool/
+**/.flutter-plugins-dependencies
+
+# Firebase
+.firebase/
+**/firebase-debug.log
+
+# Platform-specific generated files
+app/android/.gradle/
+app/android/app/build/
+app/ios/Pods/
+app/ios/.symlinks/
+app/web/favicon.png
+
+# Lock files
+**/pubspec.lock
+**/pnpm-lock.yaml
+**/package-lock.json
+
+# IDE
+**/.idea/
+**/.vscode/
+*.iml
+
+# Images & binaries
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
+**/*.ico
+**/*.svg
+
+# Misc
+**/.DS_Store
+**/*.log
