@@ -1,10 +1,17 @@
 import type { NextFunction, Request, Response } from 'express';
 import * as admin from 'firebase-admin';
 
-const isAppCheckDisabled = () =>
-  process.env.DISABLE_APP_CHECK?.toLowerCase() === 'true' ||
-  process.env.FUNCTIONS_EMULATOR === 'true' ||
-  process.env.NODE_ENV === 'test';
+const isAppCheckDisabled = () => {
+  // App Check disabled by default. To enable enforcement, set ENFORCE_APP_CHECK=true.
+  if (
+    process.env.ENFORCE_APP_CHECK?.toLowerCase() === 'true' &&
+    process.env.FUNCTIONS_EMULATOR !== 'true' &&
+    process.env.NODE_ENV !== 'test'
+  ) {
+    return false; // Enforce App Check
+  }
+  return true; // Disabled (default)
+};
 
 export const enforceAppCheck = async (req: Request, res: Response, next: NextFunction) => {
   if (isAppCheckDisabled() || req.method === 'OPTIONS') {

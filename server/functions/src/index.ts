@@ -1,6 +1,5 @@
 import { onRequest } from 'firebase-functions/v2/https';
 import { onDocumentCreated } from 'firebase-functions/v2/firestore';
-import { defineSecret } from 'firebase-functions/params';
 import * as admin from 'firebase-admin';
 import { app } from './app';
 // import { processResourceDocument } from './app/ai/ai.controller';
@@ -8,7 +7,8 @@ import { app } from './app';
 // Gemini API key is currently disabled — do not bind it as a secret or
 // Firebase will try to resolve it from Secret Manager at deploy time and fail.
 // const geminiApiKey = defineSecret('GEMINI_API_KEY');
-const disableAppCheck = defineSecret('DISABLE_APP_CHECK');
+// App Check disabled by default in code (see app-check.middleware.ts).
+// Set ENFORCE_APP_CHECK=true to enable enforcement when clients are ready.
 
 export const api = onRequest(
   {
@@ -19,7 +19,6 @@ export const api = onRequest(
     minInstances: 0,
     maxInstances: 10,
     invoker: 'public',
-    secrets: [disableAppCheck],
   },
   app
 );
