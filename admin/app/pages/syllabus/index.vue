@@ -30,7 +30,7 @@ interface UploadRowError {
   error: string;
 }
 
-const { get, post } = useApi();
+const { get, post, patch } = useApi();
 
 const colleges = ref<CollegeOption[]>([]);
 const snack = ref("");
@@ -49,6 +49,7 @@ const singleInFlight = ref<Set<string>>(new Set());
 
 const activeTab = ref<"pending" | "approved">("pending");
 const detailItem = ref<CurriculumRecord | null>(null);
+const savingEdit = ref(false);
 
 const filterCollegeCode = ref("");
 const filterCourseCode = ref("");
@@ -251,6 +252,48 @@ const availableRegulations = computed(() => {
   [...pending.value, ...approved.value].forEach((c) => regs.add(c.regulation));
   return [...regs].sort();
 });
+
+const handleSaveEdit = async (payload: {
+  id: string;
+  status: "pending" | "approved";
+  college: string;
+  collegeCode: string;
+  course: string;
+  courseCode: string;
+  regulation: string;
+  subjects: CurriculumSubject[];
+}) => {
+  savingEdit.value = true;
+  const path =
+    payload.status === "pending"
+      ? `/curriculum/pending/${payload.id}`
+      : `/curriculum/admin/${payload.id}`;
+  try {
+    const updated = await patch<CurriculumRecord>(path, {
+      college: payload.college,
+      collegeCode: payload.collegeCode,
+      course: payload.course,
+      courseCode: payload.courseCode,
+      regulation: payload.regulation,
+      subjects: payload.subjects,
+    });
+
+    const list = payload.status === "pending" ? pending : approved;
+    const idx = list.value.findIndex((c) => c.id === payload.id);
+    if (idx !== -1) {
+      if (updated.id !== payload.id) list.value.splice(idx, 1);
+      else list.value[idx] = updated;
+    }
+    if (updated.id !== payload.id) list.value.push(updated);
+
+    detailItem.value = updated;
+    snack.value = "Curriculum updated.";
+  } catch (err) {
+    console.error("Failed to save curriculum edit", err);
+    snack.value = "Failed to save changes.";
+  }
+  savingEdit.value = false;
+};
 </script>
 
 <template>
@@ -488,9 +531,11 @@ const availableRegulations = computed(() => {
       v-if="detailItem"
       :curriculum="detailItem"
       :action-in-flight="singleInFlight.has(detailItem.id)"
+      :saving-edit="savingEdit"
       @close="detailItem = null"
       @approve="approveOne"
       @reject="rejectOne"
+      @save="handleSaveEdit"
     />
   </div>
 </template>

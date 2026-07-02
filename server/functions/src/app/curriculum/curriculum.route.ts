@@ -7,6 +7,8 @@ import {
   listCurricula,
   approvePendingCurricula,
   rejectPendingCurricula,
+  updatePendingCurriculum,
+  updateCurriculum,
 } from './curriculum.controller';
 import { authenticate, requireVerifiedEmail } from '../../shared/middlewares/auth.middleware';
 import { isAdmin } from '../../shared/middlewares/role.middleware';
@@ -108,6 +110,18 @@ router.get('/pending/:id', authenticate, requireVerifiedEmail, isAdmin, getPendi
 
 /**
  * @openapi
+ * /api/v1/curriculum/pending/{id}:
+ *   patch:
+ *     summary: Edit a pending curriculum upload's metadata and subjects (Admin)
+ *     tags: [Curriculum]
+ *     security:
+ *       - bearerAuth: []
+ *         appCheck: []
+ */
+router.patch('/pending/:id', authenticate, requireVerifiedEmail, isAdmin, updatePendingCurriculum);
+
+/**
+ * @openapi
  * /api/v1/curriculum/admin:
  *   get:
  *     summary: List approved curricula with optional filters (Admin)
@@ -117,5 +131,18 @@ router.get('/pending/:id', authenticate, requireVerifiedEmail, isAdmin, getPendi
  *         appCheck: []
  */
 router.get('/admin', authenticate, requireVerifiedEmail, isAdmin, listCurricula);
+
+/**
+ * @openapi
+ * /api/v1/curriculum/admin/{id}:
+ *   patch:
+ *     summary: Edit an approved curriculum's metadata and subjects (Admin)
+ *     description: If college/course/regulation change, the document is moved to a new id; fails with 409 if that id is already taken.
+ *     tags: [Curriculum]
+ *     security:
+ *       - bearerAuth: []
+ *         appCheck: []
+ */
+router.patch('/admin/:id', authenticate, requireVerifiedEmail, isAdmin, updateCurriculum);
 
 export default router;

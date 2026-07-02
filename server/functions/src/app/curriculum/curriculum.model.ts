@@ -26,7 +26,17 @@ export const CurriculumEnvelopeSchema = z.object({
   subjects: z.array(CurriculumSubjectSchema).min(1),
 });
 
+export const CurriculumUpdateSchema = z.object({
+  college: z.string().min(1),
+  collegeCode: z.string().min(1),
+  course: z.string().min(1),
+  courseCode: z.string().min(1),
+  regulation: z.string().min(1),
+  subjects: z.array(CurriculumSubjectSchema).min(1),
+});
+
 export type CurriculumEnvelope = z.infer<typeof CurriculumEnvelopeSchema>;
+export type CurriculumUpdate = z.infer<typeof CurriculumUpdateSchema>;
 export type CurriculumSubjectInput = z.infer<typeof CurriculumSubjectSchema>;
 
 export const curriculumDocId = (collegeCode: string, courseCode: string, regulation: string) =>

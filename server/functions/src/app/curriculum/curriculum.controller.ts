@@ -2,7 +2,7 @@ import { Response } from 'express';
 import * as admin from 'firebase-admin';
 import { AuthRequest } from '../../shared/middlewares/auth.middleware';
 import { zodError } from '../../shared/zod-error';
-import { CurriculumEnvelopeSchema, curriculumDocId } from './curriculum.model';
+import { CurriculumEnvelopeSchema, CurriculumUpdateSchema, curriculumDocId } from './curriculum.model';
 import { log } from '../../shared/logger';
 
 const firestore = () => admin.firestore();
@@ -134,6 +134,91 @@ export const getPendingCurriculum = async (req: AuthRequest, res: Response) => {
     return res.status(200).json({ id: doc.id, ...doc.data() });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
+  }
+};
+
+export const updatePendingCurriculum = async (req: AuthRequest, res: Response) => {
+  try {
+    const id = req.params.id as string;
+    const docRef = firestore().collection('curricula_pending').doc(id);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+      return res.status(404).json({ error: 'Pending curriculum not found' });
+    }
+
+    const validated = CurriculumUpdateSchema.parse(req.body);
+    await docRef.update({
+      college: validated.college,
+      collegeCode: validated.collegeCode,
+      course: validated.course,
+      courseCode: validated.courseCode,
+      regulation: validated.regulation,
+      subjects: validated.subjects,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    const updated = await docRef.get();
+    return res.status(200).json({ id: updated.id, ...updated.data() });
+  } catch (error: any) {
+    if (error?.issues) return res.status(400).json({ error: zodError(error) });
+    log.error('updatePendingCurriculum error', { error: String(error), stack: error?.stack });
+    return res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+};
+
+export const updateCurriculum = async (req: AuthRequest, res: Response) => {
+  try {
+    const uid = req.user?.uid;
+    if (!uid) return res.status(401).json({ error: 'Unauthorized' });
+
+    const id = req.params.id as string;
+    const docRef = firestore().collection('curricula').doc(id);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+      return res.status(404).json({ error: 'Curriculum not found' });
+    }
+
+    const validated = CurriculumUpdateSchema.parse(req.body);
+    const existing = doc.data()!;
+    const newId = curriculumDocId(validated.collegeCode, validated.courseCode, validated.regulation);
+    const timestamp = admin.firestore.FieldValue.serverTimestamp();
+    const updatedData = {
+      college: validated.college,
+      collegeCode: validated.collegeCode,
+      course: validated.course,
+      courseCode: validated.courseCode,
+      regulation: validated.regulation,
+      subjects: validated.subjects,
+      status: 'approved',
+      approvedBy: existing.approvedBy ?? uid,
+      approvedAt: existing.approvedAt ?? timestamp,
+      createdAt: existing.createdAt ?? timestamp,
+      updatedAt: timestamp,
+    };
+
+    if (newId === id) {
+      await docRef.update(updatedData);
+      const updated = await docRef.get();
+      return res.status(200).json({ id: updated.id, ...updated.data() });
+    }
+
+    const newRef = firestore().collection('curricula').doc(newId);
+    if ((await newRef.get()).exists) {
+      return res.status(409).json({
+        error: `A curriculum already exists for ${validated.collegeCode}/${validated.courseCode}/${validated.regulation}`,
+      });
+    }
+
+    const batch = firestore().batch();
+    batch.set(newRef, updatedData);
+    batch.delete(docRef);
+    await batch.commit();
+
+    return res.status(200).json({ id: newId, ...updatedData });
+  } catch (error: any) {
+    if (error?.issues) return res.status(400).json({ error: zodError(error) });
+    log.error('updateCurriculum error', { error: String(error), stack: error?.stack });
+    return res.status(500).json({ error: error.message || 'Internal server error' });
   }
 };
 
