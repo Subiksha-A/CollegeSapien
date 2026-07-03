@@ -257,6 +257,108 @@ export const syncAttendance = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Resolves (and self-heals) the attendanceTrackingStartDate for a semester's timetable doc.
+ * Shared by the standalone attendance-summary endpoint and the auth sync endpoint.
+ */
+export const ensureAttendanceTrackingStartDate = async (
+  timetableRef: FirebaseFirestore.DocumentReference,
+  timetable: FirebaseFirestore.DocumentData
+): Promise<string> => {
+  let attendanceTrackingStartDate = timetable.attendanceTrackingStartDate as string | undefined;
+  if (!attendanceTrackingStartDate) {
+    attendanceTrackingStartDate = new Date().toISOString().slice(0, 10);
+    await timetableRef.set({ attendanceTrackingStartDate }, { merge: true });
+  }
+  return attendanceTrackingStartDate;
+};
+
+/**
+ * Pure computation: timetable subjects + raw attendance records -> per-subject summary.
+ * Shared by the standalone attendance-summary endpoint and the auth sync endpoint.
+ */
+export const computeAttendanceSummary = (
+  subjects: TimetableSubject[],
+  records: AttendanceRecord[],
+  threshold: number,
+  attendanceTrackingStartDate: string,
+  now: Date,
+  timezoneOffsetMinutes: number
+) => {
+  const elapsedDateKeys = getElapsedDateKeys(
+    attendanceTrackingStartDate,
+    now,
+    timezoneOffsetMinutes
+  );
+
+  return subjects.map((subject: TimetableSubject) => {
+    const explicitBySlot = new Map<string, AttendanceRecord>();
+    const legacyByDate = new Map<string, AttendanceRecord>();
+    for (const record of records) {
+      if (!subjectMatches(record.subjectId, subject)) continue;
+      const recordDateKey = record.dateKey || toDateKey(record.date);
+      if (record.slotStartTime && record.slotEndTime) {
+        explicitBySlot.set(
+          slotKey(recordDateKey, subject.id, record.slotStartTime, record.slotEndTime),
+          record
+        );
+      } else {
+        legacyByDate.set(recordDateKey, record);
+      }
+    }
+
+    let attended = 0;
+    let absent = 0;
+    let leave = 0;
+    let odMl = 0;
+
+    for (const dateKey of elapsedDateKeys) {
+      const day = dayCodeForDateKey(dateKey);
+      const slots = (subject.classes || []).filter(cls => {
+        if (cls.day !== day || cls.type === 'BREAK') return false;
+        if (hasSlotElapsed(dateKey, cls.endTime, now, timezoneOffsetMinutes)) return true;
+        // Count explicitly marked slots even if class hasn't ended yet
+        return explicitBySlot.has(slotKey(dateKey, subject.id, cls.startTime, cls.endTime));
+      });
+
+      for (const slot of slots) {
+        const record =
+          explicitBySlot.get(slotKey(dateKey, subject.id, slot.startTime, slot.endTime)) ||
+          (slots.length === 1 ? legacyByDate.get(dateKey) : undefined);
+        const status = record?.status || 'Absent';
+
+        if (status === 'Present') attended += 1;
+        if (status === 'Absent') absent += 1;
+        if (status === 'Leave') leave += 1;
+        if (status === 'OD_ML') odMl += 1;
+      }
+    }
+
+    // OD_ML is excused — not counted in total, doesn't affect percentage
+    const total = attended + absent;
+
+    const percentage = total === 0 ? 0 : (attended / total) * 100;
+    const calculatedSafeSkips = total === 0 ? 0 : Math.floor(attended / threshold - total);
+    // OD_ML classes count toward safeToSkip since they're excused absences
+    const safeToSkip = Math.max(0, calculatedSafeSkips) + odMl;
+
+    return {
+      subjectId: subject.id,
+      subjectName: subject.name,
+      subjectCode: subject.code,
+      attended,
+      absent,
+      leave,
+      odMl,
+      total,
+      percentage: Math.round(percentage * 100) / 100,
+      safeToSkip,
+      requiredToReachThreshold:
+        calculatedSafeSkips < 0 ? Math.ceil((threshold * total - attended) / (1 - threshold)) : 0,
+    };
+  });
+};
+
 export const getAttendanceSummary = async (req: AuthRequest, res: Response) => {
   try {
     const uid = req.user?.uid;
@@ -278,11 +380,10 @@ export const getAttendanceSummary = async (req: AuthRequest, res: Response) => {
     const timetable = timetableDoc.data();
     if (!timetable || !timetable.subjects) return res.status(200).json([]);
 
-    let attendanceTrackingStartDate = timetable.attendanceTrackingStartDate as string | undefined;
-    if (!attendanceTrackingStartDate) {
-      attendanceTrackingStartDate = new Date().toISOString().slice(0, 10);
-      await timetableRef.set({ attendanceTrackingStartDate }, { merge: true });
-    }
+    const attendanceTrackingStartDate = await ensureAttendanceTrackingStartDate(
+      timetableRef,
+      timetable
+    );
 
     const subjects = timetable.subjects as TimetableSubject[];
     const records = attendanceSnapshot.docs.map(doc => doc.data() as AttendanceRecord);
@@ -295,78 +396,15 @@ export const getAttendanceSummary = async (req: AuthRequest, res: Response) => {
     const safeTimezoneOffsetMinutes = Number.isNaN(timezoneOffsetMinutes)
       ? 0
       : timezoneOffsetMinutes;
-    const elapsedDateKeys = getElapsedDateKeys(
+
+    const summary = computeAttendanceSummary(
+      subjects,
+      records,
+      threshold,
       attendanceTrackingStartDate,
       now,
       safeTimezoneOffsetMinutes
     );
-
-    const summary = subjects.map((subject: TimetableSubject) => {
-      const explicitBySlot = new Map<string, AttendanceRecord>();
-      const legacyByDate = new Map<string, AttendanceRecord>();
-      for (const record of records) {
-        if (!subjectMatches(record.subjectId, subject)) continue;
-        const recordDateKey = record.dateKey || toDateKey(record.date);
-        if (record.slotStartTime && record.slotEndTime) {
-          explicitBySlot.set(
-            slotKey(recordDateKey, subject.id, record.slotStartTime, record.slotEndTime),
-            record
-          );
-        } else {
-          legacyByDate.set(recordDateKey, record);
-        }
-      }
-
-      let attended = 0;
-      let absent = 0;
-      let leave = 0;
-      let odMl = 0;
-
-      for (const dateKey of elapsedDateKeys) {
-        const day = dayCodeForDateKey(dateKey);
-        const slots = (subject.classes || []).filter(cls => {
-          if (cls.day !== day || cls.type === 'BREAK') return false;
-          if (hasSlotElapsed(dateKey, cls.endTime, now, safeTimezoneOffsetMinutes)) return true;
-          // Count explicitly marked slots even if class hasn't ended yet
-          return explicitBySlot.has(slotKey(dateKey, subject.id, cls.startTime, cls.endTime));
-        });
-
-        for (const slot of slots) {
-          const record =
-            explicitBySlot.get(slotKey(dateKey, subject.id, slot.startTime, slot.endTime)) ||
-            (slots.length === 1 ? legacyByDate.get(dateKey) : undefined);
-          const status = record?.status || 'Absent';
-
-          if (status === 'Present') attended += 1;
-          if (status === 'Absent') absent += 1;
-          if (status === 'Leave') leave += 1;
-          if (status === 'OD_ML') odMl += 1;
-        }
-      }
-
-      // OD_ML is excused — not counted in total, doesn't affect percentage
-      const total = attended + absent;
-
-      const percentage = total === 0 ? 0 : (attended / total) * 100;
-      const calculatedSafeSkips = total === 0 ? 0 : Math.floor(attended / threshold - total);
-      // OD_ML classes count toward safeToSkip since they're excused absences
-      const safeToSkip = Math.max(0, calculatedSafeSkips) + odMl;
-
-      return {
-        subjectId: subject.id,
-        subjectName: subject.name,
-        subjectCode: subject.code,
-        attended,
-        absent,
-        leave,
-        odMl,
-        total,
-        percentage: Math.round(percentage * 100) / 100,
-        safeToSkip,
-        requiredToReachThreshold:
-          calculatedSafeSkips < 0 ? Math.ceil((threshold * total - attended) / (1 - threshold)) : 0,
-      };
-    });
 
     return res.status(200).json(summary);
   } catch (error: any) {

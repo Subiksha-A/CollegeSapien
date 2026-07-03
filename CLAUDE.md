@@ -17,6 +17,7 @@ Flutter app. Entry: `lib/main.dart`. Key directories under `lib/`:
 
 - `screens/` — feature screens: home, auth, onboarding, attendance, syllabus, cgpa, pomodoro, ai_features, resources, profile
 - `models/` — data models
+- `providers/` — global app state (cache-first with background refresh, e.g. `app_state_notifier.dart`)
 - `services/` — API and platform services (`services/platform/` for platform-specific)
 - `data/` — local data layer
 - `widgets/` — shared widgets
@@ -42,9 +43,9 @@ Lint: `cd admin && pnpm lint`
 
 ## Server (`server/`)
 
-Firebase project: `collegesapiens`. Functions source: `server/functions/src/`.
+Firebase project: `collegesapiens`. Functions source: `server/functions/src/`. Express 5.0, npm (package-lock.json; not pnpm).
 
-Domain modules under `src/app/`: admin, ai, attendance, auth, cgpa, cms, colleges, resources, subjects, syllabus, timetable.
+Domain modules under `src/app/`: admin, ai, attendance, auth, cgpa, cms, colleges, curriculum, resources, subjects, syllabus, timetable.
 Shared: `src/shared/` (docs, middlewares), `src/db/` (Firestore helpers), `src/ses/` (email via AWS SES).
 
 Firestore rules: `server/firestore.rules`

@@ -127,9 +127,21 @@ router.post('/signup', authenticate, signup);
  *       whether onboarding is still required.
  *
  *       No request body is required. `email` comes from the Firebase ID token.
+ *
+ *       When onboarding is already complete, the response also bundles the user's current-semester
+ *       attendance summary, timetable, and saved syllabus subjects — the same data
+ *       `GET /attendance/summary`, `GET /timetable`, and `GET /syllabus/subjects/:semester` return —
+ *       so the app can hydrate its home screen from this single call instead of four.
  *     security:
  *       - bearerAuth: []
  *         appCheck: []
+ *     parameters:
+ *       - in: query
+ *         name: timezoneOffsetMinutes
+ *         schema:
+ *           type: integer
+ *           default: 0
+ *         description: Client timezone offset in minutes, used to compute the attendance summary's elapsed-day boundaries (same semantics as `GET /attendance/summary`).
  *     responses:
  *       200:
  *         description: Auth/profile sync result.
@@ -183,6 +195,24 @@ router.post('/signup', authenticate, signup);
  *                       type: string
  *                     isVerified:
  *                       type: boolean
+ *                 attendanceSummary:
+ *                   type: array
+ *                   description: Present (possibly empty) once onboarding is complete. Same shape as `GET /attendance/summary`.
+ *                   items:
+ *                     type: object
+ *                 timetable:
+ *                   type: object
+ *                   nullable: true
+ *                   description: Present once onboarding is complete, null if no timetable is saved yet. Same shape as `GET /timetable`.
+ *                   properties:
+ *                     subjects:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                 savedSubjects:
+ *                   type: object
+ *                   nullable: true
+ *                   description: Present once onboarding is complete, null if no subjects are saved yet. Same shape as `GET /syllabus/subjects/:semester`.
  *       401:
  *         description: Unauthorized. Missing or invalid token.
  */

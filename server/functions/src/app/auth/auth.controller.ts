@@ -3,6 +3,10 @@ import { AuthRequest } from '../../shared/middlewares/auth.middleware';
 import { OnboardingSchema, ProfileUpdateSchema } from './auth.model';
 import * as admin from 'firebase-admin';
 import { zodError } from '../../shared/zod-error';
+import {
+  computeAttendanceSummary,
+  ensureAttendanceTrackingStartDate,
+} from '../attendance/attendance.controller';
 // import { sendLoginLinkEmail } from '../../ses/ses.service';
 
 const COOKIE_OPTIONS = {
@@ -89,17 +93,62 @@ export const syncAuthProfile = async (req: AuthRequest, res: Response) => {
       patch.isVerified = true;
     }
 
-    await userRef.update(patch);
-    const updatedDoc = await userRef.get();
+    const [, updatedDoc] = await Promise.all([userRef.update(patch), userRef.get()]);
     setSessionCookie(req, res);
 
     const finalData = updatedDoc.data()!;
     const onboardingRequired = !finalData.collegeId || !finalData.department || !finalData.semester;
+
+    if (onboardingRequired) {
+      return res.status(200).json({
+        message: 'Profile synchronized',
+        onboardingRequired,
+        auth: buildAuthSnapshot(req),
+        user: finalData,
+      });
+    }
+
+    const semester = finalData.semester || 1;
+    const [attendanceSnapshot, timetableDoc, syllabusDoc] = await Promise.all([
+      userRef.collection('attendance').get(),
+      userRef.collection('semesters').doc(String(semester)).get(),
+      userRef.collection('syllabus').doc(String(semester)).get(),
+    ]);
+
+    let attendanceSummary: unknown[] = [];
+    const timetable = timetableDoc.data();
+    if (timetable?.subjects) {
+      const timetableRef = userRef.collection('semesters').doc(String(semester));
+      const attendanceTrackingStartDate = await ensureAttendanceTrackingStartDate(
+        timetableRef,
+        timetable
+      );
+      const threshold = (finalData.attendanceThreshold || 75) / 100;
+      const timezoneOffsetMinutes = Number.parseInt(
+        req.query?.timezoneOffsetMinutes?.toString() || '0',
+        10
+      );
+      const safeTimezoneOffsetMinutes = Number.isNaN(timezoneOffsetMinutes)
+        ? 0
+        : timezoneOffsetMinutes;
+      attendanceSummary = computeAttendanceSummary(
+        timetable.subjects,
+        attendanceSnapshot.docs.map(doc => doc.data()),
+        threshold,
+        attendanceTrackingStartDate,
+        new Date(),
+        safeTimezoneOffsetMinutes
+      );
+    }
+
     return res.status(200).json({
       message: 'Profile synchronized',
       onboardingRequired,
       auth: buildAuthSnapshot(req),
       user: finalData,
+      attendanceSummary,
+      timetable: timetable?.subjects ? { subjects: timetable.subjects } : null,
+      savedSubjects: syllabusDoc.exists ? syllabusDoc.data() : null,
     });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });

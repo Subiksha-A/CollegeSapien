@@ -14,7 +14,6 @@ import '../../models/event_models.dart';
 import '../../services/attendance_service.dart';
 import '../../services/auth_service.dart';
 import '../../services/college_service.dart';
-import '../../services/timetable_service.dart';
 import '../profile/profile_screen.dart';
 import '../../models/syllabus_models.dart';
 import '../../services/syllabus_service.dart';
@@ -147,11 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Paint whatever's cached first, then trigger the network refresh.
       _initializeStateFromProvider();
       final appState = Provider.of<AppStateNotifier>(context, listen: false);
       appState.addListener(_onAppStateChanged);
+      _load();
     });
-    _load();
   }
 
   @override
@@ -219,8 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _load() async {
     // Fire all load methods concurrently in the background
     _loadProfile();
-    _loadAttendance();
-    _loadTimetable();
     _loadEvents();
     _loadMarkedSlots();
   }
@@ -245,6 +243,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     try {
+      // One sync call now returns profile + attendance + timetable + saved
+      // subjects together, instead of four separate network round trips.
       final result = await AuthService.instance.syncProfile();
       final freshUser = result.user;
       if (freshUser == null) return;
@@ -257,21 +257,34 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
 
-      final syllabusService = SyllabusService();
-      List<SavedSubject>? saved;
-      try {
-        saved = await syllabusService.getSavedSubjects(freshUser.semester);
-      } catch (_) {}
+      if (result.attendanceSummary != null) {
+        appState.setAttendanceSummary(result.attendanceSummary!);
+        if (mounted) setState(() => _summaries = result.attendanceSummary!);
+      }
 
-      if (saved != null) {
+      if (result.timetableSubjects != null) {
+        appState.setTimetableSubjects(result.timetableSubjects!);
+        if (mounted) {
+          setState(() {
+            _processTodayClasses(result.timetableSubjects!);
+            _loadingTimetable = false;
+          });
+        }
+      } else if (mounted) {
+        setState(() => _loadingTimetable = false);
+      }
+
+      final saved = result.savedSubjects?.subjects;
+      if (saved != null && saved.isNotEmpty) {
         appState.setSavedSubjects(saved);
         if (mounted) {
           setState(() {
-            _savedSubjects = saved!;
+            _savedSubjects = saved;
             _showingCurriculumFallback = false;
           });
         }
       } else {
+        final syllabusService = SyllabusService();
         // No saved subjects — try curriculum fallback
         try {
           final colleges = await CollegeService().listColleges();
@@ -354,27 +367,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     entries.sort((a, b) => _toMin(a.startTime).compareTo(_toMin(b.startTime)));
     _todayClasses = entries;
-  }
-
-  Future<void> _loadTimetable() async {
-    final appState = Provider.of<AppStateNotifier>(context, listen: false);
-    if (appState.timetableSubjects != null && _todayClasses.isEmpty) {
-      _processTodayClasses(appState.timetableSubjects!);
-      if (mounted) setState(() => _loadingTimetable = false);
-    }
-
-    try {
-      final subjects = await TimetableService().getAllSubjects();
-      appState.setTimetableSubjects(subjects);
-      if (mounted) {
-        setState(() {
-          _processTodayClasses(subjects);
-          _loadingTimetable = false;
-        });
-      }
-    } catch (_) {
-      if (mounted) setState(() => _loadingTimetable = false);
-    }
   }
 
   Future<void> _markSlotPresent(_ClassEntry entry) async {

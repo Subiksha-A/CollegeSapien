@@ -106,6 +106,18 @@ class SavedSyllabus {
   final List<SavedSubject> subjects;
 
   SavedSyllabus({this.regulation, required this.subjects});
+
+  static SavedSyllabus? fromJsonOrNull(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final subjects = json['subjects'] as List<dynamic>?;
+    if (subjects == null || subjects.isEmpty) return null;
+    return SavedSyllabus(
+      regulation: json['regulation'] as String?,
+      subjects: subjects
+          .map((s) => SavedSubject.fromJson(s as Map<String, dynamic>))
+          .toList(),
+    );
+  }
 }
 
 class SavedSubject {

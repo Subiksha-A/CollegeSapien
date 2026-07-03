@@ -24,8 +24,10 @@ class AuthService {
   UserProfile? get profile => _profile;
 
   Future<AuthSyncResult> syncProfile() async {
-    final json =
-        await ApiService.instance.post('/auth/sync') as Map<String, dynamic>;
+    final timezoneOffsetMinutes = DateTime.now().timeZoneOffset.inMinutes;
+    final json = await ApiService.instance
+            .post('/auth/sync?timezoneOffsetMinutes=$timezoneOffsetMinutes')
+        as Map<String, dynamic>;
     final result = AuthSyncResult.fromJson(json);
     _profile = result.user;
     return result;

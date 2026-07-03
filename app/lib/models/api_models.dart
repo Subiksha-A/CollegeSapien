@@ -1,3 +1,6 @@
+import 'timetable_models.dart';
+import 'syllabus_models.dart';
+
 class College {
   final String id;
   final String name;
@@ -72,16 +75,25 @@ class AuthSyncResult {
   final bool onboardingRequired;
   final UserProfile? user;
   final bool emailVerified;
+  final List<AttendanceSummary>? attendanceSummary;
+  final List<TimetableSubject>? timetableSubjects;
+  final SavedSyllabus? savedSubjects;
 
   AuthSyncResult({
     required this.onboardingRequired,
     required this.user,
     required this.emailVerified,
+    this.attendanceSummary,
+    this.timetableSubjects,
+    this.savedSubjects,
   });
 
   factory AuthSyncResult.fromJson(Map<String, dynamic> json) {
     final auth = json['auth'] as Map<String, dynamic>? ?? {};
     final userJson = json['user'] as Map<String, dynamic>?;
+    final attendanceJson = json['attendanceSummary'] as List<dynamic>?;
+    final timetableJson = json['timetable'] as Map<String, dynamic>?;
+    final timetableSubjectsJson = timetableJson?['subjects'] as List<dynamic>?;
     return AuthSyncResult(
       onboardingRequired:
           json['onboardingRequired'] as bool? ?? userJson == null,
@@ -89,6 +101,14 @@ class AuthSyncResult {
       emailVerified: auth['emailVerified'] as bool? ??
           userJson?['isVerified'] as bool? ??
           false,
+      attendanceSummary: attendanceJson
+          ?.map((e) => AttendanceSummary.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      timetableSubjects: timetableSubjectsJson
+          ?.map((e) => TimetableSubject.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      savedSubjects: SavedSyllabus.fromJsonOrNull(
+          json['savedSubjects'] as Map<String, dynamic>?),
     );
   }
 }
