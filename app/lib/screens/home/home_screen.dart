@@ -299,8 +299,9 @@ class _HomeScreenState extends State<HomeScreen> {
           final college =
               colleges.where((c) => c.id == freshUser.collegeId).firstOrNull;
           final collegeCode = college?.code;
-          final deptObj =
-              departments.where((d) => d.name == freshUser.department).firstOrNull;
+          final deptObj = departments
+              .where((d) => d.name == freshUser.department)
+              .firstOrNull;
           final courseCode = deptObj?.code;
           if (collegeCode != null && courseCode != null) {
             final bundle = await syllabusService.getCurriculum(
@@ -550,9 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (_savedSubjects.isNotEmpty) ...[
                 const SizedBox(height: 24),
                 _sectionHeader(
-                  _showingCurriculumFallback
-                      ? "Semester Subjects"
-                      : "Your Subjects",
+                  "${_semester == 1 ? '1st' : _semester == 2 ? '2nd' : _semester == 3 ? '3rd' : '${_semester}th'} Semester Subjects",
                   onShowAll: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -632,17 +631,36 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _header() {
     final now = DateTime.now();
     const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
     String daySuffix(int day) {
       if (day >= 11 && day <= 13) return 'th';
       switch (day % 10) {
-        case 1: return 'st';
-        case 2: return 'nd';
-        case 3: return 'rd';
-        default: return 'th';
+        case 1:
+          return 'st';
+        case 2:
+          return 'nd';
+        case 3:
+          return 'rd';
+        default:
+          return 'th';
       }
     }
-    final dateStr = '${weekdays[now.weekday - 1]}, ${now.day}${daySuffix(now.day)} ${months[now.month - 1]}';
+
+    final dateStr =
+        '${weekdays[now.weekday - 1]}, ${now.day}${daySuffix(now.day)} ${months[now.month - 1]}';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -662,7 +680,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Expanded(
               child: Text(
-                _userName.isEmpty ? 'Hi there' : 'Hi ${_userName.split(' ').first}',
+                _userName.isEmpty
+                    ? 'Hi there'
+                    : 'Hi ${_userName.split(' ').first}',
                 style: const TextStyle(
                   fontFamily: 'Lexend Mega',
                   fontSize: 20,
@@ -685,7 +705,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: const [
-                    BoxShadow(offset: Offset(2, 2), color: Colors.black)
+                    BoxShadow(offset: Offset(1, 1), color: Colors.black)
                   ],
                 ),
                 child: const Icon(Icons.person, size: 22),
@@ -708,9 +728,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: AppColors.primaryYellow,
         border: Border.all(color: Colors.black, width: 1.5),
         borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(offset: Offset(1, 1), color: Colors.black)
-        ],
+        boxShadow: const [BoxShadow(offset: Offset(1, 1), color: Colors.black)],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6.5),
@@ -791,7 +809,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      _progressBar(hasData ? _avgPct / 100 : 0, pctStr, hasData),
+                      _progressBar(
+                          hasData ? _avgPct / 100 : 0, pctStr, hasData),
                     ],
                   ),
                 ],
@@ -866,9 +885,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: AppColors.primaryYellow,
         border: Border.all(color: Colors.black, width: 1.5),
         borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(offset: Offset(1, 1), color: Colors.black)
-        ],
+        boxShadow: const [BoxShadow(offset: Offset(1, 1), color: Colors.black)],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6.5),
@@ -963,10 +980,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _dayOverCard() {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => const MarkAttendanceScreen())),
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (_) => const MarkAttendanceScreen())),
       child: Container(
         height: 180,
         decoration: BoxDecoration(
@@ -974,7 +989,7 @@ class _HomeScreenState extends State<HomeScreen> {
           border: Border.all(color: Colors.black, width: 1.5),
           borderRadius: BorderRadius.circular(8),
           boxShadow: const [
-            BoxShadow(offset: Offset(2, 2), color: Colors.black)
+            BoxShadow(offset: Offset(1, 2), color: Colors.black)
           ],
         ),
         child: ClipRRect(
@@ -1098,11 +1113,11 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                offset: const Offset(4, 4),
+                offset: const Offset(1, 1),
                 color: isMarked ? const Color(0xFF16A34A) : Colors.black,
               ),
               const BoxShadow(
-                  offset: Offset(0, 8),
+                  offset: Offset(0, 2),
                   blurRadius: 24,
                   color: Color(0x1E003FB1)),
             ],
@@ -1202,7 +1217,7 @@ class _HomeScreenState extends State<HomeScreen> {
               border: Border.all(color: Colors.black, width: 1.5),
               borderRadius: BorderRadius.circular(8),
               boxShadow: const [
-                BoxShadow(offset: Offset(4, 4), color: Colors.black),
+                BoxShadow(offset: Offset(1, 1), color: Colors.black),
               ],
             ),
             child: Column(
@@ -1457,7 +1472,7 @@ class _HomeScreenState extends State<HomeScreen> {
             border: Border.all(color: Colors.black, width: 1.5),
             borderRadius: BorderRadius.circular(8),
             boxShadow: const [
-              BoxShadow(offset: Offset(4, 4), color: Colors.black)
+              BoxShadow(offset: Offset(1, 1), color: Colors.black)
             ],
           ),
           child: const Row(
@@ -1523,7 +1538,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.showAllButton,
                 borderRadius: BorderRadius.circular(6),
                 boxShadow: const [
-                  BoxShadow(offset: Offset(2, 2), color: Colors.black)
+                  BoxShadow(offset: Offset(1, 1), color: Colors.black)
                 ],
               ),
               child: const Text(
