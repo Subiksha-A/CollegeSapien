@@ -20,6 +20,21 @@ import cmsRoutes from './app/cms/cms.route';
 import curriculumRoutes from './app/curriculum/curriculum.route';
 
 const app = express();
+app.set('query parser', 'extended');
+
+// functions-framework v5 (Cloud Functions gen2) fronts this app with Express 5, where
+// req.query is a prototype getter. Express 4 skips its own query parsing when it sees
+// that getter, then discards it on re-init — leaving req.query undefined. Re-parse it.
+app.use((req, _res, next) => {
+  if (req.query === undefined) {
+    const queryIndex = req.url.indexOf('?');
+    (req as { query: Record<string, string> }).query =
+      queryIndex >= 0
+        ? Object.fromEntries(new URLSearchParams(req.url.slice(queryIndex + 1)))
+        : {};
+  }
+  next();
+});
 
 if (admin.apps.length === 0) {
   admin.initializeApp();

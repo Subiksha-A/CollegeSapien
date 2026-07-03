@@ -5,6 +5,7 @@ import '../../models/api_models.dart';
 import '../../services/api_service.dart';
 import '../../services/auth_service.dart';
 import '../../services/college_service.dart';
+import '../../services/syllabus_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/department_constants.dart';
@@ -24,6 +25,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String? _selectedCollegeId;
   String? _selectedDepartment;
   int? _selectedSemester;
+  String? _initialCollegeId;
+  String? _initialDepartment;
   bool _isSaving = false;
   bool _isLoading = true;
 
@@ -47,8 +50,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       final profile = (results[1] as AuthSyncResult).user;
       if (profile != null) {
         _selectedCollegeId = profile.collegeId;
+        _initialCollegeId = profile.collegeId;
         final deptMatch = departments.any((d) => d.name == profile.department);
         _selectedDepartment = deptMatch ? profile.department : null;
+        _initialDepartment = profile.department;
         _selectedSemester =
             profile.semester > 0 && profile.semester <= 8 ? profile.semester : null;
       }
@@ -86,6 +91,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       if (_nameController.text.trim().isNotEmpty) {
         await FirebaseAuth.instance.currentUser
             ?.updateDisplayName(_nameController.text.trim());
+      }
+
+      // Check if college or department changed, and clear/refresh curriculum cache
+      final collegeChanged = _selectedCollegeId != _initialCollegeId;
+      final departmentChanged = _selectedDepartment != _initialDepartment;
+
+      if (collegeChanged || departmentChanged) {
+        final syllabusService = SyllabusService();
+        await syllabusService.clearCache();
+
+        if (_selectedCollegeId != null && _selectedDepartment != null) {
+          final newCollege =
+              _colleges.where((c) => c.id == _selectedCollegeId).firstOrNull;
+          final deptObj =
+              departments.where((d) => d.name == _selectedDepartment).firstOrNull;
+          final courseCode = deptObj?.code;
+          if (newCollege != null && courseCode != null) {
+            try {
+              // Pre-fetch the new curriculum to refresh local cache
+              await syllabusService.getCurriculum(
+                collegeCode: newCollege.code,
+                courseCode: courseCode,
+              );
+            } catch (_) {
+              // Ignore background fetch errors so the profile save is not blocked
+            }
+          }
+        }
       }
 
       if (mounted) {
