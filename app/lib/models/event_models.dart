@@ -23,4 +23,13 @@ class EventItem {
         eventLink: j['eventLink'] as String? ?? '',
         eventDate: j['eventDate'] as String? ?? '',
       );
+
+  Map<String, dynamic> toJson() => {
+        'eventName': eventName,
+        'location': location,
+        'communityName': communityName,
+        'communityLogo': communityLogo,
+        'eventLink': eventLink,
+        'eventDate': eventDate,
+      };
 }

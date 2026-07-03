@@ -54,6 +54,18 @@ class UserProfile {
       role: json['role'] as String? ?? 'user',
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'uid': uid,
+        'email': email,
+        'name': name,
+        'collegeId': collegeId,
+        'collegeName': collegeName,
+        'department': department,
+        'semester': semester,
+        'isVerified': isVerified,
+        'role': role,
+      };
 }
 
 class AuthSyncResult {
@@ -117,6 +129,18 @@ class AttendanceSummary {
       requiredToReachThreshold: json['requiredToReachThreshold'] as int? ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'subjectId': subjectId,
+        'subjectName': subjectName,
+        'subjectCode': subjectCode,
+        'attended': attended,
+        'absent': absent,
+        'total': total,
+        'percentage': percentage,
+        'safeToSkip': safeToSkip,
+        'requiredToReachThreshold': requiredToReachThreshold,
+      };
 }
 
 class HubResource {

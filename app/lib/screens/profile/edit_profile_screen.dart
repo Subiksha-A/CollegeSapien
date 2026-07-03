@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/api_models.dart';
+import '../../models/syllabus_models.dart';
 import '../../services/api_service.dart';
 import '../../services/auth_service.dart';
 import '../../services/college_service.dart';
 import '../../services/syllabus_service.dart';
+import '../../providers/app_state_notifier.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/department_constants.dart';
@@ -27,6 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   int? _selectedSemester;
   String? _initialCollegeId;
   String? _initialDepartment;
+  int? _initialSemester;
   bool _isSaving = false;
   bool _isLoading = true;
 
@@ -56,6 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         _initialDepartment = profile.department;
         _selectedSemester =
             profile.semester > 0 && profile.semester <= 8 ? profile.semester : null;
+        _initialSemester = _selectedSemester;
       }
     } catch (_) {}
     if (mounted) setState(() => _isLoading = false);
@@ -70,6 +75,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isSaving = true);
+
+    final appState = Provider.of<AppStateNotifier>(context, listen: false);
 
     try {
       final body = <String, dynamic>{};
@@ -93,9 +100,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ?.updateDisplayName(_nameController.text.trim());
       }
 
-      // Check if college or department changed, and clear/refresh curriculum cache
+      // Refresh local user profile via sync
+      final syncResult = await AuthService.instance.syncProfile();
+      final updatedProfile = syncResult.user;
+      if (updatedProfile != null) {
+        appState.setUserProfile(updatedProfile);
+      }
+
+      // Check if college, department or semester changed, and update cache accordingly
       final collegeChanged = _selectedCollegeId != _initialCollegeId;
       final departmentChanged = _selectedDepartment != _initialDepartment;
+      final semesterChanged = _selectedSemester != _initialSemester;
 
       if (collegeChanged || departmentChanged) {
         final syllabusService = SyllabusService();
@@ -119,6 +134,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             }
           }
         }
+      }
+
+      if (semesterChanged && _selectedSemester != null) {
+        final syllabusService = SyllabusService();
+        try {
+          final saved = await syllabusService.getSavedSubjects(_selectedSemester!);
+          if (saved != null) {
+            appState.setSavedSubjects(saved);
+          } else {
+            // Curriculum fallback
+            final newCollegeId = _selectedCollegeId ?? _initialCollegeId;
+            final newDept = _selectedDepartment ?? _initialDepartment;
+            if (newCollegeId != null && newDept != null) {
+              final newCollege =
+                  _colleges.where((c) => c.id == newCollegeId).firstOrNull;
+              final deptObj =
+                  departments.where((d) => d.name == newDept).firstOrNull;
+              final courseCode = deptObj?.code;
+              if (newCollege != null && courseCode != null) {
+                final bundle = await syllabusService.getCurriculum(
+                  collegeCode: newCollege.code,
+                  courseCode: courseCode,
+                );
+                final subjects = syllabusService.getSubjectsForSemester(
+                  bundle,
+                  semester: _selectedSemester!,
+                );
+                if (subjects.isNotEmpty) {
+                  final fallbackSubjects = subjects
+                      .map((s) => SavedSubject(
+                            subjectCode: s.subjectCode,
+                            subjectName: s.subjectName,
+                            credits: s.credits,
+                            isElective: s.isElective,
+                            electiveType: s.electiveType,
+                            courseType: s.courseType,
+                            ltp: s.ltp,
+                            tcp: s.tcp,
+                            category: s.category,
+                          ))
+                      .toList();
+                  appState.setSavedSubjects(fallbackSubjects);
+                } else {
+                  appState.invalidateSavedSubjects();
+                }
+              }
+            }
+          }
+        } catch (_) {}
       }
 
       if (mounted) {

@@ -13,7 +13,6 @@ import '../../models/timetable_models.dart';
 import '../../models/event_models.dart';
 import '../../services/attendance_service.dart';
 import '../../services/auth_service.dart';
-import '../../services/cache_service.dart';
 import '../../services/college_service.dart';
 import '../../services/timetable_service.dart';
 import '../profile/profile_screen.dart';
@@ -149,8 +148,36 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initializeStateFromProvider();
+      final appState = Provider.of<AppStateNotifier>(context, listen: false);
+      appState.addListener(_onAppStateChanged);
     });
     _load();
+  }
+
+  @override
+  void dispose() {
+    try {
+      final appState = Provider.of<AppStateNotifier>(context, listen: false);
+      appState.removeListener(_onAppStateChanged);
+    } catch (_) {}
+    super.dispose();
+  }
+
+  void _onAppStateChanged() {
+    if (!mounted) return;
+    final appState = Provider.of<AppStateNotifier>(context, listen: false);
+    final user = appState.userProfile;
+    if (user != null) {
+      if (user.semester != _semester || user.name != _userName) {
+        setState(() {
+          _semester = user.semester;
+          _userName = user.name;
+        });
+        _load(); // Reload all data for the new semester
+        return;
+      }
+    }
+    _initializeStateFromProvider();
   }
 
   void _initializeStateFromProvider() {
@@ -159,14 +186,14 @@ class _HomeScreenState extends State<HomeScreen> {
       final appState = Provider.of<AppStateNotifier>(context, listen: false);
 
       // Load data from provider if available
-      if (appState.attendanceSummary != null && _summaries.isEmpty) {
+      if (appState.attendanceSummary != null) {
         setState(() => _summaries = appState.attendanceSummary!);
       }
-      if (appState.timetableSubjects != null && _todayClasses.isEmpty) {
+      if (appState.timetableSubjects != null) {
         _processTodayClasses(appState.timetableSubjects!);
-        setState(() {});
+        setState(() => _loadingTimetable = false);
       }
-      if (appState.events != null && _allEvents.isEmpty) {
+      if (appState.events != null) {
         setState(() {
           _allEvents = appState.events!;
           _shownEvents = _allEvents.take(2).toList();
@@ -180,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _userName = appState.userProfile!.name;
         });
       }
-      if (appState.savedSubjects != null && _savedSubjects.isEmpty) {
+      if (appState.savedSubjects != null) {
         setState(() {
           _savedSubjects = appState.savedSubjects!;
           _showingCurriculumFallback = false;
@@ -190,89 +217,97 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _load() async {
-    final profileFuture = _loadProfile();
-    await Future.wait([
-      _loadAttendance(),
-      _loadTimetable(),
-      _loadEvents(),
-      profileFuture,
-      _loadMarkedSlots(),
-    ]);
+    // Fire all load methods concurrently in the background
+    _loadProfile();
+    _loadAttendance();
+    _loadTimetable();
+    _loadEvents();
+    _loadMarkedSlots();
   }
 
   Future<void> _loadProfile() async {
-    final prefs = await SharedPreferences.getInstance();
-    final cached = prefs.getInt('last_semester') ?? 0;
-    if (mounted && cached > 0) setState(() => _semester = cached);
-    try {
-      final result = await AuthService.instance.syncProfile();
-      final user = result.user;
-      if (user == null || !mounted) return;
-      await prefs.setInt('last_semester', user.semester);
-      await prefs.setString('last_college_name', user.collegeName ?? '');
+    final appState = Provider.of<AppStateNotifier>(context, listen: false);
+    var user = appState.userProfile ?? AuthService.instance.profile;
+
+    if (user != null) {
       if (mounted) {
-        final appState = Provider.of<AppStateNotifier>(context, listen: false);
-        appState.setUserProfile(user);
         setState(() {
           _semester = user.semester;
           _userName = user.name;
+        });
+        if (appState.savedSubjects != null) {
+          setState(() {
+            _savedSubjects = appState.savedSubjects!;
+            _showingCurriculumFallback = false;
+          });
+        }
+      }
+    }
+
+    try {
+      final result = await AuthService.instance.syncProfile();
+      final freshUser = result.user;
+      if (freshUser == null) return;
+
+      appState.setUserProfile(freshUser);
+      if (mounted) {
+        setState(() {
+          _semester = freshUser.semester;
+          _userName = freshUser.name;
         });
       }
 
       final syllabusService = SyllabusService();
       List<SavedSubject>? saved;
       try {
-        saved = await syllabusService.getSavedSubjects(user.semester);
+        saved = await syllabusService.getSavedSubjects(freshUser.semester);
       } catch (_) {}
-      if (mounted && saved != null) {
-        final savedSubjects = saved;
-        final appState = Provider.of<AppStateNotifier>(context, listen: false);
-        appState.setSavedSubjects(savedSubjects);
-        setState(() {
-          _savedSubjects = savedSubjects;
-          _showingCurriculumFallback = false;
-        });
-      } else if (mounted) {
+
+      if (saved != null) {
+        appState.setSavedSubjects(saved);
+        if (mounted) {
+          setState(() {
+            _savedSubjects = saved!;
+            _showingCurriculumFallback = false;
+          });
+        }
+      } else {
         // No saved subjects — try curriculum fallback
         try {
           final colleges = await CollegeService().listColleges();
           final college =
-              colleges.where((c) => c.id == user.collegeId).firstOrNull;
+              colleges.where((c) => c.id == freshUser.collegeId).firstOrNull;
           final collegeCode = college?.code;
           final deptObj =
-              departments.where((d) => d.name == user.department).firstOrNull;
+              departments.where((d) => d.name == freshUser.department).firstOrNull;
           final courseCode = deptObj?.code;
           if (collegeCode != null && courseCode != null) {
-            CurriculumBundle? bundle;
-            try {
-              bundle = await syllabusService.getCurriculum(
-                collegeCode: collegeCode,
-                courseCode: courseCode,
-              );
-            } catch (_) {}
-            if (bundle != null) {
-              final subjects = syllabusService.getSubjectsForSemester(
-                bundle,
-                semester: user.semester,
-              );
-              if (subjects.isNotEmpty && mounted) {
-                final savedSubjects = subjects
-                    .map((s) => SavedSubject(
-                          subjectCode: s.subjectCode,
-                          subjectName: s.subjectName,
-                          credits: s.credits,
-                          isElective: s.isElective,
-                          electiveType: s.electiveType,
-                          courseType: s.courseType,
-                          ltp: s.ltp,
-                          tcp: s.tcp,
-                          category: s.category,
-                        ))
-                    .toList();
-                final appState = Provider.of<AppStateNotifier>(context, listen: false);
-                appState.setSavedSubjects(savedSubjects);
+            final bundle = await syllabusService.getCurriculum(
+              collegeCode: collegeCode,
+              courseCode: courseCode,
+            );
+            final subjects = syllabusService.getSubjectsForSemester(
+              bundle,
+              semester: freshUser.semester,
+            );
+            if (subjects.isNotEmpty) {
+              final fallbackSubjects = subjects
+                  .map((s) => SavedSubject(
+                        subjectCode: s.subjectCode,
+                        subjectName: s.subjectName,
+                        credits: s.credits,
+                        isElective: s.isElective,
+                        electiveType: s.electiveType,
+                        courseType: s.courseType,
+                        ltp: s.ltp,
+                        tcp: s.tcp,
+                        category: s.category,
+                      ))
+                  .toList();
+              appState.setSavedSubjects(fallbackSubjects);
+              if (mounted) {
                 setState(() {
-                  _savedSubjects = savedSubjects;
+                  _savedSubjects = fallbackSubjects;
                   _showingCurriculumFallback = true;
                 });
               }
@@ -284,11 +319,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadAttendance() async {
+    final appState = Provider.of<AppStateNotifier>(context, listen: false);
+    if (appState.attendanceSummary != null && _summaries.isEmpty) {
+      if (mounted) setState(() => _summaries = appState.attendanceSummary!);
+    }
+
     try {
       final s = await AttendanceService().getSummary();
+      appState.setAttendanceSummary(s);
       if (mounted) {
-        final appState = Provider.of<AppStateNotifier>(context, listen: false);
-        appState.setAttendanceSummary(s);
         setState(() => _summaries = s);
       }
     } catch (_) {}
@@ -318,16 +357,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadTimetable() async {
+    final appState = Provider.of<AppStateNotifier>(context, listen: false);
+    if (appState.timetableSubjects != null && _todayClasses.isEmpty) {
+      _processTodayClasses(appState.timetableSubjects!);
+      if (mounted) setState(() => _loadingTimetable = false);
+    }
+
     try {
-      final appState = Provider.of<AppStateNotifier>(context, listen: false);
-
-      List<TimetableSubject>? subjects = appState.timetableSubjects;
-      subjects ??= await TimetableService().getAllSubjects();
-
-      if (mounted && subjects != null) {
-        appState.setTimetableSubjects(subjects);
+      final subjects = await TimetableService().getAllSubjects();
+      appState.setTimetableSubjects(subjects);
+      if (mounted) {
         setState(() {
-          _processTodayClasses(subjects!);
+          _processTodayClasses(subjects);
           _loadingTimetable = false;
         });
       }
@@ -380,22 +421,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadEvents() async {
-    try {
-      final appState = Provider.of<AppStateNotifier>(context, listen: false);
-
-      // Check if we have cached events that are still valid
-      if (appState.events != null) {
-        if (mounted) {
-          setState(() {
-            _allEvents = appState.events!;
-            _shownEvents = _allEvents.take(2).toList();
-            _hasMoreEvents = _allEvents.length > 2;
-            _loadingEvents = false;
-          });
-        }
-        return;
+    final appState = Provider.of<AppStateNotifier>(context, listen: false);
+    if (appState.events != null && _allEvents.isEmpty) {
+      if (mounted) {
+        setState(() {
+          _allEvents = appState.events!;
+          _shownEvents = _allEvents.take(2).toList();
+          _hasMoreEvents = _allEvents.length > 2;
+          _loadingEvents = false;
+        });
       }
+    }
 
+    try {
       final res = await http
           .get(Uri.parse(
             'https://raw.githubusercontent.com/FOSSUChennai/Communities/'
@@ -430,8 +468,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return db.compareTo(da);
           });
 
+        appState.setEvents(shown);
         if (mounted) {
-          appState.setEvents(shown);
           setState(() {
             _allEvents = shown;
             _shownEvents = shown.take(2).toList();

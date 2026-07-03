@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
+import '../../providers/app_state_notifier.dart';
 import '../home/main_navigation.dart';
 import '../onboarding/onboarding_screen.dart';
 import 'login_screen.dart';
@@ -55,9 +57,17 @@ class _SplashScreenState extends State<SplashScreen>
     }
 
     try {
+      final appState = Provider.of<AppStateNotifier>(context, listen: false);
+      await appState.loadFromLocalCache();
+
       await user.reload();
       await AuthService.instance.currentUser?.getIdToken(true);
       final result = await AuthService.instance.syncProfile();
+      
+      if (result.user != null) {
+        appState.setUserProfile(result.user);
+      }
+
       if (!mounted) return;
       if (!result.emailVerified) {
         _replaceWith(const LoginScreen());
@@ -69,7 +79,16 @@ class _SplashScreenState extends State<SplashScreen>
     } catch (e) {
       if (mounted) {
         debugPrint('SplashScreen navigation error: $e');
-        _replaceWith(const LoginScreen());
+        final appState = Provider.of<AppStateNotifier>(context, listen: false);
+        final profile = appState.userProfile;
+        if (profile != null &&
+            profile.collegeId != null &&
+            profile.department != null) {
+          // Navigate to main screen offline if we have cached details
+          _replaceWith(const MainNavigation());
+        } else {
+          _replaceWith(const LoginScreen());
+        }
       }
     }
   }
