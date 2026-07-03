@@ -102,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<SavedSubject> _savedSubjects = [];
   bool _showingCurriculumFallback = false;
   String _userName = '';
+  String _collegeName = '';
 
   static String get _todayMarkedKey =>
       'marked_slots_${_dateKey(DateTime.now())}';
@@ -168,10 +169,13 @@ class _HomeScreenState extends State<HomeScreen> {
     final appState = Provider.of<AppStateNotifier>(context, listen: false);
     final user = appState.userProfile;
     if (user != null) {
-      if (user.semester != _semester || user.name != _userName) {
+      if (user.semester != _semester ||
+          user.name != _userName ||
+          (user.collegeName ?? '') != _collegeName) {
         setState(() {
           _semester = user.semester;
           _userName = user.name;
+          _collegeName = user.collegeName ?? '';
         });
         _load(); // Reload all data for the new semester
         return;
@@ -205,6 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _semester = appState.userProfile!.semester;
           _userName = appState.userProfile!.name;
+          _collegeName = appState.userProfile!.collegeName ?? '';
         });
       }
       if (appState.savedSubjects != null) {
@@ -232,6 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _semester = user.semester;
           _userName = user.name;
+          _collegeName = user.collegeName ?? '';
         });
         if (appState.savedSubjects != null) {
           setState(() {
@@ -261,6 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _semester = freshUser.semester;
           _userName = freshUser.name;
+          _collegeName = freshUser.collegeName ?? '';
         });
       }
       appState.setUserProfile(freshUser);
@@ -629,53 +636,9 @@ class _HomeScreenState extends State<HomeScreen> {
   // ─── Header ────────────────────────────────────────────────────────────────
 
   Widget _header() {
-    final now = DateTime.now();
-    const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
-    String daySuffix(int day) {
-      if (day >= 11 && day <= 13) return 'th';
-      switch (day % 10) {
-        case 1:
-          return 'st';
-        case 2:
-          return 'nd';
-        case 3:
-          return 'rd';
-        default:
-          return 'th';
-      }
-    }
-
-    final dateStr =
-        '${weekdays[now.weekday - 1]}, ${now.day}${daySuffix(now.day)} ${months[now.month - 1]}';
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          dateStr.toUpperCase(),
-          style: TextStyle(
-            fontFamily: 'Public Sans',
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
-            color: Colors.black.withValues(alpha: 0.5),
-          ),
-        ),
-        const SizedBox(height: 4),
         Row(
           children: [
             Expanded(
@@ -713,6 +676,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+        if (_collegeName.isNotEmpty) ...[
+          const SizedBox(height: 4),
+          Text(
+            _collegeName.toUpperCase(),
+            style: TextStyle(
+              fontFamily: 'Public Sans',
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
+              color: Colors.black.withValues(alpha: 0.5),
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ],
     );
   }
