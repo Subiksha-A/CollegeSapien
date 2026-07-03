@@ -39,31 +39,56 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
     final user = FirebaseAuth.instance.currentUser;
     _nameController = TextEditingController(text: user?.displayName ?? '');
+    // Prefill instantly from the cache /auth/sync already populated (splash,
+    // home screen, ...) instead of blocking this screen on a fresh sync.
+    _applyProfile(
+      Provider.of<AppStateNotifier>(context, listen: false).userProfile ??
+          AuthService.instance.profile,
+      markAsInitial: true,
+    );
     _loadProfile();
   }
 
+  void _applyProfile(UserProfile? profile, {required bool markAsInitial}) {
+    if (profile == null) return;
+    _selectedCollegeId = profile.collegeId;
+    final deptMatch = departments.any((d) => d.name == profile.department);
+    _selectedDepartment = deptMatch ? profile.department : null;
+    _selectedSemester =
+        profile.semester > 0 && profile.semester <= 8 ? profile.semester : null;
+    if (markAsInitial) {
+      _initialCollegeId = _selectedCollegeId;
+      _initialDepartment = _selectedDepartment;
+      _initialSemester = _selectedSemester;
+    }
+  }
+
   Future<void> _loadProfile() async {
+    // Colleges list gates the dropdowns (an id/name alone can't render a
+    // selection without it) — that's the only thing worth a loading state.
     try {
-      final results = await Future.wait([
-        CollegeService().listColleges(),
-        AuthService.instance.syncProfile(),
-      ]);
-      if (!mounted) return;
-      _colleges = results[0] as List<College>
+      _colleges = (await CollegeService().listColleges())
         ..sort((a, b) => a.name.compareTo(b.name));
-      final profile = (results[1] as AuthSyncResult).user;
-      if (profile != null) {
-        _selectedCollegeId = profile.collegeId;
-        _initialCollegeId = profile.collegeId;
-        final deptMatch = departments.any((d) => d.name == profile.department);
-        _selectedDepartment = deptMatch ? profile.department : null;
-        _initialDepartment = profile.department;
-        _selectedSemester =
-            profile.semester > 0 && profile.semester <= 8 ? profile.semester : null;
-        _initialSemester = _selectedSemester;
-      }
     } catch (_) {}
     if (mounted) setState(() => _isLoading = false);
+
+    // Background refresh so the cache (and this form, if the user hasn't
+    // started editing yet) stays current — never blocks the UI.
+    try {
+      final result = await AuthService.instance.syncProfile();
+      if (!mounted) return;
+      final profile = result.user;
+      if (profile == null) return;
+      Provider.of<AppStateNotifier>(context, listen: false)
+          .setUserProfile(profile);
+
+      final untouched = _selectedCollegeId == _initialCollegeId &&
+          _selectedDepartment == _initialDepartment &&
+          _selectedSemester == _initialSemester;
+      if (untouched) {
+        setState(() => _applyProfile(profile, markAsInitial: true));
+      }
+    } catch (_) {}
   }
 
   @override
