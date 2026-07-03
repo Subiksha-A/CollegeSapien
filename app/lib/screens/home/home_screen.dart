@@ -242,6 +242,10 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
+    // Cache is still fresh (e.g. splash screen just synced) — skip hitting
+    // the network again so opening the home screen doesn't always re-sync.
+    if (appState.hasFreshHomeData) return;
+
     try {
       // One sync call now returns profile + attendance + timetable + saved
       // subjects together, instead of four separate network round trips.
@@ -249,13 +253,17 @@ class _HomeScreenState extends State<HomeScreen> {
       final freshUser = result.user;
       if (freshUser == null) return;
 
-      appState.setUserProfile(freshUser);
+      // Update local state before touching appState: setUserProfile()
+      // notifies _onAppStateChanged synchronously, which compares against
+      // _semester/_userName — updating those first avoids it seeing a false
+      // "semester changed" mismatch and re-triggering _load().
       if (mounted) {
         setState(() {
           _semester = freshUser.semester;
           _userName = freshUser.name;
         });
       }
+      appState.setUserProfile(freshUser);
 
       if (result.attendanceSummary != null) {
         appState.setAttendanceSummary(result.attendanceSummary!);
@@ -519,9 +527,20 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _header(),
               const SizedBox(height: 24),
-              _attendanceCard(),
-              const SizedBox(height: 16),
-              _isDayOver ? _dayOverStack() : _nextClassCard(),
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: _attendanceCard(),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _isDayOver ? _dayOverCard() : _nextClassCard(),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 24),
               _sectionHeader("Today's Timetable", onShowAll: () {
                 Navigator.push(
@@ -689,8 +708,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.primaryYellow,
           border: Border.all(color: Colors.black, width: 1.5),
@@ -705,66 +723,80 @@ class _HomeScreenState extends State<HomeScreen> {
             _shineStripes(const Color(0xFFFCD150)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'CURRENT ATTENDANCE',
-                  style: TextStyle(
-                    fontFamily: 'Public Sans',
-                    fontSize: 10,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.1,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: pctStr,
-                        style: TextStyle(
-                          fontFamily: 'Lexend Mega',
-                          fontSize: 100,
-                          fontWeight: FontWeight.w700,
-                          // Only use tight tracking for real numbers, not placeholder
-                          letterSpacing: hasData ? -4.0 : 0,
-                          color: Colors.black,
-                          height: 0.9,
-                        ),
-                      ),
-                      if (hasData)
-                        const TextSpan(
-                          text: '%',
-                          style: TextStyle(
-                            fontFamily: 'Lexend Mega',
-                            fontSize: 63,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -2.0,
-                            color: Colors.black,
-                            height: 0.9,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.access_time_rounded, size: 12),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Safe To Skip : $_totalSkip Classes',
-                      style: const TextStyle(
+                    const Text(
+                      'CURRENT ATTENDANCE',
+                      style: TextStyle(
                         fontFamily: 'Public Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.1,
                         color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: pctStr,
+                            style: TextStyle(
+                              fontFamily: 'Lexend Mega',
+                              fontSize: 54,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: hasData ? -2.0 : 0,
+                              color: Colors.black,
+                              height: 1.0,
+                            ),
+                          ),
+                          if (hasData)
+                            const TextSpan(
+                              text: '%',
+                              style: TextStyle(
+                                fontFamily: 'Lexend Mega',
+                                fontSize: 32,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -1.0,
+                                color: Colors.black,
+                                height: 1.0,
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                _progressBar(hasData ? _avgPct / 100 : 0, pctStr, hasData),
+                const SizedBox(height: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.access_time_rounded, size: 12),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            'Safe To Skip : $_totalSkip Classes',
+                            style: const TextStyle(
+                              fontFamily: 'Public Sans',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    _progressBar(hasData ? _avgPct / 100 : 0, pctStr, hasData),
+                  ],
+                ),
               ],
             ),
           ],
@@ -833,8 +865,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.primaryYellow,
           border: Border.all(color: Colors.black, width: 1.5),
@@ -849,56 +880,76 @@ class _HomeScreenState extends State<HomeScreen> {
             _shineStripes(const Color(0xFFFCD150)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'NEXT CLASS',
-                  style: TextStyle(
-                    fontFamily: 'Public Sans',
-                    fontSize: 10,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.1,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  next?.subjectName ??
-                      (_todayClasses.isEmpty
-                          ? 'No classes set up'
-                          : 'No more classes today'),
-                  style: const TextStyle(
-                    fontFamily: 'Lexend Mega',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.5, // fixed: was -3.6 which merged words
-                    color: Colors.black,
-                  ),
-                ),
-                if (next != null && next.room.isNotEmpty) ...[
-                  const SizedBox(height: 4),
-                  Text(
-                    next.room,
-                    style: TextStyle(
-                      fontFamily: 'Public Sans',
-                      fontSize: 14,
-                      color: Colors.black.withValues(alpha: 0.7),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'NEXT CLASS',
+                      style: TextStyle(
+                        fontFamily: 'Public Sans',
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.1,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
-                if (next != null) ...[
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      const Icon(Icons.access_time_rounded, size: 12),
-                      const SizedBox(width: 6),
+                    const SizedBox(height: 8),
+                    Text(
+                      next?.subjectName ??
+                          (_todayClasses.isEmpty
+                              ? 'No classes set up'
+                              : 'No more classes today'),
+                      style: const TextStyle(
+                        fontFamily: 'Lexend Mega',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.5,
+                        color: Colors.black,
+                        height: 1.2,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (next != null && next.room.isNotEmpty) ...[
+                      const SizedBox(height: 4),
                       Text(
-                        '${_fmt(next.startTime)} - ${_fmt(next.endTime)}',
-                        style: const TextStyle(
+                        next.room,
+                        style: TextStyle(
                           fontFamily: 'Public Sans',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                          fontSize: 12,
+                          color: Colors.black.withValues(alpha: 0.7),
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ],
+                ),
+                if (next != null) ...[
+                  const SizedBox(height: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.access_time_rounded, size: 12),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              '${_fmt(next.startTime)} - ${_fmt(next.endTime)}',
+                              style: const TextStyle(
+                                fontFamily: 'Public Sans',
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -911,118 +962,88 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ─── Day over stack ────────────────────────────────────────────────────────
-
-  Widget _dayOverStack() {
-    return SizedBox(
-      height: 160,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Positioned(
-            top: 12,
-            left: 10,
-            right: -10,
-            child: _stackBackCard(),
+  Widget _dayOverCard() {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => const MarkAttendanceScreen())),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.accentPink,
+            border: Border.all(color: Colors.black, width: 1.5),
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: const [
+              BoxShadow(offset: Offset(4, 4), color: Colors.black)
+            ],
           ),
-          Positioned(
-            top: 6,
-            left: 5,
-            right: -5,
-            child: _stackBackCard(),
-          ),
-          GestureDetector(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => const MarkAttendanceScreen())),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: AppColors.accentPink,
-                  border: Border.all(color: Colors.black, width: 1.5),
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: const [
-                    BoxShadow(offset: Offset(4, 4), color: Colors.black)
-                  ],
-                ),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    _shineStripes(const Color(0xFFFFAAAA)),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text(
-                                'DAY IS OVER',
-                                style: TextStyle(
-                                  fontFamily: 'Public Sans',
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              const Text(
-                                'Mark Your\nAttendance',
-                                style: TextStyle(
-                                  fontFamily: 'Lexend Mega',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: -0.5,
-                                  color: Colors.black,
-                                  height: 1.1,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 5),
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: const Text(
-                                  'Mark Now →',
-                                  style: TextStyle(
-                                    fontFamily: 'Public Sans',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+          child: Stack(
+            children: [
+              _shineStripes(const Color(0xFFFFAAAA)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'DAY IS OVER',
+                        style: TextStyle(
+                          fontFamily: 'Public Sans',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black,
                         ),
-                        const Icon(Icons.check_circle_outline,
-                            size: 52, color: Colors.black),
-                      ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Mark Your\nAttendance',
+                        style: TextStyle(
+                          fontFamily: 'Lexend Mega',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.5,
+                          color: Colors.black,
+                          height: 1.2,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: const Text(
+                        'Mark Now →',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
-
-  Widget _stackBackCard() => Container(
-        height: 150,
-        decoration: BoxDecoration(
-          color: AppColors.accentPink.withValues(alpha: 0.7),
-          border: Border.all(color: Colors.black, width: 1.5),
-          borderRadius: BorderRadius.circular(8),
-        ),
-      );
 
   // ─── Timetable carousel ────────────────────────────────────────────────────
 

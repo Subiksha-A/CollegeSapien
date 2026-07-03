@@ -63,9 +63,21 @@ class _SplashScreenState extends State<SplashScreen>
       await user.reload();
       await AuthService.instance.currentUser?.getIdToken(true);
       final result = await AuthService.instance.syncProfile();
-      
+
       if (result.user != null) {
         appState.setUserProfile(result.user);
+      }
+      // Persist the rest of the sync payload too, so the home screen finds
+      // fresh cached data on mount instead of hitting /auth/sync again.
+      if (result.attendanceSummary != null) {
+        appState.setAttendanceSummary(result.attendanceSummary!);
+      }
+      if (result.timetableSubjects != null) {
+        appState.setTimetableSubjects(result.timetableSubjects!);
+      }
+      final savedSubjects = result.savedSubjects?.subjects;
+      if (savedSubjects != null && savedSubjects.isNotEmpty) {
+        appState.setSavedSubjects(savedSubjects);
       }
 
       if (!mounted) return;

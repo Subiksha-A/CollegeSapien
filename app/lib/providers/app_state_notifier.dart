@@ -133,6 +133,13 @@ class AppStateNotifier extends ChangeNotifier {
     return null;
   }
 
+  // True once profile + attendance + timetable are all within their TTLs —
+  // lets callers skip re-hitting /auth/sync when the cache is still good.
+  bool get hasFreshHomeData =>
+      (_userProfile?.isValid ?? false) &&
+      (_attendanceSummary?.isValid ?? false) &&
+      (_timetableSubjects?.isValid ?? false);
+
   // Setters
   void setAttendanceSummary(List<AttendanceSummary> data) {
     _attendanceSummary = CachedData(data: data, ttl: attendanceTtl);
