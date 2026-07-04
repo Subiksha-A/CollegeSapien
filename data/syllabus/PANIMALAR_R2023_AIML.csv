@@ -1,0 +1,64 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,1,23MA1101,Matrices and Calculus,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,1,23ES1101,Problem Solving using C Programming 3,60,ES,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,1,23HS1101,Communicative English and Language Skills 50/50,3,HS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,1,23PH1101,Engineering Physics,3,BS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,1,23ES1102,Basic Electrical and Electronics Engineering,4,ES,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,1,23ES1111,Problem Solving using C Programming,2,ES,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,1,23TA1101,தமிழர் மரபு,1,HS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23MA1203,Transforms and Vector Calculus,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23AD1201,Data Structures and Algorithms,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23ES1103,Engineering Graphics Python Programming,3,ES,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23ES1201,,3,ES,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23HS1201,Communicative and Aptitude Skills,3,HS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23ES1211,Python Programming,2,ES,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23AD1211,Data Structures and Algorithms Laboratory,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23ES1212,Technical Skill Practices I,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,2,23TA1201,தமிழும் ததொழில்,1,HS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23MA1304,Mathematical Foundations for Artificial Intelligence,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23AD1302,Artificial Intelligence and Expert Systems,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23AD1303,Object Oriented Programming Paradigm,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23CS1301,Digital Principles and Computer Architecture,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23CS1303,Database Management Systems,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23AD1311,Artificial Intelligence and Expert Systems Laboratory,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23AD1312,Object Oriented Programming Paradigm,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,23CS1312,Database Management Systems Laboratory,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,,23ES1311 Technical Skill Practices II,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,3,,Mandatory Course II,0,MC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23MA1406,Probabilistic Methods and Optimization Techniques,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23CS1401,in Machine Learning Computer Networks,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23IT1403,Operating Systems,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23AD1401,Machine Learning,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23CB1402,Introduction to Innovation and Entrepreneurship,3,EEC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23AD1403,Software Development and Practices,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23CS1411,Computer Networks,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23AD1411,Machine Learning,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,4,23ES1411,Technical Skill Practices III,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,23AD1501,Formal Language,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,23ML1501,and Automata Theory Advanced Machine,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,23AD1503,Learning Data Analytics,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,23AD1504,Knowledge Engineering and Intelligent Systems,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,,Open Elective I,3,OE,Open Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,,Professional Elective I,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,23AD1511,Data Analytics,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,23AD1512,Knowledge Engineering and Intelligent Systems,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,5,23ES1511,Technical Skill Practices,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,23ML1601,Reinforcement and,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,23ML1602,Ensemble Learning Swarm Intelligence,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,23AD1601,Deep Learning,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,23AD1602,Computer Vision,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,,Open Elective II,3,OE,Open Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,,Professional Elective II,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,23AD1611,Courses Deep Learning,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,,23AD1612 Computer Vision,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,6,23ES1611,Technical Skill Practices,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,7,23ML1701,Machine Intelligence for Network Sciences,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,7,23ML1702,Natural Language Processing,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,7,,Professional Elective III,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,7,,Professional Elective IV,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,7,23AD1702,AI in Robotics,4,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,7,23ML1711,Natural Language Processing,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,7,23ML1712,Laboratory Design Thinking and Project Development Laboratory,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,8,,Professional Elective V,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,8,,Professional Elective VI,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Artificial Intelligence and Machine Learning,AIML,R2023,8,23ML1811,Project Work,8,EEC,,core

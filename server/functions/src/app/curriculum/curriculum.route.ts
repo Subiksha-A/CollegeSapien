@@ -9,6 +9,7 @@ import {
   rejectPendingCurricula,
   updatePendingCurriculum,
   updateCurriculum,
+  deleteCurriculum,
 } from './curriculum.controller';
 import { authenticate, requireVerifiedEmail } from '../../shared/middlewares/auth.middleware';
 import { isAdmin } from '../../shared/middlewares/role.middleware';
@@ -144,5 +145,6 @@ router.get('/admin', authenticate, requireVerifiedEmail, isAdmin, listCurricula)
  *         appCheck: []
  */
 router.patch('/admin/:id', authenticate, requireVerifiedEmail, isAdmin, updateCurriculum);
+router.delete('/admin/:id', authenticate, requireVerifiedEmail, isAdmin, deleteCurriculum);
 
 export default router;

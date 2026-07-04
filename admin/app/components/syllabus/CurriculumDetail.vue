@@ -91,9 +91,7 @@ watch(
 );
 
 const effectiveSemester = (s: CurriculumSubject): number | null => {
-  if (typeof s.parent_semester === "number") return s.parent_semester;
-  const n = parseInt(s.semester, 10);
-  return Number.isNaN(n) ? null : n;
+  return s.semester;
 };
 
 const displaySubjects = computed(() =>

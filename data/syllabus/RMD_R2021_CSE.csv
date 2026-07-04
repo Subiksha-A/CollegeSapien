@@ -1,0 +1,76 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21EL101,Communicative English and Life Skills,2,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21MA101,Engineering Mathematics - I,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21PH101,Physics for Computer Science and Information,3,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21CH101,Technology Engineering Chemistry,3,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21GE101,Problem Solving and C Programming,3,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21GE103,"Basic Electrical, Electronics and Measurement",3,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21PC111,Engineering PRACTICALS Physics and Chemistry,2,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21GE111,C Programming,2,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,1,21EL111,Interpersonal Skills (Listening and Speaking),1,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21EL201,Technical English,2,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21MA201,Engineering Mathematics - II,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21CH102,Environmental Science and Engineering,3,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21ME103,Computer Aided Engineering Graphics,4,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21CS201,Data Structures,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21CS202,Python Programming (Lab Integrated),4,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21EM111,PRACTICALS Engineering Practices,2,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21CS211,Data Structures,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,2,21EL211,Advanced Reading and Writing,1,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21MA302,Discrete Mathematics,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21CS301,Digital Principles and Systems Design,4,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21CS302,(Lab Integrated) Object Oriented Programming,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21CS303,Software Engineering,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21IT403,Database Management,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21GE301,Systems Universal Human Values - II:,3,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21CS311,Understanding Harmony PRACTICALS Object Oriented Programming,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21IT412,Database Management,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21CS312,Systems Laboratory Mini Project,1,EEC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,3,21CS313,Aptitude and Coding Skills - I,1,EEC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21MA402,Probability and Statistics,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21CS401,Computer Architecture,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21CS402,Design and Analysis of Algorithms,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21CS403,Internet Programming,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21CS404,Operating Systems,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21EC441,Microprocessors and Interfacing (Lab,4,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21CS411,Integrated) PRACTICALS Internet Programming,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21CS412,Operating System,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,4,21CS414,Internship EEC - - - - 1 Aptitude and Coding Skills - II,1,EEC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,21CS501,Computer Networks,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,21CS503,Computation,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,21CS502,Artificial Intelligence,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,,Open Elective I*,3,OE,Open Elective,elective
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,,,3,PE,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,21CS511,I PRACTICALS Networks Laboratory,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,21CS514,Artificial Intelligence,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,21CS512,Advanced Aptitude and Coding Skills - I,1,EEC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,5,21CS513,Mini Project and Design Thinking,1,EEC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,6,21CS601,Compiler Design (Lab integrated),3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,6,21CS602,Cryptography and Network Security,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,6,21CS604,Machine Learning,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,6,,II,3,PE,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,6,,III,3,PE,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,6,21CS612,PRACTICALS Security Laboratory,2,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,6,21CS614,Internship EEC - - - - 1 Advanced Aptitude and Coding Skills-II,1,EEC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,7,21CS703,Data Analytics(Lab,3,PC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,7,,Integrated) Open Elective II*,3,OE,Open Elective,elective
+RMD,RMD,Computer Science Engineering,CSE,R2021,7,,IV,3,PE,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,7,,,3,PE,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,7,,VI,3,PE,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21CS812,No CODE PERIODS PRACTICALS Project Work,8,EEC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21EL101,*Course from the curriculum of other UG programmes HUMANITIES AND SOCIAL SCIENCES (HS) No CODE PERIODS Communicative English and Life,2,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21EL111,Skills Interpersonal Skills (Listening,1,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21EL201,and Speaking ) Technical English,2,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21EL211,Advanced Reading and Writing,1,HS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21CH102,Environmental Science and Engineering,3,MC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21GE301,Universal Human Values - II: Understanding,3,MC,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21MA101,Harmony BASIC SCIENCES (BS) No CODE PERIODS Engineering Mathematics - I,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21PH101,Physics for Computer Science and Information,3,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21CH101,Technology Engineering Chemistry,3,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21PC111,Physics & Chemistry,2,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21MA201,Engineering Mathematics - II,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21MA302,Discrete Mathematics,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21MA402,Probability and Statistics,4,BS,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21GE101,ENGINEERING SCIENCES (ES) No CODE PERIODS Problem Solving and C Programming,3,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21GE103,"Basic Electrical, Electronics and Measurement",3,ES,,core
+RMD,RMD,Computer Science Engineering,CSE,R2021,8,21GE111,Engineering C Programming,2,ES,,core

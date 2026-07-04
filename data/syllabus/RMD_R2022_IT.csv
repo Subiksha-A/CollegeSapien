@@ -1,0 +1,58 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+RMD,RMD,Information Technology,IT,R2022,1,22MA101,Matrices and Calculus,4,BSC,,core
+RMD,RMD,Information Technology,IT,R2022,1,22CH101,Engineering Chemistry,4,BSC,,core
+RMD,RMD,Information Technology,IT,R2022,1,22CS101,Problem Solving using C++,4,ESC,,core
+RMD,RMD,Information Technology,IT,R2022,1,22CS102,Software Development,4,ESC,,core
+RMD,RMD,Information Technology,IT,R2022,1,22EC101,Digital Principles and System Design,4,ESC,,core
+RMD,RMD,Information Technology,IT,R2022,1,22GE111,Computer Aided Engineering Graphics,2,ESC,,core
+RMD,RMD,Information Technology,IT,R2022,1,22GE112,Product Development Lab-I,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22MA201,Transforms and Numerical Methods,4,BSC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22CS201,Data Structures,4,ESC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22PH201,Physics for Computer Science and Information,4,BSC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22HS101,Communication,3,HSMC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22CS202,Java Programming,4,ESC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22IT201,Database Management Systems,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22GE211,Product Development Lab – II,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22CH102,Environmental Sciences and Sustainability (Non Credit),0,MC,,core
+RMD,RMD,Information Technology,IT,R2022,2,22AC201,Yoga for Stress Management,0,AC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22GE301,Universal Human Values II: Understanding Harmony,3,HSMC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22GE201,Tamils and Technology,1,HSMC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22MA301,Discrete Mathematics,4,BSC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22IT301,Design Thinking,4,ESC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22CS301,Advanced Java Programming,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22CS303,Design and Analysis of Algorithms,3,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22CS304,Operating Systems,3,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22GE311,Product Development Lab-III,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22CS311,Aptitude and Coding Skills I,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22IT311,Internship/Seminar,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,3,22AC301,Value Education (Non Credit),0,AC,,core
+RMD,RMD,Information Technology,IT,R2022,4,22MA401,Probability and Statistics,4,BSC,,core
+RMD,RMD,Information Technology,IT,R2022,4,22IT401,Artificial Intelligence and Machine Learning,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,4,22IT402,Computer Architecture and Microprocessors,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,4,22IT403,Web Development Frameworks,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,4,22IT404,Application System Design with UML,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,4,,Professional Elective I,3,PEC,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2022,4,22GE411,Product Development Lab - IV,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,4,22CS411,Aptitude and Coding Skills - II,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,4,22AC401,Yoga/Personality (Non Credit),0,AC,,core
+RMD,RMD,Information Technology,IT,R2022,5,22IT501,Data Communications and Computer Networks,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,5,22CS702,Data Analytics,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,5,22IT503,Managing Cloud and Containerization,4,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,5,,Professional Elective II,3,PEC,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2022,5,,Professional Elective III,3,PEC,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2022,5,,Open Elective I,3,OEC,Open Elective,elective
+RMD,RMD,Information Technology,IT,R2022,5,22CS511,Advanced Aptitude and Coding Skills - I,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,6,22IT601,Mobile Application Framework and Development,3,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,6,22IT602,Embedded Systems and Internet of Things,3,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,6,,Professional Elective IV,3,PEC,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2022,6,,Professional Elective V,3,PEC,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2022,6,,Open Elective II,3,OEC,Open Elective,elective
+RMD,RMD,Information Technology,IT,R2022,6,,Open Elective III,3,OEC,Open Elective,elective
+RMD,RMD,Information Technology,IT,R2022,6,22CS611,Advanced Aptitude and Coding Skills – II,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,7,22IT701,Microservice Architecture,3,PCC,,core
+RMD,RMD,Information Technology,IT,R2022,7,,Professional Elective VI,3,PEC,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2022,7,22CS603,Professional Ethics,3,HSMC,,core
+RMD,RMD,Information Technology,IT,R2022,7,,Open Elective IV,3,OEC,Open Elective,elective
+RMD,RMD,Information Technology,IT,R2022,7,22IT711,"Innovation, Employability and",3,EEC,,core
+RMD,RMD,Information Technology,IT,R2022,7,22MC701,Essence of Indian Knowledge Tradition (Non Credit),0,MC,,core
+RMD,RMD,Information Technology,IT,R2022,8,22IT811,Project Work,8,EEC,,core

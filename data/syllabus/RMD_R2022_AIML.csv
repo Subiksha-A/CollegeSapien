@@ -1,0 +1,53 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22MA101,Matrices and Calculus,4,BSC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22CH101,Engineering Chemistry,4,BSC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22CS101,Problem Solving using C++,4,ESC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22CS102,Software Development,4,ESC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22EC101,Digital Principles and System Design,4,ESC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22GE101,Heritage of Tamils,1,HSMC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22GE111,Computer Aided Engineering Graphics,2,ESC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,1,22GE112,Product Development Lab-I,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22MA201,Transforms and Numerical Methods,4,BSC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22CS201,Data Structures,4,ESC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22PH201,Physics for Computer Science and Information,4,BSC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22HS101,Communication,3,HSMC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22CS202,Java Programming Database Management,4,ESC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22IT201,System,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22GE211,Product Development Lab – II,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22CH102,Environmental Sciences and Sustainability (Non Credit),0,MC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,2,22AC201,Yoga for Stress Management,0,AC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22MA301,Discrete Mathematics,4,BSC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22GE301,Universal Human Values II: Understanding,3,HSMC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22AM301,Artificial Intelligence,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22CS304,Operating Systems,3,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22CS306,Design and Analysis of Algorithms,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22CS307,Advanced Java Programming,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22GE311,Product Development Lab-III,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22CS311,Aptitude and Coding Skills- I,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22AM311,Internship,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,3,22AC301,Value Education (Non,0,AC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22CS302,Computer Organization and Architecture,3,ESC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,,Professional Elective- I,3,PEC,Programme Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22MA401,Probability and Statistics,4,BSC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22AM401,Neural Networks,3,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22AM402,Machine Learning Essentials,3,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22IT407,Web Development Frameworks,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22GE411,Product Development Lab-IV,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22CS411,Aptitude and Coding Skills - II,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,4,22AC401,Yoga/Personality Development(Non-Credit),0,AC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,5,22AM501,Deep Learning,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,5,22AM502,"Data Exploration, Feature Engineering and Visualization",3,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,5,22CS511,Advanced Aptitude and Coding Skills-,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,5,22AM511,I Internship and Career Readiness,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,5,22MC301,Indian Constitution (Non Credit),0,MC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,6,22AM601,Automata Theory and Compiler Design,3,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,6,22AM602,Foundation of Reinforcement Learning and Ensemble Methods,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,6,22CS602,Object Oriented Software Engineering,3,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,6,22CS611,Advanced Aptitude and Coding Skills - II,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,6,22AM611,Mini Project,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,7,22AM701,Computer Vision,3,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,7,,Professional Ethics,3,HSMC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,7,22AM702,Natural Language Processing,4,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,7,22AM711,MLOps,1,PCC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,7,22MC711,Essence of Indian Knowledge Tradition (Non Credit),0,MC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2022,8,22AM811,Project Work,8,EEC,,core

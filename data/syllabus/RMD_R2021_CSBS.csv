@@ -1,0 +1,56 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,1,21MA102,Discrete Mathematics,3,BS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,1,21MA103,"Introduction to Statistics, Probability and Calculus",3,BS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,1,21GE102,Fundamentals of Computer Science +,4,ES,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,1,21GE104,Lab Principles of Electrical Engineering + Lab,4,ES,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,1,21PH103,Fundamentals of Physics + Lab,4,BS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,1,21EL102,Business Communication and,4,HS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,2,21MA202,Linear Algebra,4,BS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,2,21MA203,Statistical Methods + Lab,4,BS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,2,21CB201,Data Structures and Algorithms + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,2,21EC241,Principles of Electronics Engineering + Lab,4,ES,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,2,21CB202,Fundamentals of Economics,2,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,2,21EL202,Business Communication and,4,HS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,2,,Value Sciences - II Environmental Science and Engineering,0,MC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21MA304,Computational Statistics + Lab,4,BS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21CB301,Formal Language and Automata Theory,5,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21CB302,Computer Organization and Architecture,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21CB303,Object Oriented Programming + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21CB304,Software Engineering + Lab,5,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21CB305,Financial Management,3,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21CB306,Indian Constitution (Non-Credit),0,MC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,3,21CS313,Aptitude and Coding Skills – I (Non-Credit),0,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CB401,Operating Systems + Lab (Unix),4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CB402,Database Management Systems + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CB403,Software Design with UML + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CB404,"Introduction to Innovation, IP Management and",3,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21EL401,Entrepreneurship Business Communication and,4,HS,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CB405,Value Science – III Operations Research + Lab,3,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CB406,Marketing Research & Marketing Management,3,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CB407,Essence of Indian Traditional Knowledge,0,MC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21CS414,(Non-Credit) Aptitude and Coding Skills – II (Non-Credit),0,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,4,21GE301,Universal Human Values 2: Understanding,0,MC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,5,21CB501,Design And Analysis of Algorithms,3,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,5,21CB502,Compiler Design + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,5,21CB503,Business Strategy,3,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,5,21CB504,Design Thinking,3,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,5,,5,4,PE,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,5,21CB511,Lab Mini Project,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,5,21CS512,Advanced Aptitude and Coding Skills – I,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,6,21CB601,Computer Networks + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,6,21CB602,Information Security + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,6,21CB603,Artificial Intelligence + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,6,,Lab,4,PE,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,6,,Professional Elective III,3,PE,Programme Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,6,21CS614,Advanced Aptitude and Coding Skills – II,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,7,21CB701,Usability Design of Software Applications +,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,7,21CB702,Lab IT Workshop Scilab + Lab,5,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,7,21CB703,IT Project Management + Lab,4,PC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,7,,Lab,4,PE,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,7,,Professional Elective V,3,PE,Programme Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,7,21CB711,Project Work,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,8,21CB811,Project Work,8,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,8,21CB901,Conversational Systems + Lab,4,PE,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,8,21CB902,"Cloud, Microservices & Application + Lab",4,PE,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,8,21CB903,Machine Learning + Lab,4,PE,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2021,8,21CB917,"Advanced Social, Text and Media Analytics +",4,PE,,core

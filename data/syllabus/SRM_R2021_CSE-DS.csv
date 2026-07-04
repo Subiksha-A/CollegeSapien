@@ -1,0 +1,60 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21LEH102T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21LEH103T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21LEH104T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21LEH105T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21LEH106T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21LEH107T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21LEH108T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21GNH101J,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21MAB101T,Calculus and Linear Algebra,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21CYB101J,Chemistry,5,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21BTB102T,Introduction to Computational Biology,2,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21CSS101J,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21MES101L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21PDM101L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21GNM101L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21GNM102L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21GNM103L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,1,21GNM104L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21MAB201T,Transforms and Boundary Value,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21DCS201P,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21CSC201J,Data Structures and Algorithms,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21CSS202T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21CSC202J,Operating Systems,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21CSC206P,Advanced Object Oriented Programming,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21LEM201T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,3,21PDM201L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,5,21MAB302T,Discrete Mathematics,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,5,21CSC301T,Formal Language and Automata,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,5,21CSC302J,Computer Networks,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,5,21CSC307P,Machine Learning for Data Analytics,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,5,21GNP301L,Community Connect,1,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,5,21PDM301L,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,5,21LEM301T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21LEH101T,Communicative English,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21MAB102T,Advanced Calculus and Complex,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21PYB102J,C Semiconductor Physics and,5,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21MES102L,Engineering Graphics and Design,2,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21EES101T,Electrical and Electronics Engineering,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21CSC101T,Object Oriented Design and,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21CYM101T,Environmental Science*,0,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21PDM102L,General Aptitude*,0,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,2,21LEM101T,Constitution of India,0,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,4,21MAB301T,Probability and Statistics,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,4,21CSC204J,Design and Analysis of Algorithms,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,4,21CSC205P,Database Management Systems,4,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,4,21CSC206T,Artificial Intelligence,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,4,21PDH209T,Social Engineering,2,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,4,21PDM202L,Critical and Creative Thinking Skills,0,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,4,21LEM202T,Harmony and Ethical Human Conduct,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,6,21CSS301T,Full Stack Development,2,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,6,21CSC303J,Software Engineering and Project,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,6,21CSC304J,Compiler Design,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,6,21CSP302L,Project,3,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,6,21CSP303T,,,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,6,21PDM302L,Employability Skills and Practices,0,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,6,21LEM302T,Indian Traditional Knowledge,0,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,8,21CSP401L,Major Project,15,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,8,21CSP402L,Major Project,10,,,core
+SRM Institute of Science and Technology,SRM,Computer Science Engineering (Data Science),CSE-DS,R2021,8,21CSP403L,Internship#,5,,,core

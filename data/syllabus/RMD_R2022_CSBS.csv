@@ -1,0 +1,60 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22MA102,Discrete Mathematics,4,BSC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22MA103,"Introduction to Statistics, Probability and Calculus",3,BSC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22GE101,Heritage of Tamils,1,HSMC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22CS101,Problem Solving using C++,4,ESC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22CS102,Software Development Practices,4,ESC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22EE102,Principles of Electrical Engineering,3,ESC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22PH104,Fundamentals of Physics,4,BSC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,1,22GE112,Product Development Lab – I,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,,Linear Algebra,3,BSC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22GE201,Tamils and Technology,1,HSMC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22MA203,Statistical Methods,4,BSC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22CB201,Data Structures and Algorithms,4,ESC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22CS202,Java Programming,4,ESC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22EC202,Principles of Electronics Engineering,3,ESC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22HS101,Professional Communication,3,HSMC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22GE211,Product Development Lab – II,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22CH104,Environmental Sciences and Sustainability (Non Credit),0,MC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,2,22AC201,Yoga for Stress Management,0,AC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22GE301,Universal Human Values II: Understanding Harmony,3,HSMC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22CB301,Computer Organization and Architecture,3,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22CB302,Fundamentals of Economics,2,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22MA304,Computational Statistics,4,BSC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22CB303,Software Design with UML,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22CB304,Database Management Systems,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22GE311,Product Development Lab - III,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22CS311,Aptitude and Coding Skills I,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,,Mini Project - Design,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,3,22MC301,Indian Constitution (Non Credit),0,MC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,22CB401,"Introduction to Innovation, IP Management and",3,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,,Web Development Frameworks,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,22CB403,Operating Systems,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,22CB404,Design And Analysis of Algorithms,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,22MA404,Operations Research,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,22GE411,Product Development Lab - IV,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,22CS411,Aptitude and Coding Skills II,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,22CB411,Mini Project,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,4,,Value Education (Non,0,AC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,22CB501,Fundamentals of Management,3,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,22CB502,Business Strategy,3,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,22CB504,Design Thinking,3,HSMC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,,Professional Elective II,3,PEC,Programme Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,22CB503,Computer Networks,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,,Professional Elective I,3,PEC,Programme Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,22CS511,Advanced Aptitude and Coding Skills I,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,22CB511,Internship/Seminar,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,5,22MC502,Essence of Indian Traditional 9,0,MC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,6,22CB601,Financial Management,3,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,6,22CB602,Information Security,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,6,22CB603,Artificial Intelligence,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,6,,Professional Elective III,3,PEC,Programme Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,6,22CB604,IT Workshop using Scilab/Matlab,2,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,6,22CS611,Advanced Aptitude and Coding Skills II,1,EEC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,7,22CB701,Human Resource Management,3,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,7,,Professional Elective VI,3,PEC,Programme Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,7,,Open Elective II,3,OEC,Open Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,7,22CB702,IT Project Management,4,PCC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,7,,Professional Elective V,3,PEC,Programme Elective,elective
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,7,22AC701,Personality Development (Non,0,AC,,core
+RMD,RMD,Computer Science and Business Systems,CSBS,R2022,8,22CB811,Code Periods PRACTICAL COURSE Project Work,8,EEC,,core

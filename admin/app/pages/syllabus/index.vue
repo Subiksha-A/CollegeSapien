@@ -8,9 +8,13 @@ interface CollegeOption {
 }
 
 interface CurriculumSubject {
-  semester: string;
+  semester: number | null;
+  subject_code?: string;
   subject_name: string;
-  [key: string]: unknown;
+  credits?: number | null;
+  category?: string;
+  elective_type?: string | null;
+  record_type?: string;
 }
 
 interface CurriculumRecord {
@@ -38,7 +42,7 @@ interface UploadConflict {
   existsIn: "pending" | "approved" | "both";
 }
 
-const { get, post, patch } = useApi();
+const { get, post, patch, delete: apiDelete } = useApi();
 
 const colleges = ref<CollegeOption[]>([]);
 const snack = ref("");
@@ -62,6 +66,7 @@ const singleInFlight = ref<Set<string>>(new Set());
 const activeTab = ref<"pending" | "approved">("pending");
 const detailItem = ref<CurriculumRecord | null>(null);
 const savingEdit = ref(false);
+const showGuideModal = ref(false);
 
 const filterCollegeCode = ref("");
 const filterCourseCode = ref("");
@@ -127,6 +132,130 @@ const readFileAsText = (file: File): Promise<string> =>
     reader.readAsText(file);
   });
 
+const parseCSV = (text: string): any => {
+  const lines: string[] = [];
+  let currentLine = "";
+  let inQuotes = false;
+  
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+    
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        currentLine += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === '\n' || char === '\r') {
+      if (inQuotes) {
+        currentLine += char;
+      } else {
+        if (char === '\r' && nextChar === '\n') {
+          i++;
+        }
+        lines.push(currentLine);
+        currentLine = "";
+      }
+    } else {
+      currentLine += char;
+    }
+  }
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+  
+  if (lines.length < 2) {
+    throw new Error("CSV must contain a header and at least one data row");
+  }
+  
+  const splitLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inside = false;
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        inside = !inside;
+      } else if (char === ',' && !inside) {
+        result.push(current.trim());
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+    result.push(current.trim());
+    return result;
+  };
+  
+  const headers = splitLine(lines[0]);
+  const expectedHeaders = [
+    "college", "college_code", "course", "course_code", "regulation",
+    "semester", "subject_code", "subject_name", "credits", "category",
+    "elective_type", "record_type"
+  ];
+  
+  const indices: Record<string, number> = {};
+  expectedHeaders.forEach(h => {
+    indices[h] = headers.findIndex(header => header.trim().toLowerCase().replace(/[-_]/g, "") === h.replace(/[-_]/g, ""));
+  });
+  
+  if (indices["college_code"] === -1 || indices["course_code"] === -1 || indices["regulation"] === -1) {
+    throw new Error("Missing required headers: college_code, course_code, regulation");
+  }
+  
+  const firstDataRow = splitLine(lines[1]);
+  const getValue = (row: string[], field: string) => {
+    const idx = indices[field];
+    return idx !== -1 && idx < row.length ? row[idx] : "";
+  };
+  
+  const college = getValue(firstDataRow, "college");
+  const college_code = getValue(firstDataRow, "college_code");
+  const course = getValue(firstDataRow, "course");
+  const course_code = getValue(firstDataRow, "course_code");
+  const regulation = getValue(firstDataRow, "regulation");
+  
+  if (!college_code || !course_code || !regulation) {
+    throw new Error("First row must have non-empty college_code, course_code, and regulation");
+  }
+  
+  const subjects: any[] = [];
+  
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+    const row = splitLine(line);
+    const subject_name = getValue(row, "subject_name");
+    if (!subject_name) continue;
+    
+    const semStr = getValue(row, "semester");
+    const semVal = semStr ? Number(semStr) : null;
+    const creditsStr = getValue(row, "credits");
+    const creditsVal = creditsStr ? Number(creditsStr) : null;
+    
+    subjects.push({
+      semester: Number.isNaN(semVal) ? null : semVal,
+      subject_code: getValue(row, "subject_code") || "",
+      subject_name: subject_name,
+      credits: Number.isNaN(creditsVal) ? null : creditsVal,
+      category: getValue(row, "category") || "",
+      elective_type: getValue(row, "elective_type") || null,
+      record_type: getValue(row, "record_type") || "core"
+    });
+  }
+  
+  return {
+    college,
+    college_code,
+    course,
+    course_code,
+    regulation,
+    subjects
+  };
+};
+
 const handleFiles = async (fileList: FileList | null) => {
   if (!fileList || fileList.length === 0) return;
   uploading.value = true;
@@ -136,7 +265,13 @@ const handleFiles = async (fileList: FileList | null) => {
   for (const file of Array.from(fileList)) {
     try {
       const text = await readFileAsText(file);
-      const data = JSON.parse(text);
+      let data: any;
+      if (file.name.endsWith(".csv")) {
+        data = parseCSV(text);
+      } else {
+        data = JSON.parse(text);
+      }
+      
       if (
         !data?.college_code ||
         !data?.course_code ||
@@ -151,10 +286,10 @@ const handleFiles = async (fileList: FileList | null) => {
         continue;
       }
       items.push({ fileName: file.name, data });
-    } catch {
+    } catch (err: any) {
       uploadErrors.value.push({
         fileName: file.name,
-        error: "Invalid JSON",
+        error: err.message || "Invalid file content",
       });
     }
   }
@@ -164,6 +299,65 @@ const handleFiles = async (fileList: FileList | null) => {
   }
 
   uploading.value = false;
+};
+
+const downloadCSV = (item: CurriculumRecord) => {
+  const headers = [
+    "college", "college_code", "course", "course_code", "regulation",
+    "semester", "subject_code", "subject_name", "credits", "category",
+    "elective_type", "record_type"
+  ];
+  
+  const csvEscape = (val: unknown) => {
+    if (val === null || val === undefined) return '""';
+    const str = String(val);
+    if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  };
+  
+  const rows = [headers.join(",")];
+  item.subjects.forEach(s => {
+    const row = [
+      csvEscape(item.college),
+      csvEscape(item.collegeCode),
+      csvEscape(item.course),
+      csvEscape(item.courseCode),
+      csvEscape(item.regulation),
+      csvEscape(s.semester),
+      csvEscape(s.subject_code),
+      csvEscape(s.subject_name),
+      csvEscape(s.credits),
+      csvEscape(s.category),
+      csvEscape(s.elective_type),
+      csvEscape(s.record_type)
+    ];
+    rows.push(row.join(","));
+  });
+  
+  const csvContent = "\ufeff" + rows.join("\r\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${item.collegeCode}_${item.courseCode}_${item.regulation}.csv`);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+const handleDeleteCurriculum = async (id: string) => {
+  if (!confirm("Are you sure you want to delete this curriculum? This action is permanent and cannot be undone.")) return;
+  try {
+    await apiDelete(`/curriculum/admin/${id}`);
+    approved.value = approved.value.filter((item) => item.id !== id);
+    snack.value = "Curriculum deleted successfully.";
+  } catch (err) {
+    console.error("Failed to delete curriculum", err);
+    snack.value = "Failed to delete curriculum.";
+  }
 };
 
 type UploadResult =
@@ -357,11 +551,20 @@ const handleSaveEdit = async (payload: {
 
 <template>
   <div>
-    <div class="mb-6">
-      <h1 class="text-xl font-bold text-gray-900">Syllabus Management</h1>
-      <p class="text-sm text-gray-500 mt-0.5">
-        Upload curriculum JSON files, review, and publish to the app.
-      </p>
+    <div class="mb-6 flex justify-between items-start">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Syllabus Management</h1>
+        <p class="text-sm text-gray-500 mt-0.5">
+          Upload curriculum JSON or CSV files, review, and publish to the app.
+        </p>
+      </div>
+      <button
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-yellow-400 text-yellow-800 bg-yellow-50 hover:bg-yellow-100 font-medium rounded-lg transition-colors text-xs"
+        @click="showGuideModal = true"
+      >
+        <Icon name="i-heroicons-question-mark-circle" class="w-4 h-4" />
+        Upload Guide
+      </button>
     </div>
 
     <div
@@ -387,7 +590,7 @@ const handleSaveEdit = async (payload: {
         class="w-8 h-8 mx-auto text-gray-400 mb-2"
       />
       <p class="text-sm text-gray-600 mb-3">
-        Drag &amp; drop one or more curriculum JSON files here, or
+        Drag &amp; drop one or more curriculum JSON or CSV files here, or
       </p>
       <label
         class="inline-flex items-center gap-2 px-4 py-2 bg-yellow-400 text-gray-900 font-medium rounded-lg hover:bg-yellow-500 transition-colors text-sm cursor-pointer"
@@ -396,7 +599,7 @@ const handleSaveEdit = async (payload: {
         Browse files
         <input
           type="file"
-          accept="application/json"
+          accept="application/json, text/csv"
           multiple
           class="hidden"
           @change="onFileInput"
@@ -565,6 +768,7 @@ const handleSaveEdit = async (payload: {
               <th class="py-2 px-4 font-medium">Course</th>
               <th class="py-2 px-4 font-medium">Regulation</th>
               <th class="py-2 px-4 font-medium">Subjects</th>
+              <th class="py-2 px-4 font-medium w-36">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -579,6 +783,24 @@ const handleSaveEdit = async (payload: {
               <td class="py-2 px-4 text-gray-500">{{ row.regulation }}</td>
               <td class="py-2 px-4 text-gray-500">
                 {{ row.subjects.length }}
+              </td>
+              <td class="py-2 px-4 flex gap-3" @click.stop>
+                <button
+                  class="inline-flex items-center gap-1 text-xs text-yellow-600 hover:text-yellow-700 font-medium transition-colors"
+                  title="Download CSV"
+                  @click="downloadCSV(row)"
+                >
+                  <Icon name="i-heroicons-arrow-down-tray" class="w-3.5 h-3.5" />
+                  Download CSV
+                </button>
+                <button
+                  class="inline-flex items-center gap-1 text-xs text-red-600 hover:text-red-700 font-medium transition-colors"
+                  title="Delete Curriculum"
+                  @click="handleDeleteCurriculum(row.id)"
+                >
+                  <Icon name="i-heroicons-trash" class="w-3.5 h-3.5" />
+                  Delete
+                </button>
               </td>
             </tr>
           </tbody>
@@ -611,5 +833,113 @@ const handleSaveEdit = async (payload: {
       @reject="rejectOne"
       @save="handleSaveEdit"
     />
+
+    <!-- Guide Modal -->
+    <div
+      v-if="showGuideModal"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 p-4"
+      @click.self="showGuideModal = false"
+    >
+      <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto p-6 flex flex-col">
+        <div class="flex justify-between items-center pb-3 border-b border-gray-100 mb-4">
+          <h3 class="text-base font-semibold text-gray-950 flex items-center gap-1.5">
+            <Icon name="i-heroicons-information-circle" class="w-5 h-5 text-yellow-500" />
+            Syllabus CSV &amp; JSON Upload Guide
+          </h3>
+          <button class="text-gray-400 hover:text-gray-600" @click="showGuideModal = false">
+            <Icon name="i-heroicons-x-mark" class="w-5 h-5" />
+          </button>
+        </div>
+        
+        <div class="space-y-4 text-xs text-gray-600 overflow-y-auto pr-1">
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm mb-1">1. How to Upload your College Syllabus</h4>
+            <p>
+              To add or update a curriculum, you can drag &amp; drop or browse a <strong>JSON</strong> or <strong>CSV</strong> file. Once uploaded, the syllabus goes to the <strong>Pending review</strong> tab. After checking its details, an admin can approve and publish it to the app.
+            </p>
+          </div>
+          
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm mb-1">2. Creating the CSV Template</h4>
+            <p class="mb-1">
+              You can create the syllabus spreadsheet using Microsoft Excel, Google Sheets, or any CSV editor. Ensure the file has a header row with the following 12 columns (order does not matter):
+            </p>
+            <div class="bg-gray-50 border border-gray-100 rounded-lg p-2 font-mono text-[10px] break-all select-all">
+              college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+            </div>
+          </div>
+          
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm mb-1">3. Field Explanations (12 Columns)</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-1.5">
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">college</div>
+                <div class="mt-0.5">Full name of the college (e.g., <code>Anna University Affiliated</code>). Replicated on all rows.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">college_code</div>
+                <div class="mt-0.5">Short code for the college (e.g., <code>AUA</code>). Replicated on all rows.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">course</div>
+                <div class="mt-0.5">Full name of the branch/course (e.g., <code>Information Technology</code>).</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">course_code</div>
+                <div class="mt-0.5">Branch short code (e.g., <code>IT</code>). Replicated on all rows.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">regulation</div>
+                <div class="mt-0.5">Curriculum regulation (e.g., <code>R2025</code>). Replicated on all rows.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">semester</div>
+                <div class="mt-0.5">Numeric semester (e.g., <code>5</code>). Leave blank/empty for elective option pools.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">subject_code</div>
+                <div class="mt-0.5">Subject alphanumeric code (e.g., <code>IT25201</code>). Can be left empty.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">subject_name</div>
+                <div class="mt-0.5">The display name of the subject. (Required for every subject row).</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">credits</div>
+                <div class="mt-0.5">Credits associated (e.g. <code>3</code>). Can be left empty.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">category</div>
+                <div class="mt-0.5">Category (e.g. <code>BS</code>, <code>HUM</code>, <code>SD</code>). For <strong>elective option</strong> rows, this holds the stream name.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">elective_type</div>
+                <div class="mt-0.5">For electives and options, matches pools (e.g. <code>Programme Elective</code>). Otherwise empty.</div>
+              </div>
+              <div class="p-2 border border-gray-100 rounded-lg">
+                <div class="font-semibold text-gray-800">record_type</div>
+                <div class="mt-0.5">Categorization. Must be one of: <code>core</code>, <code>elective</code>, or <code>option</code>.</div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm mb-1">4. Downloading Reference Samples</h4>
+            <p>
+              To see an example or obtain a starting template, you can download the CSV file of other colleges/regulations from the <strong>Approved</strong> list below by clicking their corresponding <strong>Download CSV</strong> action.
+            </p>
+          </div>
+        </div>
+        
+        <div class="flex justify-end gap-2 pt-4 border-t border-gray-100 mt-5">
+          <button
+            class="px-4 py-2 text-sm bg-yellow-400 text-gray-900 font-medium rounded-lg hover:bg-yellow-500 transition-colors"
+            @click="showGuideModal = false"
+          >
+            Got it, thanks!
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

@@ -1,0 +1,46 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,EN23C01,Foundation English,3,HSMC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,MA23C01,Matrices and Calculus,4,HSMC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,PH23C01,Engineering Physics,4,ESC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,EE23C02,Fundamentals of Electrical and Electronics Engineering,3,ESC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,CS23C04,Programming in C,4,ESC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,CS23101,Computational Thinking,2,SDC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,UC23H01,தமிழரம் ரபு/ Heritage of Tamils,1,UC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,1,,NCC/NSS/NSO/YRC,0,UC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,2,EN23C02,Professional Communication,3,HSMC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,2,MA23C04,Discrete Mathematics,4,HSMC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,2,CY23C01,Engineering Chemistry,4,HSMC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,2,ME23C01,Engineering Drawing and 3D Modelling,4,SDC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,2,ME23C04,Makerspace,3,SDC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,2,UC23H02,Tamils and Technology,1,UC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,2,CS23201,Object Oriented Programming,3,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,3,MA23C05,Probability and Statistics,4,HSMC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,3,CS23301,Software Engineering,3,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,3,CS23302,Data Structures,5,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,3,CS23303,Digital System Design,5,ESC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,3,CS23304,Java Programming,5,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,3,CS23U01,Standards – Computer Science & Engg.,1,UC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,3,UC23U01,Universal Human Values,2,UC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,4,MA23C03,Linear Algebra and Numerical,4,HSMC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,4,CS23401,Database Management Systems,5,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,4,CS23402,Computer Architecture,4,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,4,CS23403,Full Stack Technologies,4,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,4,CS23404,Design and Analysis of Algorithms,3,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,5,CS23501,Operating Systems,5,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,5,CS23502,Networks and Data Communication,5,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,5,CS23503,Theory of Computation,3,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,5,,Open Elective – I,3,OEC,Open Elective,elective
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,5,CS23L01,Self Learning Course,1,SLC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,5,UC23E01,Engineering Entrepreneurship Development,3,UC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,5,CS23D01,Capstone – Ideation,6,SDC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,6,CS23601,Cryptography and System Security,4,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,6,CS23602,Compiler Design,4,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,6,CS23603,Machine Learning,5,PCC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,6,,Open Elective – II,3,OEC,Open Elective,elective
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,6,CS23U02,Perspectives of Sustainability Development,3,UC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,6,CS23604,Creative and Innovative Project,2,SDC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,6,CS23D02,"Concept, Implementation &",6,SDC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,7,,Emerging Technology Course I,4,ETC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,7,,Emerging Technology Course II,3,ETC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,7,,(Product Development,6,SDC,,core
+Anna University,ANNA,Computer Science Engineering,CSE,R2023,8,CS23801,Project Work / Internship cum Project Work,8,SDC,,core

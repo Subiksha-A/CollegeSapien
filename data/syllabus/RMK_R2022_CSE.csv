@@ -1,0 +1,64 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,1,22MA101,Matrices and Calculus,4,BSC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,1,22CH101,Engineering Chemistry,4,BSC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,1,22CS101,Problem Solving using C++,4,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,1,22CS102,Software Development,4,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,1,22EC101,Digital Principles and System Design,4,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,1,22ME202,Computer Aided Engineering Graphics,2,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,1,22ME111,Product Development Lab-1,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22MA201,Transforms and Numerical Methods,4,BSC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22CS201,Data Structures,4,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22PH201,Physics for Computer Science and Information,4,BSC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22HS101,Communication,3,HSMC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22CS202,Java Programming,4,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22IT202,Database Management System,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22ME211,Product Development Lab - 2,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,22CH104,Environmental Sciences and Sustainability (Non,0,MC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,2,,Yoga for Stress 9,0,AC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22MA301,Discrete Mathematics,3,BSC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,,Universal Human Values II: Understanding,3,HSMC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22CS301,Advanced Java Programming,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22CS302,Computer Organization and Architecture,3,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22CS303,Design and Analysis of Algorithms,3,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22CS304,Operating Systems,3,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22ME311,Product Development Lab - 3,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22CS311,Aptitude and Coding Skills I,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,22CS312,Internship and Seminar*,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,3,,Value Education 10,0,AC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,,Microcontrollers and 1,3,ESC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,22MA401,Probability and Statistics,3,BSC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,,Artificial Intelligence,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,22CS401,Distributed and Cloud Computing,3,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,22CS402,Web Development Frameworks,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,,Communication Lab / Product Development,2,HSMC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,22CS411,Aptitude and Coding Skills II,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,22CS412,Mini Project and Design Thinking Lab,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,4,,Yoga/Personality Development (Non,0,AC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,5,,Open Elective I,3,OEC,Open Elective,elective
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,5,22CS501,Computer Networks,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,5,22CS502,Theory of Computation,3,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,5,,Machine Learning,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,5,22CS511,Advanced Aptitude and Coding Skills I,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,5,22CS512,Internship and Seminar*,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,5,,Indian Constitution 9,0,MC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,6,,Open Elective II,3,OEC,Open Elective,elective
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,6,,Professional Ethics,2,HSMC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,6,22CS601,Compiler Design,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,6,22CS602,Object Oriented Software Engineering,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,6,22CS611,Advanced Aptitude and Coding Skills II,1,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,7,,Open Elective III,3,OEC,Open Elective,elective
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,7,,Open Elective IV,3,OEC,Open Elective,elective
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,7,22CS701,Cryptography and Cyber Security,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,7,20CS702,Data Analytics,4,PCC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,7,,Professional Elective VI,3,PEC,Programme Elective,elective
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,7,22CS711,"for Innovation,",3,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,7,,Essence of Indian Knowledge Tradition,0,MC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS811,Project Work,8,EEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS901,HSMC - Humanities and Social Sciences including Management Course; BSC – Basic Science Course; ESC – Engineering Science Course; PCC – Professional Core Course; PEC – Professional Elective Course; OEC – Open Elective Course; EEC – Employability Enhancement Course; MC – Mandatory Course; AC – Audit ELECTIVE VERTICALS CYBER SECURITY Ethical Hacking,3,PEC,Programme Elective,elective
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS903,Social Network Security Block Chain Technology,3,PEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS904,Web Security,3,PEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS905,Digital and Mobile 5,3,PEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS906,Forensics Vulnerability Analysis and Penetration Testing,3,PEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS907,CLOUD COMPUTING AWS Cloud Foundations,3,PEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS908,Google Cloud Computing 2,3,PEC,,core
+R.M.K. Engineering College,RMK,Computer Science Engineering,CSE,R2022,8,22CS909,Foundations Cloud Architecting,3,PEC,,core

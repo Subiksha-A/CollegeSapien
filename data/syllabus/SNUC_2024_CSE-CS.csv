@@ -1,0 +1,64 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCCOMMUN,Communicative English,3,HSS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCLINEAR,Linear Algebra,4,BS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCENGINE,Engineering Physics,3,BS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCCYBERS,Cyber Security Essentials,4,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCPROGRA,Programming in C,3,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCDIGITA,Digital Design + lab,3,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCEXTRAA,Extra Academic Activity,1,AEA*,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCPROGRA,Programming in C Lab (Linux based),2,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,1,SNUCENGINE,Engineering Physics Lab,2,BS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCENGLIS,English for Engineers,3,HSS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCPROBAB,Probability and Statistics,3,BS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCPROGRA,Programming in Python,2,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCDATAST,Data Structures,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCCOMPUT,Computer Organization,3,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCCLASSI,Classical Cryptography,3,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCEXTRAA,Extra Academic Activity,1,AEA*,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCDATAST,Data Structures Lab,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,2,SNUCPROGRA,Programming in Python Lab,2,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCDISCRE,Discrete Mathematics,3,BS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCOBJECT,Object Oriented Programming,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCOPERAT,Operating Systems + Lab,4,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCDATABA,Database Management System,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCMODERN,Modern Cryptography,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCCOGNIT,Cognitive Psychology,2,HSS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCOOPLAB,OOP Lab,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,3,SNUCDATABA,Database Management Lab,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCDESIGN,Design and Analysis of Algorithms,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCGRAPHT,Graph Theory,4,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCCOMPUT,Computer Networks,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCMACHIN,Machine Learning Techniques,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCOPENEL,Open Elective - I,3,OE,Open Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCSYSTEM,System Security Management +Lab,4,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCCOMPUT,Computer Networks Lab,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,4,SNUCMACHIN,Machine Learning Lab,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUCOPTIMI,Optimization Techniques,3,BS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUCCOMPUT,Computing (HPC) and Big,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUCARTIFI,Artificial Intelligence,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUCETHICA,Ethical Hacking and Social,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUCPRINCI,Principles of Management,2,HSS,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUCPROFES,Professional Elective – I,3,PE,Programme Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUC8,8.,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,5,SNUCCYBERS,CyberSecurity Lab,1,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,6,SNUCIMAGEA,Image and video Processing,3,ES,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,6,SNUCPROFES,Professional Elective II,3,PE,Programme Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,6,SNUCOPENEL,Open Elective - II,3,OE,Open Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,7,SNUCDEEPLE,Deep Learning,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,7,SNUCWEBAPP,Web Application Security,3,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,7,SNUCPROFES,Professional Elective III,3,PE,Programme Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,7,SNUCPROFES,Professional Elective IV,3,PE,Programme Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,7,SNUCOPENEL,Open Elective III,3,OE,Open Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,7,SNUCDEEPLE,Deep Learning Lab,2,PC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCPROFES,Professional Elective V,3,PE,Programme Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCPROFES,Professional Elective VI,3,PE,Programme Elective,elective
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUC3,3.,6,EEC,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCAIFORP,AI for Precision Healthcare,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCROBOTI,Robotics Fundamentals,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCAIFORP,AI for Precision Agriculture,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCINTROD,Introduction to IoT,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCINDUST,Industry 4.0,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCSENSOR,Sensors for Healthcare,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCINTROD,Introduction to Cybersecurity,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCCRYPTO,Cryptography,3,OE,,core
+SNUC,SNUC,Computer Science Engineering (Cyber Security),CSE-CS,2024,8,SNUCDIGITA,Digital forensics,3,OE,,core

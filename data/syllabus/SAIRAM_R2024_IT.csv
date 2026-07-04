@@ -1,0 +1,14 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,1,24BSCY101,Engineering Chemistry,3,BS,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,1,24BSMA101,Matrices and Calculus,4,BS,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,1,24ESCS101,PROBLEM SOLVING AND LT P cpic,1,ESC,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,1,24ESGE102,Engineering Practices Laboratory,2,ESC,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,1,24ESPL101,Programming in C Laboratory,1,ESC,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,1,24HSEN101,Communicative English,3,HUM,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,1,24HSTA101,Heritage of Tamils,1,HUM,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,2,24ESMC201,MS Office (Mandatory - NC),0,ESC,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,3,24HSMC301,""" YNiVERSAL HUMAN VALUES II",4,HUM,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,4,24ITPT201,OOPS Using Java Laboratory with Theory,3,PC,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,5,24ESMC201,MS Office (Mandatory - NC),0,ESC,,core
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,5,24XEL5KK,Professional Elective,3,PE,Programme Elective,elective
+Sri Sairam Engineering College,SAIRAM,Information Technology,IT,R2024,5,24XXOEXXX,Open Elective,3,PE,Open Elective,elective

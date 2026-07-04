@@ -1,0 +1,62 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+RMD,RMD,Information Technology,IT,R2021,1,21EL101,Communicative English and Life Skills,2,HS,,core
+RMD,RMD,Information Technology,IT,R2021,1,21MA101,Engineering Mathematics-I,4,BS,,core
+RMD,RMD,Information Technology,IT,R2021,1,21PH101,Physics for Computer Science and Information,3,BS,,core
+RMD,RMD,Information Technology,IT,R2021,1,21CH101,Technology Engineering Chemistry,3,BS,,core
+RMD,RMD,Information Technology,IT,R2021,1,21GE101,Problem Solving and C Programming,3,ES,,core
+RMD,RMD,Information Technology,IT,R2021,1,21EE102,"Basic Electrical, Electronics and Measurement",3,ES,,core
+RMD,RMD,Information Technology,IT,R2021,1,21PC111,Physics and Chemistry Laboratory,2,BS,,core
+RMD,RMD,Information Technology,IT,R2021,1,21GE111,C Programming Laboratory,2,ES,,core
+RMD,RMD,Information Technology,IT,R2021,1,21EL111,Interpersonal Skills-Listening and Speaking Lab,1,HS,,core
+RMD,RMD,Information Technology,IT,R2021,2,21EL201,Technical English,2,HS,,core
+RMD,RMD,Information Technology,IT,R2021,2,21MA201,Engineering Mathematics-II,4,BS,,core
+RMD,RMD,Information Technology,IT,R2021,2,21GE103,Computer Aided Engineering Graphics,4,ES,,core
+RMD,RMD,Information Technology,IT,R2021,2,21CH102,Environmental Science and Engineering,3,HS,,core
+RMD,RMD,Information Technology,IT,R2021,2,21CS201,Data Structures,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,2,21CS202,LAB INTEGRATED THEORY COURSE Python Programming,4,ES,,core
+RMD,RMD,Information Technology,IT,R2021,2,21GE111,Engineering Practices,2,ES,,core
+RMD,RMD,Information Technology,IT,R2021,2,21CS211,Data Structures Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,2,21EL211,Advanced Reading and Writing Lab,1,HS,,core
+RMD,RMD,Information Technology,IT,R2021,3,21MA302,Discrete Mathematics,4,BS,,core
+RMD,RMD,Information Technology,IT,R2021,3,21IT301,Object Oriented Programming Principles,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,3,21CS404,Operating Systems,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,3,21CS402,Design and Analysis of Algorithms,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,3,21EC341,Analog and Digital Communication,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,3,21CS301,LAB INTEGRATED THEORY COURSE Digital Principles and System Design,4,ES,,core
+RMD,RMD,Information Technology,IT,R2021,3,21IT311,Object Oriented Programming Principles Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,3,21CS412,Operating Systems Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,3,21IT312,Mini Project–I,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,3,21CS313,Aptitude and Coding Skills–I,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21MA301,Probability and Statistics,4,BS,,core
+RMD,RMD,Information Technology,IT,R2021,4,21IT402,Web Technology- Foundation,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21CS401,Computer Architecture,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21IT403,Database Management Systems,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21GE301,Universal Human Values II: Understanding Harmony,3,HS,,core
+RMD,RMD,Information Technology,IT,R2021,4,21IT401,LAB INTEGRATED THEORY COURSE Software Engineering,4,PC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21IT411,Web Technology Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21IT412,Database Management Systems,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21IT413,Internship,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,4,21CS414,Aptitude and Coding Skills–II,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21CS501,Computer Networks,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21IT501,Big Data Analytics,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21IT502,Object Oriented Systems Design,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21EC441,LAB INTEGRATED THEORY COURSE Microprocessors and Interfacing,4,PC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21CS511,Networks Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21IT511,Object Oriented Systems Design Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21IT512,Big Data Analytics Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,5,21CS512,Advanced Aptitude and Coding Skills–I,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,6,21CS701,Cloud Computing,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,6,21IT601,Mobile Architecture and Development,3,PC,,core
+RMD,RMD,Information Technology,IT,R2021,6,,Open Elective-I*,3,OE,Open Elective,elective
+RMD,RMD,Information Technology,IT,R2021,6,,LAB INTEGRATED THEORY COURSE Professional Elective–II,3,PE,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2021,6,,Professional Elective–III,3,PE,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2021,6,21CS611,Mobile Application Development Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,6,21CS711,Cloud Computing Laboratory,2,PC,,core
+RMD,RMD,Information Technology,IT,R2021,6,21IT611,Mini Project-II,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,6,21CS614,Advanced Aptitude and Coding Skills–II,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,7,,Open Elective – II*,3,OE,Open Elective,elective
+RMD,RMD,Information Technology,IT,R2021,7,,LAB INTEGRATED THEORYCOURSE Professional Elective - IV,3,PE,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2021,7,,Professional Elective - V,3,PE,Programme Elective,elective
+RMD,RMD,Information Technology,IT,R2021,7,21IT711,"Innovation, Employability and",3,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,7,21IT712,Entrepreneurship Internship,1,EEC,,core
+RMD,RMD,Information Technology,IT,R2021,8,21IT811,Project Work,8,EEC,,core

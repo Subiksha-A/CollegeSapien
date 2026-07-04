@@ -362,3 +362,19 @@ export const rejectPendingCurricula = async (req: AuthRequest, res: Response) =>
     return res.status(500).json({ error: error.message || 'Internal server error' });
   }
 };
+
+export const deleteCurriculum = async (req: AuthRequest, res: Response) => {
+  try {
+    const id = req.params.id as string;
+    const docRef = firestore().collection('curricula').doc(id);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+      return res.status(404).json({ error: 'Curriculum not found' });
+    }
+    await docRef.delete();
+    return res.status(200).json({ success: true, message: 'Curriculum deleted successfully' });
+  } catch (error: any) {
+    log.error('deleteCurriculum error', { error: String(error), stack: error?.stack });
+    return res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+};

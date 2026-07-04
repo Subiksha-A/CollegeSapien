@@ -18,7 +18,7 @@ export const useApi = () => {
 
     try {
       return await $fetch<T>(`${config.public.apiBaseUrl}${path}`, {
-        method,
+        method: method as any,
         headers,
         body: body ? JSON.stringify(body) : undefined,
       });

@@ -1,0 +1,59 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+Anna University,ANNA,Information Technology,IT,R2023,1,EN23C01,Foundation English,3,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,1,MA23C01,Matrices and Calculus,4,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,1,PH23C01,Engineering Physics,4,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,1,ME23C01,Engineering Drawing and 3D Modeling,4,SDC,,core
+Anna University,ANNA,Information Technology,IT,R2023,1,EE23C02,Electrical and,3,ESC,,core
+Anna University,ANNA,Information Technology,IT,R2023,1,ME23C04,Makerspace,3,SDC,,core
+Anna University,ANNA,Information Technology,IT,R2023,1,UC23H01,தமிழரம் ரபு/ Heritage of Tamils,1,UC,,core
+Anna University,ANNA,Information Technology,IT,R2023,2,,EN23C02 Professional Communication,3,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,2,,MA23C03 Linear Algebra and Numerical Methods,4,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,2,,Electronic Materials and,3,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,2,CY23C01,Engineering Chemistry,4,ESC,,core
+Anna University,ANNA,Information Technology,IT,R2023,2,CS23C04,Programming in C,4,ESC,,core
+Anna University,ANNA,Information Technology,IT,R2023,2,,Information Technology IT23201 Essentials,4,ESC,,core
+Anna University,ANNA,Information Technology,IT,R2023,2,,ததொழில்நுட்பமும் /,1,UC,,core
+Anna University,ANNA,Information Technology,IT,R2023,3,MA23C09,Finite State Automata and Discrete Structures,4,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,3,IT23301,Digital Logic and Design,4,ESC,,core
+Anna University,ANNA,Information Technology,IT,R2023,3,IT23302,Data Structures,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,3,IT23303,Database Management Systems,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,3,IT23304,Object Oriented Programming,2,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,3,IT23U01,Standards – IT,1,UC,,core
+Anna University,ANNA,Information Technology,IT,R2023,3,UC23U01,Universal Human Values,2,UC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,MA23C05,Probability and Statistics,4,HSMC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,IT23401,Advanced Data Structures,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,,IT23C01 Design and Analysis of Algorithms,3,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,,IT23402 Computer Organization and Architecture,3,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,IT23403,Software Engineering,3,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,IT23C02,Operating Systems,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,IT23L01,Self-Learning Course,1,SLC,,core
+Anna University,ANNA,Information Technology,IT,R2023,4,,-,2,SDC,,core
+Anna University,ANNA,Information Technology,IT,R2023,5,IT23501,Computer Networks,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,5,IT23502,Web Programming,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,5,IT23503,Compiler Design,3,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,5,IT23504,Machine Learning,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,5,,Professional Elective I,3,PEC,Programme Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,5,IT23505,Engineering UC23E01 Entrepreneurship T 2 0 2 4 3 EDS Development Industry Oriented T 1 0 0 1 1 IOC Skill Development Societal Oriented Project,1,SDC,,core
+Anna University,ANNA,Information Technology,IT,R2023,5,IT23D01,Capstone Design Project – Level I,6,SDC,Capstone Design Project,elective
+Anna University,ANNA,Information Technology,IT,R2023,5,,Honours Elective - I,3,PEC,Honours Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,5,,Honours Elective - II,3,PEC,Honours Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,5,,Minor Elective - I,3,PEC,Minor Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,5,,Minor Elective - II,3,PEC,Minor Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,IT23601,Distributed Systems and Computing,3,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,6,,Professional Elective II,3,PEC,Programme Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,,Professional Elective III,3,PEC,Programme Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,,Open Elective – I,3,OEC,Open Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,IT23U02,Industry Oriented Course II T 1 0 0 1 1 IOC Perspectives of Sustainability Development,3,UC,,core
+Anna University,ANNA,Information Technology,IT,R2023,6,IT23D02,Capstone Design Project – Level II,6,SDC,Capstone Design Project,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,,Honours Elective - III,3,PEC,Honours Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,,Honours Elective - IV,3,PEC,Honours Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,,Minor Elective - III,3,PEC,Minor Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,6,,Minor Elective - IV,3,PEC,Minor Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,7,IT23701,Cryptography and Network Security,4,PCC,,core
+Anna University,ANNA,Information Technology,IT,R2023,7,,Professional Elective IV,3,PEC,Programme Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,7,,Professional Elective V,3,PEC,Programme Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,7,,Professional Elective VI,3,PEC,Programme Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,7,,Open Elective II,3,OEC,Open Elective,elective
+Anna University,ANNA,Information Technology,IT,R2023,7,IT23702,Industry Oriented T 1 0 0 1 1 IOC Software Development Project Laboratory,2,SDC,,core
+Anna University,ANNA,Information Technology,IT,R2023,7,IT23D03,Capstone Design Project – Level III,6,SDC,Capstone Design Project,elective
+Anna University,ANNA,Information Technology,IT,R2023,8,IT23801,Project Work / Internship cum Project Work,8,SDC,,core

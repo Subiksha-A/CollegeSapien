@@ -1,0 +1,61 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23MA1103,"Introductory Topics in Statistics, Probability and",3,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23ES1104,Calculus Fundamentals of Computer Science,3,ES,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23HS1102,Business Communication and Value Science I,3,HS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23PH1102,Physics for Computing Science,3,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23ES1105,Principles of Electrical Engineering,3,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23MA1102,Discrete Mathematics for Computer Science,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23ES1112,Fundamentals Computer Science,2,ES,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,1,23TA1101,/Heritage of Tamils,1,HS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23CB1201,Data Structures and 1 Algorithms,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23CB1202,Fundamentals of Economics,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23HS1202,Business Communication and Value Science II,3,HS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23EE1204,Principles of Electronics Engineering,3,ES,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23MA1204,Linear Algebra,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23MA1205,Statistical Methods and Modelling,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23CB1211,Data Structures and Algorithms,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23ES1212,Technical Skill Practices I,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,23TA1201,/ Tamils and,1,HS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,2,,Technology Mandatory course,0,MC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,23CB1301,Object Oriented Programming,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,23CB1302,Formal Language and Automata Theory,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,23MA1305,Computational Statistics,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,23CB1303,Software Engineering,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,23CB1304,Computer Organization and,4,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,23CB1311,Object Oriented Programming,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,23ES1311,Technical Skill Practices II,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,3,,Mandatory course,0,MC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23CB1401,Database Management Systems,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23CB1402,Introduction to Innovation and Entrepreneurship,3,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23MA1407,Operations Research,4,BS,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23CB1403,Operating Systems,4,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23CB1404,Software Design with UML,4,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23CB1405,Design Thinking,3,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23CB1411,Database Management Systems Laboratory,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,4,23ES1411,Technical Skill Practices III,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,23CB1501,Design and Analysis of 1 Computer Algorithms,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,23CB1502,Computer Networks,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,23CB1503,Fundamentals of Management,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,23CB1504,Java Programming,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,,Professional Elective - I,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,,Open Elective - I,3,OE,Open Elective,elective
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,23CB1511,Java Programming,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,5,23ES1511,Technical Skill Practices IV,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,23CB1601,Cloud Computing,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,23CB1602,Human Resource Management,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,23CS1501,Full Stack Development,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,23CS1602,Compiler Design,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,,Professional Elective -II,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,23CS1503,Artificial Intelligence and Machine Learning,4,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,23ES1611,Technical Skill Practices V,1,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,6,23CB1611,Socially Relevant Mini Project,2,EEC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,7,23CB1701,Information Security Management,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,7,23CB1702,Financial Management,3,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,7,,Professional Elective- III,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,7,,Professional Elective-,3,PE,Programme Elective,elective
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,7,,Open Elective - II,3,OE,Open Elective,elective
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,7,23CB1711,Information Security Management,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,7,23CB1712,IT Workshop Laboratory,2,PC,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,8,,Professional,3,PE,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,8,,Elective -V Professional,3,PE,,core
+Panimalar Engineering College,PANIMALAR,Computer Science and Business Systems,CSBS,R2023,8,23CB1811,Project Work,40,EEC,,core

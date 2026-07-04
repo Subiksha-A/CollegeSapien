@@ -1,0 +1,71 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,Foundation English,3,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,Matrices and Calculus,4,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,Engineering Physics,4,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,Engineering Drawing & 3D Modelling,4,SDC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,Fundamentals of Electrical and Electronics Engineering,3,ESC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,Makerspace,3,SDC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,தமிழர்மரபு /Heritage of Tamils,1,UC*,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,1,,NCC/NSS/NSO/YRC,,UC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,2,,Professional Communication,3,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,2,,Probability and statistics,4,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,2,,Semiconductor devices and quantum technology,3,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,2,,Engineering Chemistry,4,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,2,,Python Programming,3,ESC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,2,,Computer Organization,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,2,,தமிழரும் ததொழில்நுட்பமும் / Tamils and Technology,1,UC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,3,,Discrete Mathematics,4,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,3,,Object Oriented Programming and Data Structures,5,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,3,,Computer Networks,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,3,,Database Management Systems,5,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,3,,Fundamentals of Data Science,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,3,,Standards Artificial Intelligence,1,UC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,3,,Universal Human Values,2,UC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Linear Algebra and Numerical Methods,4,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Operating Systems,4,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Design and Analysis of Algorithms,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Data Exploration and Visualization,4,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Computer Vision,4,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Distributed Systems and Cloud Computing,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Self-Learning I,1,SLC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,4,,Skill Development I,2,SDC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Optimization Techniques,4,HSMC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Machine Learning Methods,4,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Artificial Intelligence,4,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Big Data Analytics,4,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Professional Elective I,3,PEC,Programme Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Skill Development –II,2,SDC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Engineering Entrepreneurship Development,3,UC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Societal Oriented Project,1,SDC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Capstone Design Project Level I,3,SDC,Capstone Design Project,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Honours Elective I,3,SDC,Honours Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Honours Elective II,3,SDC,Honours Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Minor Elective I,3,SDC,Minor Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,5,,Minor Elective II,3,SDC,Minor Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Deep Learning Techniques,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Natural Language Processing,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Emerging Technology - I,3,ETC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Professional Elective II,3,PEC,Programme Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Professional Elective III,3,PEC,Programme Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Open Elective I,3,OE,Open Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Skill Development Course-III,2,SDC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Industry Oriented II,1,IOC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Perspectives Of Sustainable Development Information Technology,3,UC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Capstone Design Project Level II,3,SDC,Capstone Design Project,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Honours Elective III,3,PEC,Honours Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Honours Elective IV,3,PEC,Honours Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Minor Elective III,3,PEC,Minor Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,6,,Minor Elective IV,3,PEC,Minor Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Machine Learning Operations,3,PCC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Emerging Technology -II,3,ETC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Professional Elective IV,3,PEC,Programme Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Professional Elective V,3,PEC,Programme Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Professional Elective VI,3,PEC,Programme Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Industry Oriented III,1,IOC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Software Development Project,2,SDC,,core
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Capstone Design Project Level III,3,SDC,Capstone Design Project,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Honours Elective V,3,PEC,Honours Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Honours Elective VI,3,PEC,Honours Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Minor Elective V,3,PEC,Minor Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,7,,Minor Elective VI,3,PEC,Minor Elective,elective
+Anna University,ANNA,Artificial Intelligence and Data Science,AIDS,R2023,8,,Project Work / Internship cum Project Work,8,SDC,,core

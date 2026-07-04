@@ -1,0 +1,72 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,MA25C01,Applied Calculus,4,BS,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,EN25C01,English Essentials I,2,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,UC25H01,/ Heritage of தமிழர ் மரபு Tamils,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,PH25C01,Applied Physics I,3,BS,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,CY25C01,Applied Chemistry I,3,BS,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,CS25C01,Computer Programming: C,3,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,CS25C03,Essentials of Computing,3,ES DIC (PC) -,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,ME25C04,Makerspace,2,SD,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,UC25A01,Life Skills for Engineers I,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,1,UC25A02,Physical Education I,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,MA25C02,Linear Algebra,4,BS,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,EE25C01,Basic Electrical and Electronics Engineering,3,ES (G),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,CS25C06,Digital Principles and Computer Organization,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,PH25C03,Applied Physics (CSIE) II,3,BS,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,UC25H02,தமிழரக் ளும் / ததொழில்நுட்பமும் Tamils and Technology,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,CS25C07,Object Oriented Programming,5,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,EN25C02,English Essentials II,2,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,ME25C05,Re-Engineering for Innovation,2,SD,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,UC25A03,Life Skills for Engineers- II,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,UC25A04,Physical Education II,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,2,,Foreign Language^,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,3,,Discrete Mathematics,4,BS,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,3,,Object Oriented Software Engineering,3,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,3,,Data Structures,5,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,3,,Java Programming,5,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,3,,Operating Systems,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,3,,Skill Development I,2,SD,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,3,,English Communication Skills II,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,Probability and Statistics,3,BS,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,Compiler Design,3,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,Algorithms,3,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,Standards in Computer Science,1,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,Database Management Systems,5,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,Python for Data Science,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,Skill Development II,2,SD,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,4,,English Communication Skills III,1,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Cryptography and Cyber Security,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Fundamentals of Internet of Things,3,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Programme Elective–I,3,ES (PE),Programme Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Computer Networks,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Artificial Intelligence and Machine Learning,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Full Stack Development,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Skill Development III,2,SD,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Industry Oriented I,25,SD,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Capstone Design Project Level I,6,SD,Capstone Design Project,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Honours Elective I,3,,Honours Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Honours Elective II,3,,Honours Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Minor Minor Elective I,3,,Minor Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,5,,Minor Elective I Minor Elective II,3,,Minor Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Cloud Computing,3,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Programme Elective II,3,ES (PE),Programme Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Programme Elective III,3,ES (PE),Programme Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Open Elective,3,,Open Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,IoT Architecture and Protocols,4,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Industry Oriented II Mobile Application Development,1,SD,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Mobile Application Development for IoT,2,ES (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Capstone Design Project Level II,6,SD,Capstone Design Project,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Honours Elective III,3,,Honours Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Honours Elective IV,3,,Honours Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Minor Elective III,3,,Minor Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,6,,Minor Elective IV,3,,Minor Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Climate Change and Sustainability,2,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Sustainability Programme Elective IV,3,ES (PE),Programme Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Programme Elective V Engineering Entrepreneurship,3,ES (PE),Programme Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Engineering Entrepreneurship Development,3,HUM,,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,IoT Penetration Testing and Vulnerability Assessment Summer Internship,3,ES SD (PC),,core
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Capstone Design Project Level III,6,SD,Capstone Design Project,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Honours Elective V,3,,Honours Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Minor Elective V,3,,Minor Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,7,,Minor Elective VI,3,,Minor Elective,elective
+Anna University Affiliated,AUA,Computer Science Engineering (Internet of Things),CSE-IOT,R2025,8,,Project Work / Internship cum Project Work,8,SD,,core

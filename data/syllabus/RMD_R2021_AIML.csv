@@ -1,0 +1,59 @@
+college,college_code,course,course_code,regulation,semester,subject_code,subject_name,credits,category,elective_type,record_type
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21EL101,Communicative English and Life Skills,2,HS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21MA101,Engineering Mathematics -I,4,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21PH104,Engineering Physics,3,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21CH101,Engineering Chemistry,3,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21GE101,Problem Solving and C Programming,3,ES,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21GE103,"Basic Electrical, Electronics and Measurement",3,ES,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21PC112,Engineering Induction Program MC 3 Weeks - - - - PRACTICALS Physics and Chemistry,2,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21GE111,C Programming Laboratory,2,ES,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,1,21EL111,Interpersonal Skills - Listening and Speaking,1,HS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21EL201,Technical English,2,HS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21MA201,Engineering Mathematics - II,4,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21CH102,Environmental Science and Engineering,3,HS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21GE105,Computer Aided Engineering Graphics,4,ES,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21CS201,Data Structures,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21CS202,Python Programming (Lab Integrated),4,ES,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21GE211,PRACTICALS Engineering Practices,2,ES,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21CS211,Data Structures Laboratory,2,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,2,21EL211,Advanced Reading and Writing Laboratory,1,HS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21MA301,Probability and Statistics,4,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21AM301,Digital Principles and Computer Architecture,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21AM302,Principles of Artificial Intelligence (Lab Integrated),4,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21CS302,Object Oriented Programming,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21IT403,Database Management Systems,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21GE301,Universal Human Values II: Understanding Harmony,3,HS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21CS311,PRACTICALS Object Oriented Programming,2,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21IT412,Database Management Systems Laboratory,2,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21AM311,Mini Project,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,3,21CS313,Aptitude and Coding Skills - I,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21MA402,Linear Algebra,4,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21AM401,Machine Learning Essentials,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21AM402,Data Analytics,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21AM403,Object Oriented Software Engineering,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21AM404,Operating System Fundamentals (Lab,4,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21CS402,Integrated) Design and Analysis of Algorithms,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21AM411,PRACTICALS Machine Learning,2,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21AM412,Data Analytics Laboratory,2,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,4,21CS414,Internship EEC - - - - 1 Aptitude and Coding Skills – II,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,21MA302,Discrete Mathematics,4,BS,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,21AM501,Neural Networks,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,21AM502,Data Visualization(Lab Integrated),4,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,,Open Elective - I*,3,OE,Open Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,,Professional Elective - I,3,PE,Programme Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,21AM511,PRACTICALS Neural Networks,2,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,21CS513,Mini Project and Design Thinking Practices,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,5,21CS514,Advanced Aptitude and Coding Skills – I,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,6,21AM601,Principles and Practices in Deep Learning (Lab,4,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,6,21AM602,integrated) Pattern Recognition,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,6,,Professional Elective - II,3,PE,Programme Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,6,,Professional Elective - III,3,PE,Programme Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,6,21AM613,PRACTICALS Internship and Career Readineess Course,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,6,21CS614,Advanced Aptitude and Coding Skills – II,1,EEC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,7,,Natural Language Processing (Lab,4,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,7,21AM702,Integrated) Computer Vision,3,PC,,core
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,7,,Open Elective - II*,3,OE,Open Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,7,,Professional Elective - IV,3,PE,Programme Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,7,,Professional Elective - V,3,PE,Programme Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,7,,Professional Elective - VI,3,PE,Programme Elective,elective
+RMD,RMD,Artificial Intelligence and Machine Learning,AIML,R2021,8,21AM811,SI. COURSE CONTACT No CODE PERIODS PRACTICALS Project Work,8,EEC,,core
