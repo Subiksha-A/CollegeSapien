@@ -24,6 +24,7 @@ class _TimetableDetailScreenState extends State<TimetableDetailScreen> {
     DaySchedule(day: 'THU', date: 12, isToday: false),
     DaySchedule(day: 'FRI', date: 12, isToday: false),
     DaySchedule(day: 'SAT', date: 12, isToday: false),
+    DaySchedule(day: 'SUN', date: 12, isToday: false),
   ];
 
   List<TimetableClass> get _selectedDayClasses {

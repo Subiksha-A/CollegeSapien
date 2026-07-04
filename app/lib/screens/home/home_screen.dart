@@ -101,8 +101,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final Set<String> _markedSlots = {};
   List<SavedSubject> _savedSubjects = [];
   bool _showingCurriculumFallback = false;
+  // True once we know whether the user has subjects (from cache or network)
+  // — gates the "configure your subjects" empty state so it doesn't flash
+  // while the first load is still in flight.
+  bool _subjectsResolved = false;
   String _userName = '';
   String _collegeName = '';
+  String _department = '';
 
   static String get _todayMarkedKey =>
       'marked_slots_${_dateKey(DateTime.now())}';
@@ -171,13 +176,20 @@ class _HomeScreenState extends State<HomeScreen> {
     if (user != null) {
       if (user.semester != _semester ||
           user.name != _userName ||
-          (user.collegeName ?? '') != _collegeName) {
+          (user.collegeName ?? '') != _collegeName ||
+          (user.department ?? '') != _department) {
         setState(() {
           _semester = user.semester;
           _userName = user.name;
           _collegeName = user.collegeName ?? '';
+          _department = user.department ?? '';
+          // Old subjects/attendance may no longer apply — clear until the
+          // reload below resolves them for the new profile.
+          _savedSubjects = appState.savedSubjects ?? [];
+          _showingCurriculumFallback = appState.savedSubjectsFromCurriculum;
+          _subjectsResolved = false;
         });
-        _load(); // Reload all data for the new semester
+        _load(); // Reload all data for the new semester/college/department
         return;
       }
     }
@@ -210,12 +222,14 @@ class _HomeScreenState extends State<HomeScreen> {
           _semester = appState.userProfile!.semester;
           _userName = appState.userProfile!.name;
           _collegeName = appState.userProfile!.collegeName ?? '';
+          _department = appState.userProfile!.department ?? '';
         });
       }
       if (appState.savedSubjects != null) {
         setState(() {
           _savedSubjects = appState.savedSubjects!;
-          _showingCurriculumFallback = false;
+          _showingCurriculumFallback = appState.savedSubjectsFromCurriculum;
+          _subjectsResolved = true;
         });
       }
     } catch (_) {}
@@ -238,11 +252,13 @@ class _HomeScreenState extends State<HomeScreen> {
           _semester = user.semester;
           _userName = user.name;
           _collegeName = user.collegeName ?? '';
+          _department = user.department ?? '';
         });
         if (appState.savedSubjects != null) {
           setState(() {
             _savedSubjects = appState.savedSubjects!;
-            _showingCurriculumFallback = false;
+            _showingCurriculumFallback = appState.savedSubjectsFromCurriculum;
+            _subjectsResolved = true;
           });
         }
       }
@@ -250,7 +266,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Cache is still fresh (e.g. splash screen just synced) — skip hitting
     // the network again so opening the home screen doesn't always re-sync.
-    if (appState.hasFreshHomeData) return;
+    // Subjects must have been resolved too, or we'd never run the curriculum
+    // fallback below.
+    if (appState.hasFreshHomeData && appState.savedSubjects != null) return;
 
     try {
       // One sync call now returns profile + attendance + timetable + saved
@@ -268,6 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _semester = freshUser.semester;
           _userName = freshUser.name;
           _collegeName = freshUser.collegeName ?? '';
+          _department = freshUser.department ?? '';
         });
       }
       appState.setUserProfile(freshUser);
@@ -296,11 +315,13 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _savedSubjects = saved;
             _showingCurriculumFallback = false;
+            _subjectsResolved = true;
           });
         }
       } else {
         final syllabusService = SyllabusService();
         // No saved subjects — try curriculum fallback
+        var fallbackApplied = false;
         try {
           final colleges = await CollegeService().listColleges();
           final college =
@@ -333,16 +354,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         category: s.category,
                       ))
                   .toList();
-              appState.setSavedSubjects(fallbackSubjects);
+              appState.setSavedSubjects(fallbackSubjects, fromCurriculum: true);
+              fallbackApplied = true;
               if (mounted) {
                 setState(() {
                   _savedSubjects = fallbackSubjects;
                   _showingCurriculumFallback = true;
+                  _subjectsResolved = true;
                 });
               }
             }
           }
         } catch (_) {}
+        if (!fallbackApplied && mounted) {
+          // Nothing saved and no usable curriculum — show the configure
+          // prompt instead of stale subjects from a previous profile.
+          setState(() {
+            _savedSubjects = [];
+            _showingCurriculumFallback = false;
+            _subjectsResolved = true;
+          });
+        }
       }
     } catch (_) {}
   }
@@ -604,6 +636,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 _syllabusCarousel(),
+              ] else if (_subjectsResolved && _semester > 0) ...[
+                const SizedBox(height: 24),
+                _sectionHeader(
+                  "${_semester == 1 ? '1st' : _semester == 2 ? '2nd' : _semester == 3 ? '3rd' : '${_semester}th'} Semester Subjects",
+                ),
+                const SizedBox(height: 12),
+                _configureSubjectsCard(),
               ],
               const SizedBox(height: 24),
               _sectionHeader(
@@ -1166,6 +1205,61 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  // ─── Configure subjects empty state ────────────────────────────────────────
+
+  Widget _configureSubjectsCard() {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const SyllabusSelectionScreen()),
+      ),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.accentBlue,
+          border: Border.all(color: Colors.black, width: 1.5),
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(offset: Offset(1, 1), color: Colors.black),
+          ],
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.menu_book_outlined, size: 32, color: Colors.black),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Configure your subjects',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'No subjects set up for this semester yet. Tap to add them.',
+                    style: TextStyle(
+                      fontFamily: 'Public Sans',
+                      fontSize: 12,
+                      color: Colors.black.withValues(alpha: 0.7),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward, size: 20, color: Colors.black),
+          ],
         ),
       ),
     );

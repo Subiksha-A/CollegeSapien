@@ -13,6 +13,10 @@ class AppStateNotifier extends ChangeNotifier {
   CachedData<List<TimetableSubject>>? _timetableSubjects;
   CachedData<UserProfile?>? _userProfile;
   CachedData<List<SavedSubject>>? _savedSubjects;
+  // True when the cached saved subjects were seeded from the curriculum
+  // instead of the user's own saved selection — the home screen uses this
+  // to show the "tap to update with your electives" hint.
+  bool _savedSubjectsFromCurriculum = false;
   CachedData<List<EventItem>>? _events;
 
   static const attendanceTtl = Duration(minutes: 5);
@@ -26,6 +30,7 @@ class AppStateNotifier extends ChangeNotifier {
   static const _attendanceKey = 'cache_attendance_summary';
   static const _timetableKey = 'cache_timetable_subjects';
   static const _savedSubjectsKey = 'cache_saved_subjects';
+  static const _savedSubjectsFallbackKey = 'cache_saved_subjects_fallback';
   static const _eventsKey = 'cache_events';
 
   // Hydration from local storage
@@ -78,6 +83,8 @@ class AppStateNotifier extends ChangeNotifier {
               .map((item) => SavedSubject.fromJson(item as Map<String, dynamic>))
               .toList();
           _savedSubjects = CachedData(data: list, ttl: savedSubjectsTtl);
+          _savedSubjectsFromCurriculum =
+              prefs.getBool(_savedSubjectsFallbackKey) ?? false;
         } catch (_) {}
       }
 
@@ -126,6 +133,8 @@ class AppStateNotifier extends ChangeNotifier {
     return null;
   }
 
+  bool get savedSubjectsFromCurriculum => _savedSubjectsFromCurriculum;
+
   List<EventItem>? get events {
     if (_events?.isValid ?? false) {
       return _events!.data;
@@ -165,11 +174,14 @@ class AppStateNotifier extends ChangeNotifier {
     }
   }
 
-  void setSavedSubjects(List<SavedSubject> data) {
+  void setSavedSubjects(List<SavedSubject> data,
+      {bool fromCurriculum = false}) {
     _savedSubjects = CachedData(data: data, ttl: savedSubjectsTtl);
+    _savedSubjectsFromCurriculum = fromCurriculum;
     notifyListeners();
     _saveToPrefs(_savedSubjectsKey,
         jsonEncode(data.map((item) => item.toJson()).toList()));
+    _saveBoolToPrefs(_savedSubjectsFallbackKey, fromCurriculum);
   }
 
   void setEvents(List<EventItem> data) {
@@ -200,8 +212,24 @@ class AppStateNotifier extends ChangeNotifier {
 
   void invalidateSavedSubjects() {
     _savedSubjects = null;
+    _savedSubjectsFromCurriculum = false;
     notifyListeners();
     _removeFromPrefs(_savedSubjectsKey);
+    _removeFromPrefs(_savedSubjectsFallbackKey);
+  }
+
+  // Clears everything tied to the user's college/department/semester —
+  // used after a profile change wipes the academic data on the server.
+  void invalidateAcademicData() {
+    _attendanceSummary = null;
+    _timetableSubjects = null;
+    _savedSubjects = null;
+    _savedSubjectsFromCurriculum = false;
+    notifyListeners();
+    _removeFromPrefs(_attendanceKey);
+    _removeFromPrefs(_timetableKey);
+    _removeFromPrefs(_savedSubjectsKey);
+    _removeFromPrefs(_savedSubjectsFallbackKey);
   }
 
   void invalidateEvents() {
@@ -215,6 +243,7 @@ class AppStateNotifier extends ChangeNotifier {
     _timetableSubjects = null;
     _userProfile = null;
     _savedSubjects = null;
+    _savedSubjectsFromCurriculum = false;
     _events = null;
     notifyListeners();
     _clearAllCachePrefs();
@@ -225,6 +254,13 @@ class AppStateNotifier extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(key, value);
+    } catch (_) {}
+  }
+
+  Future<void> _saveBoolToPrefs(String key, bool value) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(key, value);
     } catch (_) {}
   }
 
@@ -242,6 +278,7 @@ class AppStateNotifier extends ChangeNotifier {
       await prefs.remove(_attendanceKey);
       await prefs.remove(_timetableKey);
       await prefs.remove(_savedSubjectsKey);
+      await prefs.remove(_savedSubjectsFallbackKey);
       await prefs.remove(_eventsKey);
       
       // Also clear all curriculum keys

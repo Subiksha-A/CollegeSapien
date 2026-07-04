@@ -8,7 +8,8 @@ import 'package:codesapiens/screens/profile/about_screen.dart';
 
 void runProfileTests() {
   group('Profile & Settings Flow', () {
-    testWidgets('Verify Profile Dashboard Stats & Menu', (WidgetTester tester) async {
+    testWidgets('Verify Profile Dashboard Stats & Menu',
+        (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: ProfileScreen()));
       await tester.pumpAndSettle();
 
@@ -19,6 +20,8 @@ void runProfileTests() {
       expect(find.text('Settings'), findsOneWidget);
       expect(find.text('Help & Support'), findsOneWidget);
       expect(find.text('About'), findsOneWidget);
+      expect(find.byTooltip('Edit profile'), findsOneWidget);
+      expect(find.text('Edit Profile'), findsNothing);
     });
 
     testWidgets('Verify Edit Profile Form Fields', (WidgetTester tester) async {
@@ -37,7 +40,8 @@ void runProfileTests() {
       expect(find.text('Save Changes'), findsOneWidget);
     });
 
-    testWidgets('Verify Settings Toggles & Sliders', (WidgetTester tester) async {
+    testWidgets('Verify Settings Toggles & Sliders',
+        (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
       await tester.pumpAndSettle();
 

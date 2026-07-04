@@ -320,6 +320,20 @@ export const getMe = async (req: AuthRequest, res: Response) => {
   }
 };
 
+const deleteSubcollection = async (
+  userRef: admin.firestore.DocumentReference,
+  name: string
+) => {
+  const snap = await userRef.collection(name).get();
+  if (snap.empty) return;
+  // Firestore batches cap at 500 operations — chunk large subcollections
+  for (let i = 0; i < snap.docs.length; i += 400) {
+    const batch = firestore().batch();
+    snap.docs.slice(i, i + 400).forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+  }
+};
+
 export const updateMe = async (req: AuthRequest, res: Response) => {
   try {
     const uid = req.user?.uid;
@@ -339,12 +353,32 @@ export const updateMe = async (req: AuthRequest, res: Response) => {
       patch.collegeName = college.data.name;
     }
 
-    await firestore()
-      .collection('users')
-      .doc(uid)
-      .update(patch);
+    const userRef = firestore().collection('users').doc(uid);
+    const existingDoc = await userRef.get();
+    const existing = existingDoc.data() || {};
 
-    return res.status(200).json({ message: 'Profile updated' });
+    // A different college or department invalidates everything tied to the
+    // old curriculum — attendance records, per-semester timetables and saved
+    // subjects. The client confirms with the user before sending this change.
+    const collegeChanged = Boolean(
+      validatedData.collegeId && validatedData.collegeId !== existing.collegeId
+    );
+    const departmentChanged = Boolean(
+      validatedData.department && validatedData.department !== existing.department
+    );
+    const clearedAcademicData = collegeChanged || departmentChanged;
+
+    if (clearedAcademicData) {
+      await Promise.all([
+        deleteSubcollection(userRef, 'attendance'),
+        deleteSubcollection(userRef, 'semesters'),
+        deleteSubcollection(userRef, 'syllabus'),
+      ]);
+    }
+
+    await userRef.update(patch);
+
+    return res.status(200).json({ message: 'Profile updated', clearedAcademicData });
   } catch (error: any) {
     return res.status(400).json({ error: zodError(error) });
   }
@@ -357,12 +391,9 @@ export const deleteAccount = async (req: AuthRequest, res: Response) => {
 
     const userRef = firestore().collection('users').doc(uid);
 
-    const subcollections = ['attendance', 'semesters', 'cgpa'];
+    const subcollections = ['attendance', 'semesters', 'syllabus', 'cgpa'];
     for (const sub of subcollections) {
-      const snap = await userRef.collection(sub).get();
-      const batch = firestore().batch();
-      snap.docs.forEach(doc => batch.delete(doc.ref));
-      if (!snap.empty) await batch.commit();
+      await deleteSubcollection(userRef, sub);
     }
 
     await userRef.delete();

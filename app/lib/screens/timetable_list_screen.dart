@@ -63,7 +63,7 @@ class _TimetableListScreenState extends State<TimetableListScreen> {
             .toList() ??
         [];
 
-    final days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    final days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
     final types = ['CORE', 'LAB', 'BREAK'];
     bool isSaving = false;
 
@@ -172,10 +172,12 @@ class _TimetableListScreenState extends State<TimetableListScreen> {
               final name = nameController.text.trim();
               final code = codeController.text.trim();
               if (name.isEmpty || code.isEmpty) {
-                ScaffoldMessenger.of(ctx).showSnackBar(
-                  const SnackBar(
-                      content: Text('Subject name and code are required.')),
-                );
+                if (ctx.mounted) {
+                  ScaffoldMessenger.of(ctx).showSnackBar(
+                    const SnackBar(
+                        content: Text('Subject name and code are required.')),
+                  );
+                }
                 return;
               }
 
@@ -219,7 +221,7 @@ class _TimetableListScreenState extends State<TimetableListScreen> {
                 CacheService.instance.set('timetable_subjects', merged);
 
                 if (ctx.mounted) Navigator.pop(ctx);
-                setState(() => _subjects = merged);
+                if (mounted) setState(() => _subjects = merged);
 
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -232,8 +234,8 @@ class _TimetableListScreenState extends State<TimetableListScreen> {
                   );
                 }
               } catch (e) {
-                setSheetState(() => isSaving = false);
                 if (ctx.mounted) {
+                  setSheetState(() => isSaving = false);
                   ScaffoldMessenger.of(ctx).showSnackBar(
                     SnackBar(content: Text('Error saving subject: $e')),
                   );
