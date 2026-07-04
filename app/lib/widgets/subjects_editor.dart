@@ -129,8 +129,8 @@ class _SubjectsEditorState extends State<SubjectsEditor> {
         semester: widget.semester,
       );
       final optionPools = curriculumSubjects
-          .where((s) => s.isSlot && s.optionsFrom != null)
-          .map((s) => s.optionsFrom!)
+          .where((s) => s.isSlot && s.electiveType != null)
+          .map((s) => s.electiveType!)
           .toSet();
       for (final pool in optionPools) {
         optionsMap[pool] = _syllabusService.getElectiveOptions(
@@ -144,9 +144,6 @@ class _SubjectsEditorState extends State<SubjectsEditor> {
     if (saved != null && saved.subjects.isNotEmpty) {
       // User has saved subjects — show exactly those
       for (final sv in saved.subjects) {
-        final optFrom = sv.isElective
-            ? _findOptionsFrom(sv.electiveType, curriculumSubjects)
-            : null;
         final subject = CurriculumSubject(
           collegeCode: widget.collegeCode ?? '',
           courseCode: widget.courseCode ?? '',
@@ -162,11 +159,10 @@ class _SubjectsEditorState extends State<SubjectsEditor> {
           isElective: sv.isElective,
           electiveType: sv.electiveType,
           recordType: sv.isElective ? 'slot' : 'core',
-          optionsFrom: optFrom,
         );
         CurriculumSubject? matchedOption;
-        if (sv.isElective && optFrom != null) {
-          final pool = optionsMap[optFrom] ?? [];
+        if (sv.isElective && sv.electiveType != null) {
+          final pool = optionsMap[sv.electiveType] ?? [];
           matchedOption =
               pool.where((o) => o.subjectName == sv.subjectName).firstOrNull;
         }
@@ -182,15 +178,6 @@ class _SubjectsEditorState extends State<SubjectsEditor> {
 
     _electiveOptions = optionsMap;
     _entries = entries;
-  }
-
-  String? _findOptionsFrom(
-      String? electiveType, List<CurriculumSubject> curriculum) {
-    if (electiveType == null) return null;
-    return curriculum
-        .where((s) => s.isSlot && s.electiveType == electiveType)
-        .map((s) => s.optionsFrom)
-        .firstOrNull;
   }
 
   void showAddSubjectSheet() {
@@ -466,8 +453,8 @@ class _SubjectsEditorState extends State<SubjectsEditor> {
     final subject = entry.subject;
     final isSlot = subject.isSlot;
     final hasOptions = isSlot &&
-        subject.optionsFrom != null &&
-        (_electiveOptions[subject.optionsFrom]?.isNotEmpty ?? false);
+        subject.electiveType != null &&
+        (_electiveOptions[subject.electiveType]?.isNotEmpty ?? false);
     final color =
         subject.isElective ? AppColors.accentPurple : AppColors.accentGreen;
     final displayName = entry.selectedOption?.subjectName ??
@@ -583,7 +570,7 @@ class _SubjectsEditorState extends State<SubjectsEditor> {
   }
 
   Widget _buildElectiveDropdown(_SubjectEntry entry, int index) {
-    final options = _electiveOptions[entry.subject.optionsFrom] ?? [];
+    final options = _electiveOptions[entry.subject.electiveType] ?? [];
     final currentValue =
         entry.selectedOption ?? _findMatchingOption(entry, options);
 
