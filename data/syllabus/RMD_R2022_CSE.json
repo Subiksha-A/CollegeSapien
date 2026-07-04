@@ -282,7 +282,7 @@
       "credits": 3,
       "category": "PEC",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -291,7 +291,7 @@
       "credits": 3,
       "category": "OEC",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -363,7 +363,7 @@
       "credits": 3,
       "category": "PEC",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -372,7 +372,7 @@
       "credits": 3,
       "category": "PEC",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -381,7 +381,7 @@
       "credits": 3,
       "category": "OEC",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -417,7 +417,7 @@
       "credits": 3,
       "category": "PEC",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -426,7 +426,7 @@
       "credits": 3,
       "category": "OEC",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -435,7 +435,7 @@
       "credits": 3,
       "category": "OEC",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,

@@ -138,7 +138,7 @@
       "credits": 3,
       "category": "PE",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -156,7 +156,7 @@
       "credits": 3,
       "category": "PE",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     }
   ]
 }

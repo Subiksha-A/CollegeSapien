@@ -327,7 +327,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -336,7 +336,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -399,7 +399,7 @@
       "credits": 6,
       "category": "SD",
       "elective_type": "Capstone Design Project",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -408,7 +408,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -417,7 +417,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -426,7 +426,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -435,7 +435,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -453,7 +453,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -462,7 +462,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -516,7 +516,7 @@
       "credits": 6,
       "category": "SD",
       "elective_type": "Capstone Design Project",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -525,7 +525,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -534,7 +534,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -543,7 +543,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -552,7 +552,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -579,7 +579,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -588,7 +588,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -606,7 +606,7 @@
       "credits": 6,
       "category": "SD",
       "elective_type": "Capstone Design Project",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -615,7 +615,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -624,7 +624,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -633,7 +633,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -642,7 +642,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 8,
@@ -652,6 +652,276 @@
       "category": "SD",
       "elective_type": null,
       "record_type": "core"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Big Data Analytics",
+      "credits": 3,
+      "category": "Data Science and Analytics",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Information Retrieval Techniques",
+      "credits": 3,
+      "category": "Data Science and Analytics",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Business Intelligence",
+      "credits": 3,
+      "category": "Data Science and Analytics",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Image and video Analytics",
+      "credits": 3,
+      "category": "Data Science and Analytics",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Data Analytics using R",
+      "credits": 3,
+      "category": "Data Science and Analytics",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Principles of Cryptography and Cyber Security",
+      "credits": 3,
+      "category": "Network and Security",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Digital Forensics & Malware Analysis",
+      "credits": 3,
+      "category": "Network and Security",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "IOT Security",
+      "credits": 3,
+      "category": "Network and Security",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Security and Privacy in Cloud",
+      "credits": 3,
+      "category": "Network and Security",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Software Defined Networks",
+      "credits": 3,
+      "category": "Network and Security",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Artificial Intelligence",
+      "credits": 3,
+      "category": "Artificial Intelligence",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Generative AI",
+      "credits": 3,
+      "category": "Artificial Intelligence",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Deep Learning",
+      "credits": 3,
+      "category": "Artificial Intelligence",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Large Language Models",
+      "credits": 3,
+      "category": "Artificial Intelligence",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Explainable AI",
+      "credits": 3,
+      "category": "Artificial Intelligence",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Quantum Computing",
+      "credits": 3,
+      "category": "Emerging Technologies",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Drone Technologies",
+      "credits": 3,
+      "category": "Emerging Technologies",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Blockchain Technologies",
+      "credits": 3,
+      "category": "Emerging Technologies",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Augmented Reality/Virtual Reality",
+      "credits": 3,
+      "category": "Emerging Technologies",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Robotic Process Automation",
+      "credits": 3,
+      "category": "Emerging Technologies",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Devops",
+      "credits": 3,
+      "category": "IT Services",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Vibe Coding",
+      "credits": 3,
+      "category": "IT Services",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "C# and .Net Programming",
+      "credits": 3,
+      "category": "IT Services",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Spring Boot & Microservices",
+      "credits": 3,
+      "category": "IT Services",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Mobile Application Development",
+      "credits": 3,
+      "category": "IT Services",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Dynamic Paradigm for IoT",
+      "credits": 3,
+      "category": "Internet of Things and Smart Applications",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Smart IoT Architecture",
+      "credits": 3,
+      "category": "Internet of Things and Smart Applications",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "Wearable Computing",
+      "credits": 3,
+      "category": "Internet of Things and Smart Applications",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "IoT in 5G Networks",
+      "credits": 3,
+      "category": "Internet of Things and Smart Applications",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
+    },
+    {
+      "semester": null,
+      "subject_code": "",
+      "subject_name": "IoT and Smart Cities",
+      "credits": 3,
+      "category": "Internet of Things and Smart Applications",
+      "elective_type": "Programme Elective",
+      "record_type": "option"
     }
   ]
 }

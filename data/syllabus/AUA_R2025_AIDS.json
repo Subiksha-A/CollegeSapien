@@ -354,7 +354,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -363,7 +363,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -417,7 +417,7 @@
       "credits": 6,
       "category": "SD",
       "elective_type": "Capstone Design Project",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -426,7 +426,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -435,7 +435,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -444,7 +444,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -453,7 +453,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -471,7 +471,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -480,7 +480,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -543,7 +543,7 @@
       "credits": 6,
       "category": "SD",
       "elective_type": "Capstone Design Project",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -552,7 +552,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -561,7 +561,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -570,7 +570,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 6,
@@ -579,7 +579,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -588,7 +588,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -597,7 +597,7 @@
       "credits": 3,
       "category": "ES (PE)",
       "elective_type": "Programme Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -633,7 +633,7 @@
       "credits": 6,
       "category": "SD",
       "elective_type": "Capstone Design Project",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -642,7 +642,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -651,7 +651,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Honours Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -660,7 +660,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
@@ -669,7 +669,7 @@
       "credits": 3,
       "category": "",
       "elective_type": "Minor Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 8,

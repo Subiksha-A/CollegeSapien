@@ -372,7 +372,7 @@
       "credits": 3,
       "category": "OE",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 5,
@@ -498,7 +498,7 @@
       "credits": 3,
       "category": "OE",
       "elective_type": "Open Elective",
-      "record_type": "slot"
+      "record_type": "elective"
     },
     {
       "semester": 7,
