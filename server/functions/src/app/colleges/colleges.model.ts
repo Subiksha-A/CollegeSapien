@@ -45,3 +45,13 @@ export const CollegeSchema = z.object({
 });
 
 export type College = z.infer<typeof CollegeSchema>;
+
+export const DepartmentSchema = z.object({
+  name: z.string().min(2),
+  code: z.string().min(2),
+  createdAt: z.any().optional(),
+  updatedAt: z.any().optional(),
+  deletedAt: z.any().optional().nullable(),
+});
+
+export type Department = z.infer<typeof DepartmentSchema>;

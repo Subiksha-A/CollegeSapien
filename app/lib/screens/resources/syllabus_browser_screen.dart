@@ -29,6 +29,7 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
   String? _filterRegulation;
 
   List<College> _colleges = [];
+  List<Department> _departments = defaultDepartments;
   UserProfile? _userProfile;
 
   @override
@@ -42,14 +43,18 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
     try {
       final results = await Future.wait([
         _collegeService.listColleges(),
+        _collegeService.listDepartments(),
         AuthService.instance.syncProfile(),
       ]);
       if (!mounted) return;
       final colleges = results[0] as List<College>
         ..sort((a, b) => a.name.compareTo(b.name));
+      final departments = results[1] as List<Department>
+        ..sort((a, b) => a.name.compareTo(b.name));
       setState(() {
         _colleges = colleges;
-        _userProfile = (results[1] as AuthSyncResult).user;
+        _departments = departments;
+        _userProfile = (results[2] as AuthSyncResult).user;
       });
     } catch (_) {}
   }
@@ -89,7 +94,7 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
         builder: (ctx, setSheetState) {
           final college =
               _colleges.where((c) => c.id == uploadCollegeId).firstOrNull;
-          final deptObj = departments
+          final deptObj = _departments
               .where((d) => d.name == uploadDepartment)
               .firstOrNull;
           final autoTitle =
@@ -128,9 +133,9 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                 ),
                 const SizedBox(height: 12),
                 SearchableDropdown<Department>(
-                  items: departments,
+                  items: _departments,
                   value: uploadDepartment != null
-                      ? departments
+                      ? _departments
                           .where((d) => d.name == uploadDepartment)
                           .firstOrNull
                       : null,
@@ -359,9 +364,9 @@ class _SyllabusBrowserScreenState extends State<SyllabusBrowserScreen> {
                       ],
                       const SizedBox(height: 12),
                       SearchableDropdown<Department>(
-                        items: departments,
+                        items: _departments,
                         value: _filterDepartment != null
-                            ? departments
+                            ? _departments
                                 .where((d) => d.name == _filterDepartment)
                                 .firstOrNull
                             : null,

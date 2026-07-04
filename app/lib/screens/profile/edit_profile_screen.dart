@@ -49,6 +49,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _editorController = SubjectsEditorController();
 
   List<College> _colleges = [];
+  List<Department> _departments = defaultDepartments;
   String? _selectedCollegeId;
   String? _selectedDepartment;
   int? _selectedSemester;
@@ -85,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void _applyProfile(UserProfile? profile, {required bool markAsInitial}) {
     if (profile == null) return;
     _selectedCollegeId = profile.collegeId;
-    final deptMatch = departments.any((d) => d.name == profile.department);
+    final deptMatch = _departments.any((d) => d.name == profile.department);
     _selectedDepartment = deptMatch ? profile.department : null;
     _selectedSemester =
         profile.semester > 0 && profile.semester <= 8 ? profile.semester : null;
@@ -100,8 +101,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     // Colleges list gates the dropdowns (an id/name alone can't render a
     // selection without it) — that's the only thing worth a loading state.
     try {
-      _colleges = (await CollegeService().listColleges())
-        ..sort((a, b) => a.name.compareTo(b.name));
+      final collegeService = CollegeService();
+      _colleges = await collegeService.listColleges();
+      _colleges.sort((a, b) => a.name.compareTo(b.name));
+      _departments = await collegeService.listDepartments();
+      _departments.sort((a, b) => a.name.compareTo(b.name));
     } catch (_) {}
     if (mounted) setState(() => _isLoading = false);
     _loadSubjectsPreview();
@@ -161,7 +165,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     CurriculumBundle? bundle;
     final college = _colleges.where((c) => c.id == collegeId).firstOrNull;
     final courseCode =
-        departments.where((d) => d.name == dept).firstOrNull?.code;
+        _departments.where((d) => d.name == dept).firstOrNull?.code;
 
     // Saved subjects belong to the current college+department — for a new
     // college/department they'd be cleared on save, so don't show them.
@@ -211,7 +215,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     final college = _colleges.where((c) => c.id == collegeId).firstOrNull;
     final courseCode =
-        departments.where((d) => d.name == dept).firstOrNull?.code;
+        _departments.where((d) => d.name == dept).firstOrNull?.code;
 
     try {
       if (college != null && courseCode != null) {
@@ -469,9 +473,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       const SizedBox(height: 16),
                       SearchableDropdown<Department>(
-                        items: departments,
+                        items: _departments,
                         value: _selectedDepartment != null
-                            ? departments
+                            ? _departments
                                 .where((d) => d.name == _selectedDepartment)
                                 .firstOrNull
                             : null,

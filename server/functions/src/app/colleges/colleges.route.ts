@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createCollege, listColleges, updateCollege, deleteCollege } from './colleges.controller';
+import { createCollege, listColleges, updateCollege, deleteCollege, listCombined, createDepartment, listDepartments, updateDepartment, deleteDepartment } from './colleges.controller';
 import { authenticate, requireVerifiedEmail } from '../../shared/middlewares/auth.middleware';
 import { isSuperAdmin } from '../../shared/middlewares/role.middleware';
 
@@ -35,6 +35,12 @@ const router = Router();
  *                     example: "AU"
  */
 router.get('/', listColleges);
+
+router.get('/combined', listCombined);
+router.get('/departments', listDepartments);
+router.post('/departments', authenticate, requireVerifiedEmail, isSuperAdmin, createDepartment);
+router.put('/departments/:id', authenticate, requireVerifiedEmail, isSuperAdmin, updateDepartment);
+router.delete('/departments/:id', authenticate, requireVerifiedEmail, isSuperAdmin, deleteDepartment);
 
 /**
  * @openapi

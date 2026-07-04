@@ -17,7 +17,6 @@ import '../../services/college_service.dart';
 import '../profile/profile_screen.dart';
 import '../../models/syllabus_models.dart';
 import '../../services/syllabus_service.dart';
-import '../../utils/department_constants.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
 import '../attendance/mark_attendance_screen.dart';
@@ -323,11 +322,13 @@ class _HomeScreenState extends State<HomeScreen> {
         // No saved subjects — try curriculum fallback
         var fallbackApplied = false;
         try {
-          final colleges = await CollegeService().listColleges();
+          final collegeService = CollegeService();
+          final colleges = await collegeService.listColleges();
+          final departmentsList = await collegeService.listDepartments();
           final college =
               colleges.where((c) => c.id == freshUser.collegeId).firstOrNull;
           final collegeCode = college?.code;
-          final deptObj = departments
+          final deptObj = departmentsList
               .where((d) => d.name == freshUser.department)
               .firstOrNull;
           final courseCode = deptObj?.code;

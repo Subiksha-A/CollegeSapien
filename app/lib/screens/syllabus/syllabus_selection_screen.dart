@@ -9,7 +9,6 @@ import '../../services/college_service.dart';
 import '../../services/syllabus_service.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_theme.dart';
-import '../../utils/department_constants.dart';
 import '../../widgets/subjects_editor.dart';
 import '../home/main_navigation.dart';
 
@@ -84,12 +83,13 @@ class _SyllabusSelectionScreenState extends State<SyllabusSelectionScreen> {
       CurriculumBundle? bundle;
       try {
         final colleges = await _collegeService.listColleges();
+        final departmentsList = await _collegeService.listDepartments();
         final college =
             colleges.where((c) => c.id == profile.collegeId).firstOrNull;
         collegeCode = college?.code;
 
         final deptObj =
-            departments.where((d) => d.name == profile.department).firstOrNull;
+            departmentsList.where((d) => d.name == profile.department).firstOrNull;
         courseCode = deptObj?.code;
 
         if (collegeCode != null && courseCode != null) {

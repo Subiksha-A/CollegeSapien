@@ -20,6 +20,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen>
   final _nameController = TextEditingController();
   final _collegeService = CollegeService();
   List<College> _colleges = [];
+  List<Department> _departments = [];
   String? _selectedCollegeId;
   String? _selectedDepartment;
   int? _selectedSemester;
@@ -48,13 +49,18 @@ class _UserDetailsScreenState extends State<UserDetailsScreen>
   Future<void> _loadColleges() async {
     try {
       final colleges = await _collegeService.listColleges();
+      final departments = await _collegeService.listDepartments();
       if (!mounted) return;
       colleges.sort((a, b) => a.name.compareTo(b.name));
-      setState(() => _colleges = colleges);
+      departments.sort((a, b) => a.name.compareTo(b.name));
+      setState(() {
+        _colleges = colleges;
+        _departments = departments;
+      });
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Unable to load colleges: $e')),
+        SnackBar(content: Text('Unable to load options: $e')),
       );
     }
   }
@@ -233,9 +239,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen>
 
                     // Department Searchable Dropdown
                     SearchableDropdown<Department>(
-                      items: departments,
+                      items: _departments,
                       value: _selectedDepartment != null
-                          ? departments
+                          ? _departments
                               .where((d) => d.name == _selectedDepartment)
                               .firstOrNull
                           : null,

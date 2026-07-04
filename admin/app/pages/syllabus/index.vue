@@ -65,7 +65,7 @@ const selectedPending = ref<Set<string>>(new Set());
 const batchInFlight = ref(false);
 const singleInFlight = ref<Set<string>>(new Set());
 
-const activeTab = ref<"pending" | "approved">("pending");
+const activeTab = ref<"pending" | "approved">("approved");
 const detailItem = ref<CurriculumRecord | null>(null);
 const savingEdit = ref(false);
 const showGuideModal = ref(false);
@@ -705,17 +705,6 @@ const handleSaveEdit = async (payload: {
       <button
         class="px-4 py-2 text-sm font-medium border-b-2 transition-colors"
         :class="
-          activeTab === 'pending'
-            ? 'border-yellow-400 text-gray-900'
-            : 'border-transparent text-gray-400 hover:text-gray-600'
-        "
-        @click="activeTab = 'pending'"
-      >
-        Pending review ({{ pending.length }})
-      </button>
-      <button
-        class="px-4 py-2 text-sm font-medium border-b-2 transition-colors"
-        :class="
           activeTab === 'approved'
             ? 'border-yellow-400 text-gray-900'
             : 'border-transparent text-gray-400 hover:text-gray-600'
@@ -723,6 +712,17 @@ const handleSaveEdit = async (payload: {
         @click="activeTab = 'approved'"
       >
         Approved ({{ approved.length }})
+      </button>
+      <button
+        class="px-4 py-2 text-sm font-medium border-b-2 transition-colors"
+        :class="
+          activeTab === 'pending'
+            ? 'border-yellow-400 text-gray-900'
+            : 'border-transparent text-gray-400 hover:text-gray-600'
+        "
+        @click="activeTab = 'pending'"
+      >
+        Pending review ({{ pending.length }})
       </button>
     </div>
 

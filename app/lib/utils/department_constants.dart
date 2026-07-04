@@ -3,9 +3,21 @@ class Department {
   final String code;
 
   const Department(this.name, this.code);
+
+  factory Department.fromJson(Map<String, dynamic> json) {
+    return Department(
+      json['name'] as String? ?? '',
+      json['code'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'code': code,
+  };
 }
 
-const List<Department> departments = [
+const List<Department> defaultDepartments = [
   Department('Computer Science and Engineering', 'CSE'),
   Department('Information Technology', 'IT'),
   Department('Artificial Intelligence and Data Science', 'AIDS'),
