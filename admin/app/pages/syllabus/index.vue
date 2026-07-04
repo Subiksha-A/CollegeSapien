@@ -30,6 +30,14 @@ interface UploadRowError {
   error: string;
 }
 
+interface UploadConflict {
+  fileName?: string;
+  collegeCode: string;
+  courseCode: string;
+  regulation: string;
+  existsIn: "pending" | "approved" | "both";
+}
+
 const { get, post, patch } = useApi();
 
 const colleges = ref<CollegeOption[]>([]);
@@ -42,6 +50,10 @@ const pending = ref<CurriculumRecord[]>([]);
 const approved = ref<CurriculumRecord[]>([]);
 const loadingPending = ref(true);
 const loadingApproved = ref(true);
+
+const pendingUploadItems = ref<{ fileName: string; data: any }[]>([]);
+const uploadConflicts = ref<UploadConflict[]>([]);
+const confirmingOverwrite = ref(false);
 
 const selectedPending = ref<Set<string>>(new Set());
 const batchInFlight = ref(false);
@@ -148,41 +160,88 @@ const handleFiles = async (fileList: FileList | null) => {
   }
 
   if (items.length > 0) {
-    try {
-      const res = await post<{
-        results: Array<
-          | {
-              fileName?: string;
-              id: string;
-              collegeCode: string;
-              courseCode: string;
-              regulation: string;
-              subjectCount: number;
-            }
-          | { fileName?: string; error: unknown }
-        >;
-      }>("/curriculum/pending", { items });
-
-      const failures = res.results.filter(
-        (r): r is { fileName?: string; error: unknown } => "error" in r,
-      );
-      if (failures.length > 0) {
-        uploadErrors.value.push(
-          ...failures.map((f) => ({
-            fileName: f.fileName,
-            error: JSON.stringify(f.error),
-          })),
-        );
-      }
-      snack.value = `${res.results.length - failures.length} file(s) uploaded for review.`;
-      await fetchPending();
-    } catch (err) {
-      console.error("Upload failed", err);
-      uploadErrors.value.push({ error: "Upload request failed." });
-    }
+    await submitItems(items, []);
   }
 
   uploading.value = false;
+};
+
+type UploadResult =
+  | {
+      fileName?: string;
+      id: string;
+      collegeCode: string;
+      courseCode: string;
+      regulation: string;
+      subjectCount: number;
+    }
+  | { fileName?: string; error: unknown }
+  | (UploadConflict & { conflict: true });
+
+const submitItems = async (
+  items: { fileName: string; data: unknown }[],
+  overwriteKeys: string[],
+) => {
+  try {
+    const res = await post<{ results: UploadResult[] }>("/curriculum/pending", {
+      items,
+      overwriteKeys,
+    });
+
+    const failures = res.results.filter(
+      (r): r is { fileName?: string; error: unknown } => "error" in r,
+    );
+    const conflicts = res.results.filter(
+      (r): r is UploadConflict & { conflict: true } => "conflict" in r,
+    );
+
+    if (failures.length > 0) {
+      uploadErrors.value.push(
+        ...failures.map((f) => ({
+          fileName: f.fileName,
+          error: JSON.stringify(f.error),
+        })),
+      );
+    }
+
+    if (conflicts.length > 0) {
+      pendingUploadItems.value = items;
+      uploadConflicts.value = conflicts;
+      return;
+    }
+
+    const successCount = res.results.length - failures.length;
+    if (successCount > 0) {
+      snack.value = `${successCount} file(s) uploaded for review.`;
+    }
+    await fetchPending();
+  } catch (err) {
+    console.error("Upload failed", err);
+    uploadErrors.value.push({ error: "Upload request failed." });
+  }
+};
+
+const conflictExistsInLabel = (existsIn: UploadConflict["existsIn"]) => {
+  if (existsIn === "both") return "pending review and already approved";
+  if (existsIn === "approved") return "already approved";
+  return "pending review";
+};
+
+const confirmOverwrite = async () => {
+  confirmingOverwrite.value = true;
+  const overwriteKeys = uploadConflicts.value.map(
+    (c) => `${c.collegeCode}|${c.courseCode}|${c.regulation}`,
+  );
+  const items = pendingUploadItems.value;
+  uploadConflicts.value = [];
+  pendingUploadItems.value = [];
+  await submitItems(items, overwriteKeys);
+  confirmingOverwrite.value = false;
+};
+
+const cancelOverwrite = () => {
+  uploadConflicts.value = [];
+  pendingUploadItems.value = [];
 };
 
 const onDrop = (e: DragEvent) => {
@@ -526,6 +585,21 @@ const handleSaveEdit = async (payload: {
         </table>
       </div>
     </div>
+
+    <ConfirmModal
+      v-if="uploadConflicts.length > 0"
+      title="Overwrite existing curricula?"
+      :message="`${uploadConflicts.length} file(s) match a college/course/regulation that already exists:\n\n${uploadConflicts
+        .map(
+          (c) =>
+            `• ${c.fileName ?? 'Unknown file'} — ${c.collegeCode}/${c.courseCode}/${c.regulation} (${conflictExistsInLabel(c.existsIn)})`,
+        )
+        .join('\n')}\n\nOverwrite the pending entries with the uploaded files?`"
+      confirm-label="Overwrite"
+      danger
+      @confirm="confirmOverwrite"
+      @cancel="cancelOverwrite"
+    />
 
     <SyllabusCurriculumDetail
       v-if="detailItem"

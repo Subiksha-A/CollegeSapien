@@ -67,14 +67,47 @@ export const uploadPendingCurricula = async (req: AuthRequest, res: Response) =>
       return res.status(400).json({ error: 'items[] is required and must not be empty' });
     }
 
+    const overwriteKeys: string[] = Array.isArray(req.body?.overwriteKeys)
+      ? req.body.overwriteKeys
+      : [];
+
     const results = await Promise.all(
       items.map(async (item: any) => {
         const fileName = typeof item?.fileName === 'string' ? item.fileName : undefined;
         try {
           const envelope = CurriculumEnvelopeSchema.parse(item?.data ?? item);
-          const docRef = firestore().collection('curricula_pending').doc();
+          const key = `${envelope.college_code}|${envelope.course_code}|${envelope.regulation}`;
+          const approvedId = curriculumDocId(envelope.college_code, envelope.course_code, envelope.regulation);
+
+          const [approvedDoc, pendingSnapshot] = await Promise.all([
+            firestore().collection('curricula').doc(approvedId).get(),
+            firestore()
+              .collection('curricula_pending')
+              .where('collegeCode', '==', envelope.college_code)
+              .where('courseCode', '==', envelope.course_code)
+              .where('regulation', '==', envelope.regulation)
+              .get(),
+          ]);
+
+          const existsInApproved = approvedDoc.exists;
+          const existsInPending = !pendingSnapshot.empty;
+
+          if ((existsInApproved || existsInPending) && !overwriteKeys.includes(key)) {
+            return {
+              fileName,
+              conflict: true,
+              collegeCode: envelope.college_code,
+              courseCode: envelope.course_code,
+              regulation: envelope.regulation,
+              existsIn: existsInApproved && existsInPending ? 'both' : existsInApproved ? 'approved' : 'pending',
+            };
+          }
+
           const timestamp = admin.firestore.FieldValue.serverTimestamp();
-          await docRef.set({
+          const docRef = firestore().collection('curricula_pending').doc();
+          const batch = firestore().batch();
+          pendingSnapshot.docs.forEach(d => batch.delete(d.ref));
+          batch.set(docRef, {
             collegeCode: envelope.college_code,
             courseCode: envelope.course_code,
             regulation: envelope.regulation,
@@ -88,6 +121,8 @@ export const uploadPendingCurricula = async (req: AuthRequest, res: Response) =>
             createdAt: timestamp,
             updatedAt: timestamp,
           });
+          await batch.commit();
+
           return {
             fileName,
             id: docRef.id,
